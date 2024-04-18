@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Image</title>
+</head>
+<body>
+  <canvas id="myCanvas" width="3000" height="800" style="border: none; background-color: black;"></canvas>
+
+  <script src="player.js"></script>
+  <script src="playerMovement.js"></script>
+  <script src="robot.js"></script>
+  <script src="robotMovement.js"></script>
+  <script src="playerJump.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
