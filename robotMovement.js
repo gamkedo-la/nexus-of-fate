@@ -1,7 +1,7 @@
 class RobotMovement {
   constructor(robot) {
     this.robot = robot;
-    this.speed = 10; // Example speed for the robot
+    this.speed = 10; 
   }
 
   update(keys) {

@@ -5,13 +5,13 @@ class PlayerMovement {
 
   update(keys) {
     if (keys['a'] || keys['A']) {
-      if (!this.player.jumping) { // Only allow horizontal movement if not jumping
-        this.player.x -= this.player.speed; // Move player left
+      if (!this.player.jumping) { 
+        this.player.x -= this.player.speed; 
       }
     }
     if (keys['d'] || keys['D']) {
-      if (!this.player.jumping) { // Only allow horizontal movement if not jumping
-        this.player.x += this.player.speed; // Move player right
+      if (!this.player.jumping) { 
+        this.player.x += this.player.speed; 
       }
     }
   }

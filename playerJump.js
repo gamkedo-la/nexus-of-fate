@@ -14,9 +14,9 @@ class PlayerJump {
       var jumpInterval = setInterval(() => {
         jumpStep++;
         var jumpHeightOffset = Math.sin((Math.PI * jumpStep) / this.player.jumpDistance);
-        this.player.x = originalX + (jumpStep * this.player.speed); // Horizontal movement
-        this.player.y = originalY - (this.player.jumpHeight * jumpHeightOffset); // Vertical movement
-        if (jumpStep >= this.player.jumpDistance / this.player.speed) { // Divide by speed to adjust timing
+        this.player.x = originalX + (jumpStep * this.player.speed); 
+        this.player.y = originalY - (this.player.jumpHeight * jumpHeightOffset); 
+        if (jumpStep >= this.player.jumpDistance / this.player.speed) { 
           clearInterval(jumpInterval);
           this.jumping = false;
         }

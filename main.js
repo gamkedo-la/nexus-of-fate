@@ -13,7 +13,7 @@ window.onload = function() {
 
   window.addEventListener('keydown', function(event) {
     keys[event.key] = true;
-    if (event.key === ' ' && !playerJump.jumping) { // Check if spacebar is pressed and not already jumping
+    if (event.key === ' ' && !playerJump.jumping) { 
       playerJump.jump();
     }
   });
@@ -26,25 +26,21 @@ window.onload = function() {
     playerMovement.update(keys);
     robotMovement.update(keys);
 
-    // Apply gravity to bring the player back to the ground
     if (player.y < 242) {
       player.y += player.gravity;
     } else {
-      player.y = 242; // Ensure the player is exactly at the ground level
+      player.y = 242; 
     }
 
-    // Redraw the images
     context.clearRect(0, 0, canvas.width, canvas.height);
     player.draw(context);
     robot.draw(context);
 
-    // Call update again on the next frame
     requestAnimationFrame(update);
   }
 
   player.image.onload = function() {
     robot.image.onload = function() {
-      // Start the game loop
       update();
     };
   };
