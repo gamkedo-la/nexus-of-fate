@@ -1,4 +1,4 @@
-var baseName = "Armature-animation";
+var baseName = "Armature-animtion";
 
 var frameLabel = ["0","1","2",""3,"4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"];
 var animFrames = frameLabel.length;
@@ -66,7 +66,7 @@ function loadImages() {
   for(var i=0;i<animFacings;i++) {
     for(var ii=0;ii<animFrames;ii++) {
       var filename = baseName+dirText[i]+"_"+frameLabel[ii]+".png";
-      // console.log(filename);
+      console.log(filename);
       imageList.push(
         {animType:frameIndex(i,ii), theFile:filename});
     }
