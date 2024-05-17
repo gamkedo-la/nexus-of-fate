@@ -37,6 +37,7 @@ window.onload = function() {
     context.closePath();
 
     player.update(keys);
+	robot.update(keys);
 
     player.draw(context);
     robot.draw(context);
