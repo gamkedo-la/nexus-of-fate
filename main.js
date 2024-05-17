@@ -9,14 +9,14 @@ window.onload = function() {
 
   var keys = {};
 
-  // Capture key presses and releases
   window.addEventListener('keydown', function(e) {
     keys[e.key.toLowerCase()] = true;
     
-    // Trigger jump when spacebar is pressed
     if (e.key.toLowerCase() === ' ') {
       playerJump.jump();
     }
+
+
   });
 
   window.addEventListener('keyup', function(e) {
@@ -38,10 +38,8 @@ window.onload = function() {
     context.fill();
     context.closePath();
 
-    // Update player movement
     playerMovement.update(keys);
 
-    // Draw player and robot
     player.draw(context);
     robot.draw(context);
 
