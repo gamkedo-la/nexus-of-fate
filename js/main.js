@@ -3,7 +3,7 @@ window.onload = function() {
   var context = canvas.getContext('2d');
 
   var player = new Player('images/player_combo.png', 50, 242, 10, 1500, 100, 5, 2);
-  var robot = new Robot('Robot.png', canvas.width - 150, 242);
+  var robot = new Robot('images/robot_test.png',600, 242);
 
   var keys = {};
 
