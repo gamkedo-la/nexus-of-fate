@@ -4,7 +4,6 @@ window.onload = function() {
 
   var player = new Player('images/player_combo.png', 50, 242, 10, 1500, 100, 5, 2);
   var robot = new Robot('Robot.png', canvas.width - 150, 242);
-  var playerMovement = new PlayerMovement(player);
 
   var keys = {};
 
@@ -37,7 +36,7 @@ window.onload = function() {
     context.fill();
     context.closePath();
 
-    playerMovement.update(keys);
+    player.update(keys);
 
     player.draw(context);
     robot.draw(context);

@@ -29,6 +29,27 @@ class Player {
 			this.x, this.y,frameW,frameH);
   }
   
+   update(keys) {
+    if (keys['a'] || keys['A']) {
+      this.moveLeft();
+    }
+    if (keys['d'] || keys['D']) {
+      this.moveRight();
+    }
+  }
+
+  moveLeft() {
+    if (!this.jumping || this.allowAirControl) {
+      this.x -= this.speed;
+    }
+  }
+
+  moveRight() {
+    if (!this.jumping || this.allowAirControl) {
+      this.x += this.speed;
+    }
+  }
+  
   jump() {
     if (!this.jumping) {
       this.jumping = true;
