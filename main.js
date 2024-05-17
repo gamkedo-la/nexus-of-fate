@@ -5,7 +5,6 @@ window.onload = function() {
   var player = new Player('images/player_combo.png', 50, 242, 10, 1500, 100, 5, 2);
   var robot = new Robot('Robot.png', canvas.width - 150, 242);
   var playerMovement = new PlayerMovement(player);
-  var playerJump = new PlayerJump(player, canvas);
 
   var keys = {};
 
@@ -13,7 +12,7 @@ window.onload = function() {
     keys[e.key.toLowerCase()] = true;
     
     if (e.key.toLowerCase() === ' ') {
-      playerJump.jump();
+      player.jump();
     }
 
 

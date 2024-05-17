@@ -28,4 +28,23 @@ class Player {
     context.drawImage(this.image,0,frameH * this.frameNum,frameW,frameH,
 			this.x, this.y,frameW,frameH);
   }
+  
+  jump() {
+    if (!this.jumping) {
+      this.jumping = true;
+      var originalX = this.x;
+      var originalY = this.y;
+      var jumpStep = 0;
+      var jumpInterval = setInterval(() => {
+        jumpStep++;
+        var jumpHeightOffset = Math.sin((Math.PI * jumpStep) / this.jumpDistance);
+        this.x = originalX + (jumpStep * this.speed); 
+        this.y = originalY - (this.jumpHeight * jumpHeightOffset); 
+        if (jumpStep >= this.jumpDistance / this.speed) { 
+          clearInterval(jumpInterval);
+          this.jumping = false;
+        }
+      }, this.jumpSpeed);
+    }
+  }
 }
