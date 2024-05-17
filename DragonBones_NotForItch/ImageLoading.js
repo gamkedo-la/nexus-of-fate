@@ -20,17 +20,23 @@ window.onload = function() {
 }
 
 function loadingDoneSoStartGame() {
-  var dimW = animPics[0].width;
-  var dimH = animPics[0].height;
-
-  canvas.width = dimW*animFacings;
-  canvas.height = dimH*animFrames;
+  var scaleBy = 0.2;
+  var dimW = 1500;
+  var dimH = 1913;
+  var scaleW = dimW * scaleBy;
+  var scaleH = dimH * scaleBy;
+  var cornerX = 1878;
+  var cornerY = 1696;
+  canvas.width = scaleW*animFacings;
+  canvas.height = scaleH*animFrames;
 
   for(var i=0;i<animFacings;i++) {
     for(var ii=0;ii<animFrames;ii++) {
       console.log(i+" _ "+ii);
       canvasContext.drawImage(animPics[ frameIndex(i,ii) ],
-        dimW*i,dimH*ii);
+	  cornerX, cornerY,dimW,dimH,
+        scaleW*i,scaleH*ii, scaleW,scaleH);
+		
       
     }
   }
