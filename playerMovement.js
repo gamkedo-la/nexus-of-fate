@@ -5,14 +5,22 @@ class PlayerMovement {
 
   update(keys) {
     if (keys['a'] || keys['A']) {
-      if (!this.player.jumping) { 
-        this.player.x -= this.player.speed; 
-      }
+      this.moveLeft();
     }
     if (keys['d'] || keys['D']) {
-      if (!this.player.jumping) { 
-        this.player.x += this.player.speed; 
-      }
+      this.moveRight();
+    }
+  }
+
+  moveLeft() {
+    if (!this.player.jumping || this.allowAirControl) {
+      this.player.x -= this.player.speed;
+    }
+  }
+
+  moveRight() {
+    if (!this.player.jumping || this.allowAirControl) {
+      this.player.x += this.player.speed;
     }
   }
 }

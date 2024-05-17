@@ -4,9 +4,26 @@ window.onload = function() {
 
   var player = new Player('Player.png', 50, 242, 10, 1500, 100, 5, 2);
   var robot = new Robot('Robot.png', canvas.width - 150, 242);
+  var playerMovement = new PlayerMovement(player);
+  var playerJump = new PlayerJump(player, canvas);
+
+  var keys = {};
+
+  // Capture key presses and releases
+  window.addEventListener('keydown', function(e) {
+    keys[e.key.toLowerCase()] = true;
+    
+    // Trigger jump when spacebar is pressed
+    if (e.key.toLowerCase() === ' ') {
+      playerJump.jump();
+    }
+  });
+
+  window.addEventListener('keyup', function(e) {
+    keys[e.key.toLowerCase()] = false;
+  });
 
   function draw() {
-
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.fillStyle = "#deb887"; 
@@ -15,14 +32,16 @@ window.onload = function() {
     context.fillStyle = "darkblue"; 
     context.fillRect(0, 0, canvas.width, canvas.height * 0.5); 
 
-    
-    
     context.beginPath();
     context.arc(canvas.width * 0.8, canvas.height * 0.2, 50, 0, 2 * Math.PI); 
     context.fillStyle = "white"; 
     context.fill();
     context.closePath();
 
+    // Update player movement
+    playerMovement.update(keys);
+
+    // Draw player and robot
     player.draw(context);
     robot.draw(context);
 
