@@ -1,9 +1,12 @@
+const GRAVITY = 0.2;
+const FLOOR_Y = 242;
+
 window.onload = function() {
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
 
-  var player = new Player('images/player_combo.png', 50, 242, 10, 1500, 100, 5, 2);
-  var robot = new Robot('images/robot_test.png',600, 242);
+  var player = new Player('images/player_combo.png', 50, FLOOR_Y, 10);
+  var robot = new Robot('images/robot_test.png',600, FLOOR_Y);
 
   var keys = {};
 

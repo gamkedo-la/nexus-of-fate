@@ -1,15 +1,11 @@
 class Player {
-  constructor(imageSrc, initialX, initialY, speed, jumpHeight, jumpDistance, jumpSpeed, gravity) {
+  constructor(imageSrc, initialX, initialY, speed) {
     this.image = new Image();
     this.image.src = imageSrc;
     this.x = initialX;
     this.y = initialY;
     this.speed = speed;
-    this.jumpHeight = jumpHeight;
-    this.jumpDistance = jumpDistance;
-    this.jumpSpeed = jumpSpeed;
-    this.gravity = gravity;
-    this.jumping = false;
+	this.speedY = 0;
 	this.frameNum = 0;
 	this.frameWait = 3;
 	this.frameCount = 19;
@@ -36,36 +32,28 @@ class Player {
     if (keys['d'] || keys['D']) {
       this.moveRight();
     }
+	this.y += this.speedY;
+	if(this.y > FLOOR_Y){
+		this.y = FLOOR_Y;
+		this.speedY = 0;
+	} else{
+		this.speedY += GRAVITY;
+	}
   }
 
   moveLeft() {
-    if (!this.jumping || this.allowAirControl) {
-      this.x -= this.speed;
-    }
+	this.x -= this.speed;
   }
 
   moveRight() {
-    if (!this.jumping || this.allowAirControl) {
-      this.x += this.speed;
-    }
+	this.x += this.speed;
   }
   
   jump() {
-    if (!this.jumping) {
-      this.jumping = true;
-      var originalX = this.x;
-      var originalY = this.y;
-      var jumpStep = 0;
-      var jumpInterval = setInterval(() => {
-        jumpStep++;
-        var jumpHeightOffset = Math.sin((Math.PI * jumpStep) / this.jumpDistance);
-        this.x = originalX + (jumpStep * this.speed); 
-        this.y = originalY - (this.jumpHeight * jumpHeightOffset); 
-        if (jumpStep >= this.jumpDistance / this.speed) { 
-          clearInterval(jumpInterval);
-          this.jumping = false;
-        }
-      }, this.jumpSpeed);
-    }
+	  
+	  if(this.y >= FLOOR_Y){
+		  this.speedY = -10;
+	  }
+   
   }
 }
