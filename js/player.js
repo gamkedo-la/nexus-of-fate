@@ -5,55 +5,61 @@ class Player {
     this.x = initialX;
     this.y = initialY;
     this.speed = speed;
-	this.speedY = 0;
-	this.frameNum = 0;
-	this.frameWait = 3;
-	this.frameCount = 19;
+    this.speedY = 0;
+    this.frameNum = 0;
+    this.frameWait = 3;
+    this.frameCount = 19;
   }
 
   draw(context) {
-	var frameW = this.image.width;
-	var frameH =  1913 * 0.2;
-	if(this.frameWait-- < 0){
-		this.frameNum++;
-		if(this.frameNum >= this.frameCount){
-			this.frameNum = 0;			
-		}
-		this.frameWait = 3;
-	}
-    context.drawImage(this.image,0,frameH * this.frameNum,frameW,frameH,
-			this.x, this.y,frameW,frameH);
+    var frameW = this.image.width;
+    var frameH = 1913 * 0.2;
+    if (this.frameWait-- < 0) {
+      this.frameNum++;
+      if (this.frameNum >= this.frameCount) {
+        this.frameNum = 0;
+      }
+      this.frameWait = 3;
+    }
+    context.drawImage(this.image, 0, frameH * this.frameNum, frameW, frameH,
+      this.x, this.y, frameW, frameH);
   }
-  
-   update(keys) {
-    if (keys['a'] || keys['A']) {
+
+  update(keys, canvasWidth) {
+    if (keys['a']) {
       this.moveLeft();
     }
-    if (keys['d'] || keys['D']) {
+    if (keys['d']) {
       this.moveRight();
     }
-	this.y += this.speedY;
-	if(this.y > FLOOR_Y){
-		this.y = FLOOR_Y;
-		this.speedY = 0;
-	} else{
-		this.speedY += GRAVITY;
-	}
+    this.y += this.speedY;
+    if (this.y > FLOOR_Y) {
+      this.y = FLOOR_Y;
+      this.speedY = 0;
+    } else {
+      this.speedY += GRAVITY;
+    }
+
+    // Bound the player within the canvas
+    if (this.x < 0) {
+      this.x = 0;
+    }
+    if (this.image.width && this.x + this.image.width > canvasWidth) {
+      this.x = canvasWidth - this.image.width;
+    }
   }
 
   moveLeft() {
-	this.x -= this.speed;
+    this.x -= this.speed;
   }
 
   moveRight() {
-	this.x += this.speed;
+    this.x += this.speed;
   }
-  
+
   jump() {
-	  
-	  if(this.y >= FLOOR_Y){
-		  this.speedY = -10;
-	  }
-   
+    if (this.y >= FLOOR_Y) {
+      this.speedY = -10;
+    }
   }
 }

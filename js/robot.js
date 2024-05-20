@@ -1,11 +1,10 @@
 class Robot {
   constructor(imageSrc, initialX, initialY) {
     this.image = new Image();
-  
     this.image.src = imageSrc;
     this.x = initialX;
     this.y = initialY;
-	this.speed = 10; 
+    this.speed = 10; 
   }
 
   draw(context) {
@@ -15,13 +14,20 @@ class Robot {
       console.log("Context not provided for drawing the robot.");
     }
   }
-  
-   update(keys) {
-    if (keys['ArrowLeft']) {
+
+  update(keys, canvasWidth) {
+    if (keys['arrowleft']) {
       this.x -= this.speed;
     }
-    if (keys['ArrowRight']) {
+    if (keys['arrowright']) {
       this.x += this.speed;
+    }
+
+    if (this.x < 0) {
+      this.x = 0;
+    }
+    if (this.x + this.image.width > canvasWidth) {
+      this.x = canvasWidth - this.image.width;
     }
   }
 }
