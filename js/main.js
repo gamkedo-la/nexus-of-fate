@@ -5,7 +5,7 @@ window.onload = function() {
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
 
-  var player = new Player('images/player_combo.png', 52, FLOOR_Y, 10);
+  var player = new Player('images/player_walk.png', 52, FLOOR_Y, 10);
   var robot = new Robot('images/robot_test.png', 600, FLOOR_Y);
 
   var keys = {};
