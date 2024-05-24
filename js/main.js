@@ -23,7 +23,7 @@ window.onload = function() {
   // var robot = new Robot('images/robot_test.pngd', 600, FLOOR_Y);
 
   // let the robot be a kind of player
-  var robot = new Player('images/robot_walk.png', 600, FLOOR_Y);
+  var robot = new Player('images/robot_walk.png', 600, FLOOR_Y, 10);
 
   var keys = {};
   var robotkeys = {};
@@ -56,6 +56,8 @@ window.onload = function() {
     context.closePath();
 
     player.update(keys, canvas.width);
+    
+    robot_AI(robotkeys);
     robot.update(robotkeys, canvas.width);
 
     player.draw(context);
