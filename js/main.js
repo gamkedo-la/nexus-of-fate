@@ -6,7 +6,24 @@ window.onload = function() {
   var context = canvas.getContext('2d');
 
   var player = new Player('images/player_walk.png', 52, FLOOR_Y, 10);
-  var robot = new Robot('images/robot_test.png', 600, FLOOR_Y);
+  
+  // mcfunkypants recommendation:
+  // (feel free to ignore! =)
+  
+  // discard the robot class and make the robot a kind of
+  // player with AI instead if keyboard input.
+  // this way we don't have to duplicate TONS
+  // of code from playerjs to robot.js,
+  // it will save pain and suffering if both entities
+  // are the same class follow the same rules.
+  // this would result in half as many bugs!
+  // (because the game source code will be half the size!!!)
+  
+  // old way: feel free to put back if you prefer
+  // var robot = new Robot('images/robot_test.png', 600, FLOOR_Y);
+
+  // let the robot be a kind of player
+  var robot = new Player('images/robot_walk.png', 600, FLOOR_Y);
 
   var keys = {};
 
