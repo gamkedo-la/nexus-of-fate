@@ -29,12 +29,14 @@ class Player {
   }
 
   update(keys, canvasWidth) {
+    
     if (keys['a']) {
-      this.moveLeft();
+    this.moveLeft();
     }
     if (keys['d']) {
-      this.moveRight();
+    this.moveRight();
     }
+
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
       this.y = FLOOR_Y;

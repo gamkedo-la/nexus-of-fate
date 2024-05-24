@@ -20,12 +20,13 @@ window.onload = function() {
   // (because the game source code will be half the size!!!)
   
   // old way: feel free to put back if you prefer
-  // var robot = new Robot('images/robot_test.png', 600, FLOOR_Y);
+  // var robot = new Robot('images/robot_test.pngd', 600, FLOOR_Y);
 
   // let the robot be a kind of player
   var robot = new Player('images/robot_walk.png', 600, FLOOR_Y);
 
   var keys = {};
+  var robotkeys = {};
 
   window.addEventListener('keydown', function(e) {
     keys[e.key.toLowerCase()] = true;
@@ -55,7 +56,7 @@ window.onload = function() {
     context.closePath();
 
     player.update(keys, canvas.width);
-    robot.update(keys, canvas.width);
+    robot.update(robotkeys, canvas.width);
 
     player.draw(context);
     robot.draw(context);
