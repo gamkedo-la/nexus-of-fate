@@ -1,3 +1,30 @@
+
+
+function robot_AI(robotkeys) {
+    
+    // keep doing whatever we were doing
+    if (Math.random() > 0.1) return; 
+    
+    // select a new key to hold down for a while
+    let choice = Math.random();
+    if (choice < 0.11) {
+        //console.log("robot is going to move left!");
+        robotkeys['a'] = true;
+        robotkeys['d'] = false;
+    }
+    else if (choice < 0.2) {
+        //console.log("robot is going to move right!");
+        robotkeys['a'] = false;
+        robotkeys['d'] = true;
+    } else { // 80% of the time:
+        //console.log("robot is going to stand idle!");
+        robotkeys['a'] = false;
+        robotkeys['d'] = false;
+    }
+}
+
+
+
 class Player {
   constructor(imageSrc, initialX, initialY, speed) {
     this.image = new Image();
@@ -67,4 +94,6 @@ class Player {
       this.speedY = -10;
     }
   }
+  
+  
 }
