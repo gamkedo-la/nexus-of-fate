@@ -14,13 +14,13 @@ function input_ai() {
         //console.log("ai is going to move left!");
         this.keys['a'] = true;
         this.keys['d'] = false;
-        this.keys[' '] = (Math.random() < 0.1); // jump occasionally!
+        this.keys[' '] = (Math.random() < 0.1);
     }
     else if (choice < 0.2) {
         //console.log("ai is going to move right!");
         this.keys['a'] = false;
         this.keys['d'] = true;
-        this.keys[' '] = (Math.random() < 0.1); // jump occasionally!
+        this.keys[' '] = (Math.random() < 0.1);
     } else { // 80% of the time:
         //console.log("ai is going to stand idle!");
         this.keys['a'] = false;

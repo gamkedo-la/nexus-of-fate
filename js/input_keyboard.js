@@ -10,11 +10,6 @@ var keyboardstate = {}; // used privately in this file only
 
 window.addEventListener('keydown', function(e) {
     keyboardstate[e.key.toLowerCase()] = true;
-    /*
-    if (e.key === ' ') {
-        player.jump(); // FIXME: handle like a normal input but only on first press
-    }
-    */
 });
 
 window.addEventListener('keyup', function(e) {
