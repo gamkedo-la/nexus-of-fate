@@ -1,32 +1,8 @@
+class Fighter {
 
-
-function robot_AI(robotkeys) {
-    
-    // keep doing whatever we were doing
-    if (Math.random() > 0.1) return; 
-    
-    // select a new key to hold down for a while
-    let choice = Math.random();
-    if (choice < 0.11) {
-        //console.log("robot is going to move left!");
-        robotkeys['a'] = true;
-        robotkeys['d'] = false;
-    }
-    else if (choice < 0.2) {
-        //console.log("robot is going to move right!");
-        robotkeys['a'] = false;
-        robotkeys['d'] = true;
-    } else { // 80% of the time:
-        //console.log("robot is going to stand idle!");
-        robotkeys['a'] = false;
-        robotkeys['d'] = false;
-    }
-}
-
-
-
-class Player {
-  constructor(imageSrc, initialX, initialY, speed) {
+  constructor(whichInput, imageSrc, initialX, initialY, speed) {
+    this.keys = {};
+    this.getInput = whichInput;
     this.image = new Image();
     this.image.src = imageSrc;
     this.x = initialX;
@@ -41,7 +17,7 @@ class Player {
     this.frameCount = 7; 
   }
 
-  draw(context) {
+  draw() {
     var frameW = this.image.width;
     var frameH = 1913 * 0.2;
     if (this.frameWait-- < 0) {
@@ -55,13 +31,19 @@ class Player {
       this.x, this.y, frameW, frameH);
   }
 
-  update(keys, canvasWidth) {
+  update(canvasWidth) {
     
-    if (keys['a']) {
-    this.moveLeft();
+    // can be input_keyboard, input_ai, etc
+    this.getInput(); // update this.keys[]
+
+    if (this.keys['a']) {
+      this.moveLeft();
     }
-    if (keys['d']) {
-    this.moveRight();
+    if (this.keys['d']) {
+      this.moveRight();
+    }
+    if (this.keys[' ']) {
+      this.jump();
     }
 
     this.y += this.speedY;
@@ -72,7 +54,7 @@ class Player {
       this.speedY += GRAVITY;
     }
 
-    // Bound the player within the canvas
+    // Bound the fighter within the canvas
     if (this.x < 0) {
       this.x = 0;
     }
@@ -94,6 +76,5 @@ class Player {
       this.speedY = -10;
     }
   }
-  
   
 }
