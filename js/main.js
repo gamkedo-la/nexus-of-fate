@@ -1,12 +1,17 @@
 var canvas, context, player, robot;
 
+const PLAYER_START_X = 52 ;
+const PLAYER_START_Y = FLOOR_Y ;
+const OPPONENT_START_X = 600;
+const OPPONENT_START_Y = FLOOR_Y;
+
 window.onload = function() {
 
   canvas = document.getElementById('myCanvas');
   context = canvas.getContext('2d');
   
-  player = new Fighter(input_keyboard, 'images/player_walk.png', 52, FLOOR_Y, MOVE_SPEED);
-  robot = new Fighter(input_ai, 'images/robot_walk.png', 600, FLOOR_Y, MOVE_SPEED);
+  player = new Fighter(input_keyboard, 'images/player_walk.png', PLAYER_START_X, PLAYER_START_Y);
+  robot = new Fighter(input_ai, 'images/robot_walk.png', OPPONENT_START_X, OPPONENT_START_Y);
 
   function draw() {
     
