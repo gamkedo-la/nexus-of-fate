@@ -11,10 +11,7 @@ class Fighter {
     this.speedY = 0;
     this.frameNum = 0;
     this.frameWait = 3;
-    // the .png is 12 frames long but in the current art
-    // it seems to loop best if we skip the last 5 frames
-    // FIXME! set back to 12 when the animation is updated
-    this.frameCount = 7; 
+    this.frameCount = 12; 
   }
 
   draw() {
