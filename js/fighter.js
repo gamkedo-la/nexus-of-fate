@@ -54,7 +54,7 @@ class Fighter {
     this.frameHeight = 1913 * 0.2; // This should match the actual frame height
   }
 
-  draw(context) {
+  draw() {
     if (!this.isReady) return;
 
     let now = performance.now() / 1000;
