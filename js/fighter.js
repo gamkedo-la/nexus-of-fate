@@ -8,8 +8,7 @@ const ANIM_IDLE = 0;
 const ANIM_WALK_FORWARD = 1;
 const ANIM_WALK_BACKWARD = 2;
 
-const PLAYER_START_X = 52;
-const PLAYER_START_Y = FLOOR_Y;
+
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
@@ -26,11 +25,23 @@ class Fighter {
     this.timeTillNextFrame = 1 / this.animationFPS;
     this.previousFrameTimestamp = performance.now() / 1000;
     this.currentAnimation = ANIM_IDLE;
+    this.isReady = false;
 
     // Preload images for each animation state
+    let imagesLoaded = 0;
+    const totalImages = Object.keys(this.imageSources).length;
     for (let anim in this.imageSources) {
       this.images[anim] = new Image();
       this.images[anim].src = this.imageSources[anim];
+      this.images[anim].onload = () => {
+        imagesLoaded++;
+        console.log(`Image ${anim} loaded`);
+        if (imagesLoaded === totalImages) {
+          // All images are loaded
+          console.log('All images loaded');
+          this.isReady = true;
+        }
+      };
     }
 
     // Define frame ranges and total frames for each animation state
@@ -44,6 +55,8 @@ class Fighter {
   }
 
   draw(context) {
+    if (!this.isReady) return;
+
     let now = performance.now() / 1000;
     let deltaTime = now - this.previousFrameTimestamp;
     this.previousFrameTimestamp = now;
@@ -57,6 +70,10 @@ class Fighter {
     }
 
     let image = this.images[this.currentAnimation];
+    if (!image.complete) {
+      console.log('Image not complete', this.currentAnimation);
+      return;
+    }
     let frameW = image.width; // Assume each frame is full width
     let frameH = this.frameHeight;
 
@@ -131,17 +148,15 @@ window.onload = function() {
   const player = new Fighter(input_keyboard, {
     [ANIM_IDLE]: 'images/player_idle.png',
     [ANIM_WALK_FORWARD]: 'images/player_walk.png',
-    [ANIM_WALK_BACKWARD]: 'images/player_walk_back.png'
+    [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png'
   }, PLAYER_START_X, PLAYER_START_Y);
 
   function draw() {
-    player.update(canvas.width);
-    
-    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-  
-
-    player.draw(context);
+    if (player.isReady) {
+      player.update(canvas.width);
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+      player.draw(context);
+    }
 
     requestAnimationFrame(draw);
   }

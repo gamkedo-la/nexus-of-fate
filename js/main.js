@@ -13,7 +13,7 @@ window.onload = function() {
   player = new Fighter(input_keyboard, {
     [ANIM_IDLE]: 'images/player_idle.png',
     [ANIM_WALK_FORWARD]: 'images/player_walk.png',
-    [ANIM_WALK_BACKWARD]: 'images/player_walk_back.png'
+    [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png'
   }, PLAYER_START_X, PLAYER_START_Y);
   
   robot = new Fighter(input_ai, 'images/robot_walk.png', OPPONENT_START_X, OPPONENT_START_Y);
