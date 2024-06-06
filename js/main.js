@@ -16,7 +16,11 @@ window.onload = function() {
     [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png'
   }, PLAYER_START_X, PLAYER_START_Y);
   
-  robot = new Fighter(input_ai, 'images/robot_walk.png', OPPONENT_START_X, OPPONENT_START_Y);
+  robot = new Fighter(input_ai, {
+    [ANIM_IDLE]: 'images/robot_idle.png',
+    [ANIM_WALK_FORWARD]: 'images/robot_walk.png',
+    [ANIM_WALK_BACKWARD]: 'images/robot_walkbackwards.png'
+ }, OPPONENT_START_X, OPPONENT_START_Y);
 
   function draw() {
     
