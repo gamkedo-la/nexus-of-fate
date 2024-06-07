@@ -4,59 +4,36 @@ const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
 
-const ANIM_IDLE = 0;
-const ANIM_WALK_FORWARD = 1;
-const ANIM_WALK_BACKWARD = 2;
-
-
+const ANIM_IDLE = 'idle';
+const ANIM_WALK_FORWARD = 'walk_forward';
+const ANIM_WALK_BACKWARD = 'walk_backward';
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
     this.getInput = whichInput;
-    this.imageSources = imageSrcs; // Object with image sources for different animations
-    this.images = {};
+    this.images = {
+      [ANIM_IDLE]: new Image(),
+      [ANIM_WALK_FORWARD]: new Image(),
+      [ANIM_WALK_BACKWARD]: new Image()
+    };
+    this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
+    this.images[ANIM_WALK_FORWARD].src = imageSrcs[ANIM_WALK_FORWARD];
+    this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
+
     this.x = initialX;
     this.y = initialY;
-    this.speed = MOVE_SPEED;
     this.speedY = 0;
-    this.frameNum = 0;
-    this.animationFPS = ANIM_FPS;
-    this.timeTillNextFrame = 1 / this.animationFPS;
-    this.previousFrameTimestamp = performance.now() / 1000;
     this.currentAnimation = ANIM_IDLE;
-    this.isReady = false;
-
-    // Preload images for each animation state
-    let imagesLoaded = 0;
-    const totalImages = Object.keys(this.imageSources).length;
-    for (let anim in this.imageSources) {
-      this.images[anim] = new Image();
-      this.images[anim].src = this.imageSources[anim];
-      this.images[anim].onload = () => {
-        imagesLoaded++;
-        console.log(`Image ${anim} loaded`);
-        if (imagesLoaded === totalImages) {
-          // All images are loaded
-          console.log('All images loaded');
-          this.isReady = true;
-        }
-      };
-    }
-
-    // Define frame ranges and total frames for each animation state
-    this.animations = {
-      [ANIM_IDLE]: { start: 0, end: 58, frameCount: 59 },
-      [ANIM_WALK_FORWARD]: { start: 0, end: 14, frameCount: 15 },
-      [ANIM_WALK_BACKWARD]: { start: 0, end: 38, frameCount: 39 }
-    };
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+    this.previousFrameTimestamp = performance.now() / 1000;
 
     this.frameHeight = 1913 * 0.2; // This should match the actual frame height
+    this.frameWidth = 1125 * 0.2; // This should match the actual frame width
   }
 
-  draw() {
-    if (!this.isReady) return;
-
+  draw(context) {
     let now = performance.now() / 1000;
     let deltaTime = now - this.previousFrameTimestamp;
     this.previousFrameTimestamp = now;
@@ -64,17 +41,12 @@ class Fighter {
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
-      let animation = this.animations[this.currentAnimation];
-      if (this.frameNum > animation.end) this.frameNum = animation.start;
-      this.timeTillNextFrame = 1 / this.animationFPS;
+      this.frameNum %= 60; // Assuming each animation has 60 frames
+      this.timeTillNextFrame = 1 / ANIM_FPS;
     }
 
     let image = this.images[this.currentAnimation];
-    if (!image.complete) {
-      console.log('Image not complete', this.currentAnimation);
-      return;
-    }
-    let frameW = image.width; // Assume each frame is full width
+    let frameW = this.frameWidth;
     let frameH = this.frameHeight;
 
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
@@ -89,7 +61,6 @@ class Fighter {
       this.moveRight();
     } else {
       this.currentAnimation = ANIM_IDLE;
-      this.frameNum = this.animations[this.currentAnimation].start; // Reset to start frame of idle
     }
 
     if (this.keys[' ']) {
@@ -107,21 +78,19 @@ class Fighter {
     if (this.x < 0) {
       this.x = 0;
     }
-    if (this.images[this.currentAnimation].width && this.x + this.images[this.currentAnimation].width > canvasWidth) {
-      this.x = canvasWidth - this.images[this.currentAnimation].width;
+    if (this.x + this.frameWidth > canvasWidth) {
+      this.x = canvasWidth - this.frameWidth;
     }
   }
 
   moveLeft() {
-    this.x -= this.speed;
+    this.x -= MOVE_SPEED;
     this.currentAnimation = ANIM_WALK_BACKWARD;
-    this.frameNum = this.animations[this.currentAnimation].start; // Reset animation frame
   }
 
   moveRight() {
-    this.x += this.speed;
+    this.x += MOVE_SPEED;
     this.currentAnimation = ANIM_WALK_FORWARD;
-    this.frameNum = this.animations[this.currentAnimation].start; // Reset animation frame
   }
 
   jump() {
@@ -135,31 +104,8 @@ function input_keyboard() {
   window.addEventListener('keydown', (event) => {
     player.keys[event.key] = true;
   });
-  
+
   window.addEventListener('keyup', (event) => {
     player.keys[event.key] = false;
   });
 }
-
-window.onload = function() {
-  const canvas = document.getElementById('myCanvas');
-  const context = canvas.getContext('2d');
-
-  const player = new Fighter(input_keyboard, {
-    [ANIM_IDLE]: 'images/player_idle.png',
-    [ANIM_WALK_FORWARD]: 'images/player_walk.png',
-    [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png'
-  }, PLAYER_START_X, PLAYER_START_Y);
-
-  function draw() {
-    if (player.isReady) {
-      player.update(canvas.width);
-      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-      player.draw(context);
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-};
