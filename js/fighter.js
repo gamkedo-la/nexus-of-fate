@@ -41,8 +41,8 @@ class Fighter {
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
-      this.frameNum %= 30; // Assuming each animation has 60 frames
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+       if (this.frameNum >= this.frameCount) this.frameNum = 0;
+      this.timeTillNextFrame = 1 / this.animationFPS;
     }
 
     let image = this.images[this.currentAnimation];
