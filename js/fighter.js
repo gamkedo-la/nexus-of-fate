@@ -21,6 +21,13 @@ class Fighter {
     this.images[ANIM_WALK_FORWARD].src = imageSrcs[ANIM_WALK_FORWARD];
     this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
 
+    // Frame counts for each animation
+    this.frameCounts = {
+      [ANIM_IDLE]: 58,
+      [ANIM_WALK_FORWARD]: 10,
+      [ANIM_WALK_BACKWARD]: 39
+    };
+
     this.x = initialX;
     this.y = initialY;
     this.speedY = 0;
@@ -38,11 +45,12 @@ class Fighter {
     let deltaTime = now - this.previousFrameTimestamp;
     this.previousFrameTimestamp = now;
 
+    // Only update frame if enough time has passed
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
-      this.frameNum++;
-      this.frameNum %= 60; // Assuming each animation has 60 frames
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+        this.frameNum++;
+        this.frameNum %= this.frameCounts[this.currentAnimation];
+        this.timeTillNextFrame += 1 / ANIM_FPS;
     }
 
     let image = this.images[this.currentAnimation];
@@ -50,13 +58,9 @@ class Fighter {
     let frameH = this.frameHeight;
 
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
-	
-	console.log(this.frameNum);
   }
 
-
-
-update(canvasWidth) {
+  update(canvasWidth) {
     this.getInput();
 
     // Update the animation state based on movement
@@ -90,30 +94,34 @@ update(canvasWidth) {
     if (this.x + this.frameWidth > canvasWidth) {
       this.x = canvasWidth - this.frameWidth;
     }
-}
+  }
 
-moveLeft() {
+  moveLeft() {
     if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
         this.currentAnimation = ANIM_WALK_BACKWARD;
         this.frameNum = 0;
         this.timeTillNextFrame = 1 / ANIM_FPS;
     }
     this.x -= MOVE_SPEED;
-}
+  }
 
-moveRight() {
+  moveRight() {
     if (this.currentAnimation !== ANIM_WALK_FORWARD) {
         this.currentAnimation = ANIM_WALK_FORWARD;
         this.frameNum = 0;
         this.timeTillNextFrame = 1 / ANIM_FPS;
     }
     this.x += MOVE_SPEED;
-}
+  }
 
   jump() {
     if (this.y >= FLOOR_Y) {
       this.speedY = JUMP_POWER;
     }
+  }
+
+  getCurrentAnimationFrameCount() {
+    return this.frameCounts[this.currentAnimation];
   }
 }
 
