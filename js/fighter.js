@@ -3,7 +3,6 @@ const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
-const frameCount = 20;
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -42,8 +41,8 @@ class Fighter {
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
-       if (this.frameNum >= this.frameCount) this.frameNum = 0;
-      this.timeTillNextFrame = 1 / this.animationFPS;
+      this.frameNum %= 60; // Assuming each animation has 60 frames
+      this.timeTillNextFrame = 1 / ANIM_FPS;
     }
 
     let image = this.images[this.currentAnimation];
@@ -55,25 +54,7 @@ class Fighter {
 	console.log(this.frameNum);
   }
 
-draw(context) {
-    let now = performance.now() / 1000;
-    let deltaTime = now - this.previousFrameTimestamp;
-    this.previousFrameTimestamp = now;
 
-    // Only update frame if enough time has passed
-    this.timeTillNextFrame -= deltaTime;
-    if (this.timeTillNextFrame <= 0) {
-        this.frameNum++;
-        this.frameNum %= 30; // Assuming each animation has 30 frames
-        this.timeTillNextFrame += 1 / ANIM_FPS;
-    }
-
-    let image = this.images[this.currentAnimation];
-    let frameW = this.frameWidth;
-    let frameH = this.frameHeight;
-
-    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
-}
 
 update(canvasWidth) {
     this.getInput();
