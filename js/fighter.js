@@ -3,6 +3,7 @@ const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
+const frameCount = 20;
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
