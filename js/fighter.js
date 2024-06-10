@@ -41,7 +41,7 @@ class Fighter {
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
-      this.frameNum %= 60; // Assuming each animation has 60 frames
+      this.frameNum %= 30; // Assuming each animation has 60 frames
       this.timeTillNextFrame = 1 / ANIM_FPS;
     }
 
@@ -50,6 +50,8 @@ class Fighter {
     let frameH = this.frameHeight;
 
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
+	
+	console.log(this.frameNum);
   }
 
   update(canvasWidth) {
