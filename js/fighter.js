@@ -54,27 +54,52 @@ class Fighter {
 	console.log(this.frameNum);
   }
 
-  update(canvasWidth) {
+draw(context) {
+    let now = performance.now() / 1000;
+    let deltaTime = now - this.previousFrameTimestamp;
+    this.previousFrameTimestamp = now;
+
+    // Only update frame if enough time has passed
+    this.timeTillNextFrame -= deltaTime;
+    if (this.timeTillNextFrame <= 0) {
+        this.frameNum++;
+        this.frameNum %= 30; // Assuming each animation has 30 frames
+        this.timeTillNextFrame += 1 / ANIM_FPS;
+    }
+
+    let image = this.images[this.currentAnimation];
+    let frameW = this.frameWidth;
+    let frameH = this.frameHeight;
+
+    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
+}
+
+update(canvasWidth) {
     this.getInput();
 
+    // Update the animation state based on movement
     if (this.keys['a']) {
-      this.moveLeft();
+        this.moveLeft();
     } else if (this.keys['d']) {
-      this.moveRight();
+        this.moveRight();
     } else {
-      this.currentAnimation = ANIM_IDLE;
+        if (this.currentAnimation !== ANIM_IDLE) {
+            this.currentAnimation = ANIM_IDLE;
+            this.frameNum = 0;
+            this.timeTillNextFrame = 1 / ANIM_FPS;
+        }
     }
 
     if (this.keys[' ']) {
-      this.jump();
+        this.jump();
     }
 
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
-      this.y = FLOOR_Y;
-      this.speedY = 0;
+        this.y = FLOOR_Y;
+        this.speedY = 0;
     } else {
-      this.speedY += GRAVITY;
+        this.speedY += GRAVITY;
     }
 
     if (this.x < 0) {
@@ -83,17 +108,25 @@ class Fighter {
     if (this.x + this.frameWidth > canvasWidth) {
       this.x = canvasWidth - this.frameWidth;
     }
-  }
+}
 
-  moveLeft() {
+moveLeft() {
+    if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
+        this.currentAnimation = ANIM_WALK_BACKWARD;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+    }
     this.x -= MOVE_SPEED;
-    this.currentAnimation = ANIM_WALK_BACKWARD;
-  }
+}
 
-  moveRight() {
+moveRight() {
+    if (this.currentAnimation !== ANIM_WALK_FORWARD) {
+        this.currentAnimation = ANIM_WALK_FORWARD;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+    }
     this.x += MOVE_SPEED;
-    this.currentAnimation = ANIM_WALK_FORWARD;
-  }
+}
 
   jump() {
     if (this.y >= FLOOR_Y) {
