@@ -21,6 +21,11 @@ function input_ai() {
         this.keys['a'] = false;
         this.keys['d'] = true;
         this.keys[' '] = (Math.random() < 0.1);
+    } else if (choice < 0.21) {
+        //console.log("ai might as well jump JUMP ... might as well jump!");
+        this.keys['a'] = false;
+        this.keys['d'] = false;
+        this.keys[' '] = 1.0;
     } else { // 80% of the time:
         //console.log("ai is going to stand idle!");
         this.keys['a'] = false;

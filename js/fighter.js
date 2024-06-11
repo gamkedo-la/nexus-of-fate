@@ -38,6 +38,8 @@ class Fighter {
 
     this.frameHeight = 1913 * 0.2; // This should match the actual frame height
     this.frameWidth = 1125 * 0.2; // This should match the actual frame width
+
+    this.opponent = null;
   }
 
   draw(context) {
@@ -79,6 +81,12 @@ class Fighter {
     if (this.keys[' ']) {
         this.jump();
     }
+    
+    this.boundsCheck(canvasWidth);
+  }
+
+  boundsCheck(canvasWidth) {
+    if (canvasWidth == undefined || canvasWidth <= 0) return;
 
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
@@ -93,6 +101,24 @@ class Fighter {
     }
     if (this.x + this.frameWidth > canvasWidth) {
       this.x = canvasWidth - this.frameWidth;
+    }
+
+    // prevent or reset if the fighters cross sides
+    let thatsCloseEnoughX = this.frameWidth * 0.5;
+    if (this.opponent === robot) {
+      // this is the player
+      // keep to left of opponent
+      let maxX = this.opponent.x - thatsCloseEnoughX;
+      if (this.x > maxX) {
+        this.x = maxX;
+      }
+    } else {
+      // this is the robot
+      // keep to right of opponent
+      let minX = this.opponent.x + thatsCloseEnoughX;
+      if (this.x < minX) {
+        this.x = minX;
+      }
     }
   }
 
