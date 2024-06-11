@@ -25,7 +25,7 @@ function input_ai() {
         //console.log("ai might as well jump JUMP ... might as well jump!");
         this.keys['a'] = false;
         this.keys['d'] = false;
-        this.keys[' '] = 1.0;
+        this.keys[' '] = true;
     } else { // 80% of the time:
         //console.log("ai is going to stand idle!");
         this.keys['a'] = false;
