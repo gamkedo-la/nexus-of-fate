@@ -24,7 +24,7 @@ class Fighter {
     // Frame counts for each animation
     this.frameCounts = {
       [ANIM_IDLE]: 58,
-      [ANIM_WALK_FORWARD]: 10,
+      [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39
     };
 
