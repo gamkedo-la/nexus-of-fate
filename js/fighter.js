@@ -7,6 +7,8 @@ const FLOOR_Y = 240; // lowest possible Y coordinate
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
+const ANIM_CROUCH = 'crouch';
+
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
@@ -15,17 +17,22 @@ class Fighter {
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
-      [ANIM_WALK_BACKWARD]: new Image()
+      [ANIM_WALK_BACKWARD]: new Image(),
+	  [ANIM_CROUCH]: new Image()
+
     };
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
     this.images[ANIM_WALK_FORWARD].src = imageSrcs[ANIM_WALK_FORWARD];
     this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
+	this.images[ANIM_CROUCH].src = imageSrcs[ANIM_Crouch];
+
 
     // Frame counts for each animation
     this.frameCounts = {
       [ANIM_IDLE]: 58,
       [ANIM_WALK_FORWARD]: 12,
-      [ANIM_WALK_BACKWARD]: 39
+      [ANIM_WALK_BACKWARD]: 39,
+	  [ANIM_CROUCH]: 19
     };
 
     this.x = initialX;
@@ -82,6 +89,10 @@ class Fighter {
         this.jump();
     }
     
+	if(this.keys['s']){
+		this.crouch();
+	}
+	
     this.boundsCheck(canvasWidth);
   }
 
@@ -144,6 +155,13 @@ class Fighter {
     if (this.y >= FLOOR_Y) {
       this.speedY = JUMP_POWER;
     }
+  }
+  
+  crouch(){
+	  
+		this.currentAnimation = ANIM_Crouch;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
   getCurrentAnimationFrameCount() {

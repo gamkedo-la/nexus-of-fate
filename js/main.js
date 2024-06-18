@@ -1,8 +1,9 @@
-const DEBUG_MODE = true;
 const player = new Fighter(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
   [ANIM_WALK_FORWARD]: 'images/player_walk.png',
-  [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png'
+  [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png',
+  [ANIM_CROUCH]: 'images/player_crouch.png'
+
 }, 100, FLOOR_Y);
 
 const robot = new Fighter(input_ai, {
