@@ -158,7 +158,7 @@ class Fighter {
   }
   
   crouch(){
-	  
+	    if (this.currentAnimation !== ANIM_CROUCH) {
 		this.currentAnimation = ANIM_Crouch;
         this.frameNum = 0;
         this.timeTillNextFrame = 1 / ANIM_FPS;
