@@ -8,6 +8,7 @@ const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
 const ANIM_CROUCH = 'crouch';
+const ANIM_JUMP   = 'jump';
 
 
 class Fighter {
@@ -18,13 +19,15 @@ class Fighter {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
       [ANIM_WALK_BACKWARD]: new Image(),
-	  [ANIM_CROUCH]: new Image()
-
+      [ANIM_CROUCH]: new Image(),
+	  [ANIM_JUMP]: new Image()
     };
+
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
     this.images[ANIM_WALK_FORWARD].src = imageSrcs[ANIM_WALK_FORWARD];
     this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
-	this.images[ANIM_CROUCH].src = imageSrcs[ANIM_Crouch];
+    this.images[ANIM_CROUCH].src = imageSrcs[ANIM_CROUCH];
+	this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
 
 
     // Frame counts for each animation
@@ -32,7 +35,8 @@ class Fighter {
       [ANIM_IDLE]: 58,
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
-	  [ANIM_CROUCH]: 19
+      [ANIM_CROUCH]: 19,
+	  [ANIM_JUMP]: 9
     };
 
     this.x = initialX;
@@ -57,9 +61,9 @@ class Fighter {
     // Only update frame if enough time has passed
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
-        this.frameNum++;
-        this.frameNum %= this.frameCounts[this.currentAnimation];
-        this.timeTillNextFrame += 1 / ANIM_FPS;
+      this.frameNum++;
+      this.frameNum %= this.frameCounts[this.currentAnimation];
+      this.timeTillNextFrame += 1 / ANIM_FPS;
     }
 
     let image = this.images[this.currentAnimation];
@@ -74,25 +78,25 @@ class Fighter {
 
     // Update the animation state based on movement
     if (this.keys['a']) {
-        this.moveLeft();
+      this.moveLeft();
     } else if (this.keys['d']) {
-        this.moveRight();
+      this.moveRight();
     } else {
-        if (this.currentAnimation !== ANIM_IDLE) {
-            this.currentAnimation = ANIM_IDLE;
-            this.frameNum = 0;
-            this.timeTillNextFrame = 1 / ANIM_FPS;
-        }
+      if (this.currentAnimation !== ANIM_IDLE) {
+        this.currentAnimation = ANIM_IDLE;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+      }
     }
 
     if (this.keys[' ']) {
-        this.jump();
+      this.jump();
     }
-    
-	if(this.keys['s']){
-		this.crouch();
-	}
-	
+
+    if (this.keys['s']) {
+      this.crouch();
+    }
+
     this.boundsCheck(canvasWidth);
   }
 
@@ -101,10 +105,10 @@ class Fighter {
 
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
-        this.y = FLOOR_Y;
-        this.speedY = 0;
+      this.y = FLOOR_Y;
+      this.speedY = 0;
     } else {
-        this.speedY += GRAVITY;
+      this.speedY += GRAVITY;
     }
 
     if (this.x < 0) {
@@ -135,33 +139,35 @@ class Fighter {
 
   moveLeft() {
     if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
-        this.currentAnimation = ANIM_WALK_BACKWARD;
-        this.frameNum = 0;
-        this.timeTillNextFrame = 1 / ANIM_FPS;
+      this.currentAnimation = ANIM_WALK_BACKWARD;
+      this.frameNum = 0;
+      this.timeTillNextFrame = 1 / ANIM_FPS;
     }
     this.x -= MOVE_SPEED;
   }
 
   moveRight() {
     if (this.currentAnimation !== ANIM_WALK_FORWARD) {
-        this.currentAnimation = ANIM_WALK_FORWARD;
-        this.frameNum = 0;
-        this.timeTillNextFrame = 1 / ANIM_FPS;
+      this.currentAnimation = ANIM_WALK_FORWARD;
+      this.frameNum = 0;
+      this.timeTillNextFrame = 1 / ANIM_FPS;
     }
     this.x += MOVE_SPEED;
   }
 
   jump() {
     if (this.y >= FLOOR_Y) {
-      this.speedY = JUMP_POWER;
+     // this.speedY = JUMP_POWER;
+	 this.currentAnimation = ANIM_JUMP;
+	 this.frameNum = 0;
+     this.timeTillNextFrame = 1 / ANIM_FPS;
     }
   }
-  
-  crouch(){
-	    if (this.currentAnimation !== ANIM_CROUCH) {
-		this.currentAnimation = ANIM_Crouch;
-        this.frameNum = 0;
-        this.timeTillNextFrame = 1 / ANIM_FPS;
+
+  crouch() {
+      this.currentAnimation = ANIM_CROUCH;
+      this.frameNum = 0;
+      this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
   getCurrentAnimationFrameCount() {

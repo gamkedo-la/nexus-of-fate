@@ -2,7 +2,8 @@ const player = new Fighter(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
   [ANIM_WALK_FORWARD]: 'images/player_walk.png',
   [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png',
-  [ANIM_CROUCH]: 'images/player_crouch.png'
+  [ANIM_CROUCH]: 'images/player_crouch.png',
+  [ANIM_JUMP]: 'images/player_jump.png'
 
 }, 100, FLOOR_Y);
 
