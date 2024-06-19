@@ -9,6 +9,8 @@ const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
 const ANIM_CROUCH = 'crouch';
 const ANIM_JUMP   = 'jump';
+const ANIM_KICK   = 'kick';
+
 
 
 class Fighter {
@@ -20,7 +22,8 @@ class Fighter {
       [ANIM_WALK_FORWARD]: new Image(),
       [ANIM_WALK_BACKWARD]: new Image(),
       [ANIM_CROUCH]: new Image(),
-	  [ANIM_JUMP]: new Image()
+	  [ANIM_JUMP]: new Image(),
+	  [ANIM_KICK]: new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -28,6 +31,8 @@ class Fighter {
     this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
     this.images[ANIM_CROUCH].src = imageSrcs[ANIM_CROUCH];
 	this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
+    this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
+
 
 
     // Frame counts for each animation
@@ -36,7 +41,8 @@ class Fighter {
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
-	  [ANIM_JUMP]: 9
+	  [ANIM_JUMP]: 9,
+	  [ANIM_KICK]: 12
     };
 
     this.x = initialX;
@@ -96,6 +102,12 @@ class Fighter {
     if (this.keys['s']) {
       this.crouch();
     }
+	
+	
+    if (this.keys['k']) {
+      this.kick();
+    }
+
 
     this.boundsCheck(canvasWidth);
   }
@@ -166,6 +178,12 @@ class Fighter {
 
   crouch() {
       this.currentAnimation = ANIM_CROUCH;
+      this.frameNum = 0;
+      this.timeTillNextFrame = 1 / ANIM_FPS;
+  }
+  
+    kick() {
+      this.currentAnimation = ANIM_KICK;
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
   }
