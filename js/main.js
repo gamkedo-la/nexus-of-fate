@@ -5,7 +5,9 @@ const player = new Fighter(input_keyboard, {
   [ANIM_CROUCH]: 'images/player_crouch.png',
   [ANIM_JUMP]: 'images/player_jump.png',
   [ANIM_KICK]: 'images/player_jump.png',
-  [ANIM_PUNCH]: 'images/player_punch.png'
+  [ANIM_PUNCH]: 'images/player_punch.png',
+  [ANIM_CROUCH_PUNCH]: 'images/player_punch.png'
+
 
 
 
