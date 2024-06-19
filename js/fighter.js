@@ -8,10 +8,9 @@ const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
 const ANIM_CROUCH = 'crouch';
-const ANIM_JUMP   = 'jump';
-const ANIM_KICK   = 'kick';
-
-
+const ANIM_JUMP = 'jump';
+const ANIM_KICK = 'kick';
+const ANIM_PUNCH = 'punch';
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
@@ -22,18 +21,18 @@ class Fighter {
       [ANIM_WALK_FORWARD]: new Image(),
       [ANIM_WALK_BACKWARD]: new Image(),
       [ANIM_CROUCH]: new Image(),
-	  [ANIM_JUMP]: new Image(),
-	  [ANIM_KICK]: new Image()
+      [ANIM_JUMP]: new Image(),
+      [ANIM_KICK]: new Image(),
+      [ANIM_PUNCH]: new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
     this.images[ANIM_WALK_FORWARD].src = imageSrcs[ANIM_WALK_FORWARD];
     this.images[ANIM_WALK_BACKWARD].src = imageSrcs[ANIM_WALK_BACKWARD];
     this.images[ANIM_CROUCH].src = imageSrcs[ANIM_CROUCH];
-	this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
+    this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
-
-
+    this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
 
     // Frame counts for each animation
     this.frameCounts = {
@@ -41,8 +40,9 @@ class Fighter {
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
-	  [ANIM_JUMP]: 9,
-	  [ANIM_KICK]: 12
+      [ANIM_JUMP]: 9,
+      [ANIM_KICK]: 12,
+      [ANIM_PUNCH]: 10
     };
 
     this.x = initialX;
@@ -102,12 +102,14 @@ class Fighter {
     if (this.keys['s']) {
       this.crouch();
     }
-	
-	
+
     if (this.keys['k']) {
       this.kick();
     }
 
+    if (this.keys['p']) {
+      this.punch();
+    }
 
     this.boundsCheck(canvasWidth);
   }
@@ -132,19 +134,20 @@ class Fighter {
 
     // prevent or reset if the fighters cross sides
     let thatsCloseEnoughX = this.frameWidth * 0.5;
-    if (this.opponent === robot) {
-      // this is the player
-      // keep to left of opponent
-      let maxX = this.opponent.x - thatsCloseEnoughX;
-      if (this.x > maxX) {
-        this.x = maxX;
-      }
-    } else {
-      // this is the robot
-      // keep to right of opponent
-      let minX = this.opponent.x + thatsCloseEnoughX;
-      if (this.x < minX) {
-        this.x = minX;
+    if (this.opponent) {
+      // keep the fighters from crossing sides
+      if (this.opponent === player) {
+        // this is the robot, keep to right of opponent
+        let minX = this.opponent.x + thatsCloseEnoughX;
+        if (this.x < minX) {
+          this.x = minX;
+        }
+      } else {
+        // this is the player, keep to left of opponent
+        let maxX = this.opponent.x - thatsCloseEnoughX;
+        if (this.x > maxX) {
+          this.x = maxX;
+        }
       }
     }
   }
@@ -169,23 +172,28 @@ class Fighter {
 
   jump() {
     if (this.y >= FLOOR_Y) {
-     // this.speedY = JUMP_POWER;
-	 this.currentAnimation = ANIM_JUMP;
-	 this.frameNum = 0;
-     this.timeTillNextFrame = 1 / ANIM_FPS;
+      this.currentAnimation = ANIM_JUMP;
+      this.frameNum = 0;
+      this.timeTillNextFrame = 1 / ANIM_FPS;
     }
   }
 
   crouch() {
-      this.currentAnimation = ANIM_CROUCH;
-      this.frameNum = 0;
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+    this.currentAnimation = ANIM_CROUCH;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-  
-    kick() {
-      this.currentAnimation = ANIM_KICK;
-      this.frameNum = 0;
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+
+  kick() {
+    this.currentAnimation = ANIM_KICK;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+  }
+
+  punch() {
+    this.currentAnimation = ANIM_PUNCH;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
   getCurrentAnimationFrameCount() {
