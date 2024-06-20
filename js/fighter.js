@@ -12,11 +12,14 @@ const ANIM_JUMP = 'jump';
 const ANIM_KICK = 'kick';
 const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
+const ANIM_DEATH = 'die';
+
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
     this.getInput = whichInput;
+	this.health = new Health();
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
@@ -25,6 +28,7 @@ class Fighter {
       [ANIM_JUMP]: new Image(),
       [ANIM_KICK]: new Image(),
       [ANIM_PUNCH]: new Image(),
+	  [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image()
     };
 
@@ -35,6 +39,7 @@ class Fighter {
     this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
+	this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
 
     // Frame counts for each animation
@@ -46,7 +51,7 @@ class Fighter {
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 12,
       [ANIM_PUNCH]: 10,
-      [ANIM_CROUCH_PUNCH]: 10
+      [ANIM_DEATH]: 7
     };
 
     this.x = initialX;
@@ -118,6 +123,11 @@ class Fighter {
     if (this.keys['s'] && this.keys['p']) {
       this.crouchPunch();
     }
+	
+	if(this.health <= 0){
+		
+		this.died();
+	}
 
     this.boundsCheck(canvasWidth);
   }
@@ -207,6 +217,13 @@ class Fighter {
 
   crouchPunch() {
     this.currentAnimation = ANIM_CROUCH_PUNCH;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+  }
+  
+  died(){
+	  
+	this.currentAnimation = ANIM_DEATH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
