@@ -1,6 +1,6 @@
 var baseName = "Armature-animtion";
 
-var frameLabel = ["0","1","2","3","4","5","6","7","8","9","10","11","12"];
+var frameLabel = ["0","1","2","3","4","5","6","7","8","9","10"];
 var animFrames = frameLabel.length;
 
 var dirText = ["0"];
@@ -22,7 +22,7 @@ window.onload = function() {
 function loadingDoneSoStartGame() {
   var scaleBy = 0.2;
   var dimW = 1500;
-  var dimH = 1913;
+  var dimH = 2300;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
   var cornerX = 1878;
@@ -36,6 +36,8 @@ function loadingDoneSoStartGame() {
       canvasContext.drawImage(animPics[ frameIndex(i,ii) ],
 	  cornerX, cornerY,dimW,dimH,
         scaleW*i,scaleH*ii, scaleW,scaleH);
+		
+      
     }
   }
 }

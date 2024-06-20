@@ -13,7 +13,6 @@ const ANIM_KICK = 'kick';
 const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
 
-
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
@@ -26,8 +25,7 @@ class Fighter {
       [ANIM_JUMP]: new Image(),
       [ANIM_KICK]: new Image(),
       [ANIM_PUNCH]: new Image(),
-	  [ANIM_CROUCH_PUNCH]: new Image()
-
+      [ANIM_CROUCH_PUNCH]: new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -37,8 +35,7 @@ class Fighter {
     this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
-	this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
-
+    this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
 
     // Frame counts for each animation
     this.frameCounts = {
@@ -48,11 +45,9 @@ class Fighter {
       [ANIM_CROUCH]: 19,
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 12,
-      [ANIM_PUNCH]: 10,    
-	  [ANIM_CROUCH_PUNCH]: 10
-
+      [ANIM_PUNCH]: 10,
+      [ANIM_CROUCH_PUNCH]: 10
     };
-	
 
     this.x = initialX;
     this.y = initialY;
@@ -119,8 +114,8 @@ class Fighter {
     if (this.keys['p']) {
       this.punch();
     }
-	
-	  if (this.keys['s'] && this.key['p']) {
+
+    if (this.keys['s'] && this.keys['p']) {
       this.crouchPunch();
     }
 
@@ -130,6 +125,7 @@ class Fighter {
   boundsCheck(canvasWidth) {
     if (canvasWidth == undefined || canvasWidth <= 0) return;
 
+    // Apply gravity and floor constraint
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
       this.y = FLOOR_Y;
@@ -138,6 +134,7 @@ class Fighter {
       this.speedY += GRAVITY;
     }
 
+    // Apply horizontal screen boundaries
     if (this.x < 0) {
       this.x = 0;
     }
@@ -145,21 +142,20 @@ class Fighter {
       this.x = canvasWidth - this.frameWidth;
     }
 
-    // prevent or reset if the fighters cross sides
+    // Prevent or reset if the fighters cross sides
     let thatsCloseEnoughX = this.frameWidth * 0.5;
     if (this.opponent) {
-      // keep the fighters from crossing sides
       if (this.opponent === player) {
-        // this is the robot, keep to right of opponent
+        // This is the robot, keep to the right of opponent
         let minX = this.opponent.x + thatsCloseEnoughX;
         if (this.x < minX) {
-          this.x = minX;
+          this.x = Math.max(minX, 0); // Ensure the robot stays within the left screen boundary
         }
       } else {
-        // this is the player, keep to left of opponent
+        // This is the player, keep to the left of opponent
         let maxX = this.opponent.x - thatsCloseEnoughX;
         if (this.x > maxX) {
-          this.x = maxX;
+          this.x = Math.min(maxX, canvasWidth - this.frameWidth); // Ensure the player stays within the right screen boundary
         }
       }
     }
@@ -208,9 +204,9 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-  
-  crouchPunch(){
-	this.currentAnimation = ANIM_CROUCH_PUNCH;
+
+  crouchPunch() {
+    this.currentAnimation = ANIM_CROUCH_PUNCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
