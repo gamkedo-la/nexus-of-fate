@@ -19,11 +19,14 @@ const player = new Fighter(input_keyboard, {
 const robot = new Fighter(input_ai, {
   [ANIM_IDLE]: 'images/robot_idle.png',
   [ANIM_WALK_FORWARD]: 'images/robot_walk.png',
-  [ANIM_WALK_BACKWARD]: 'images/robot_walk.png'
+  [ANIM_WALK_BACKWARD]: 'images/robot_walk.png',
+  [ANIM_JUMP]: 'images/player_jump.png'
 }, 300, FLOOR_Y);
 
 player.opponent = robot;
 robot.opponent = player;
+player.AI = false;
+robot.AI = true;
 
 window.onload = function() {
   const canvas = document.getElementById('myCanvas');

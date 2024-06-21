@@ -18,6 +18,7 @@ const ANIM_DEATH = 'die';
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
+    this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
 	//this.health = new Health();
     this.images = {
@@ -90,7 +91,7 @@ class Fighter {
       this.timeTillNextFrame += 1 / ANIM_FPS;
     }
 	
-    if(this.currentAnimation < 0 || this.currentAnimation >= this.images.length || !this.images[this.currentAnimation] ){
+    if(this.currentAnimation < 0 || this.currentAnimation >= this.images.length) {
 		
 		console.log(" invalid animation frame " + this.currentAnimation + " AI? " + this.AI);
 		return;
@@ -99,7 +100,6 @@ class Fighter {
     let image = this.images[this.currentAnimation];
     let frameW = image.width; // this.frameWidth;
     let frameH = this.frameHeight;
-
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW/2, this.y, frameW, frameH);
   }
 
