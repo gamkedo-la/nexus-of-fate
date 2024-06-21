@@ -54,11 +54,11 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
     };
-    this.frameHeight = {
-      [ANIM_IDLE]: 382,
-      [ANIM_WALK_FORWARD]: 382,
-      [ANIM_WALK_BACKWARD]: 383,
-      [ANIM_CROUCH]: 383,
+    this.frameHeight = { // scale dim times frameheight from export
+      [ANIM_IDLE]: 382.6, // note: not locked to exact pixel multiples, probably should on export
+      [ANIM_WALK_FORWARD]: 382.6,
+      [ANIM_WALK_BACKWARD]: 382.6,
+      [ANIM_CROUCH]: 382.6,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 12,
       [ANIM_PUNCH]: 10,
@@ -71,9 +71,6 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.previousFrameTimestamp = performance.now() / 1000;
-
-    this.frameHeight = 1913 * 0.2; // This should match the actual frame height
-    this.frameWidth = 1125 * 0.2; // This should match the actual frame width
 
     this.opponent = null;
   }
@@ -98,8 +95,8 @@ class Fighter {
 	}
 		
     let image = this.images[this.currentAnimation];
-    let frameW = image.width; // this.frameWidth;
-    let frameH = this.frameHeight;
+    let frameW = image.width;
+    let frameH = this.frameHeight[this.currentAnimation];
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW/2, this.y, frameW, frameH);
   }
 
