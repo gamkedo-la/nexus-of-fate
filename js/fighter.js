@@ -19,7 +19,7 @@ class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
     this.getInput = whichInput;
-	this.health = new Health();
+	//this.health = new Health();
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
@@ -80,7 +80,13 @@ class Fighter {
       this.frameNum %= this.frameCounts[this.currentAnimation];
       this.timeTillNextFrame += 1 / ANIM_FPS;
     }
-
+	
+    if(this.currentAnimation < 0 || this.currentAnimation >= this.images.length || !this.images[this.currentAnimation] ){
+		
+		console.log(" invalid animation frame " + this.currentAnimation + " AI? " + this.AI);
+		return;
+	}
+		
     let image = this.images[this.currentAnimation];
     let frameW = this.frameWidth;
     let frameH = this.frameHeight;
