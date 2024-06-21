@@ -53,7 +53,16 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
     };
-
+    this.frameHeight = {
+      [ANIM_IDLE]: 382,
+      [ANIM_WALK_FORWARD]: 382,
+      [ANIM_WALK_BACKWARD]: 383,
+      [ANIM_CROUCH]: 383,
+      [ANIM_JUMP]: 407,
+      [ANIM_KICK]: 12,
+      [ANIM_PUNCH]: 10,
+      [ANIM_DEATH]: 7
+    };
     this.x = initialX;
     this.y = initialY;
     this.speedY = 0;
@@ -88,10 +97,10 @@ class Fighter {
 	}
 		
     let image = this.images[this.currentAnimation];
-    let frameW = this.frameWidth;
+    let frameW = image.width; // this.frameWidth;
     let frameH = this.frameHeight;
 
-    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x, this.y, frameW, frameH);
+    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW/2, this.y, frameW, frameH);
   }
 
   update(canvasWidth) {
@@ -200,6 +209,7 @@ class Fighter {
       this.currentAnimation = ANIM_JUMP;
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
+	  this.speedY = JUMP_POWER;
     }
   }
 
