@@ -3,6 +3,8 @@ const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
+const BODY_WIDTH = 150;
+
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -13,6 +15,8 @@ const ANIM_KICK = 'kick';
 const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
+
+
 
 
 class Fighter {
@@ -165,8 +169,8 @@ class Fighter {
 
 	
 	
-    if (this.x + this.frameWidth > canvasWidth) {
-      this.x = canvasWidth - this.frameWidth;
+    if (this.x + BODY_WIDTH > canvasWidth) {
+      this.x = canvasWidth - BODY_WIDTH;
     }
 	
 	
