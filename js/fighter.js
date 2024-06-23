@@ -80,7 +80,7 @@ class Fighter {
     this.opponent = null;
   }
 
-  draw(context) {
+  draw() {
     let now = performance.now() / 1000;
     let deltaTime = now - this.previousFrameTimestamp;
     this.previousFrameTimestamp = now;
