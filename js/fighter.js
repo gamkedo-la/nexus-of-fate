@@ -113,7 +113,7 @@ class Fighter {
       this.moveLeft();
     } else if (this.keys['d']) {
       this.moveRight();
-    } else {
+    } else if(this.y >= FLOOR_Y && this.speedY == 0 ){
       if (this.currentAnimation !== ANIM_IDLE) {
         this.currentAnimation = ANIM_IDLE;
         this.frameNum = 0;
