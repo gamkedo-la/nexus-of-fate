@@ -54,13 +54,14 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
     };
+	
     this.frameHeight = { // scale dim times frameheight from export
       [ANIM_IDLE]: 382.6, // note: not locked to exact pixel multiples, probably should on export
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 382.6,
       [ANIM_JUMP]: 407,
-      [ANIM_KICK]: 12,
+      [ANIM_KICK]: 360,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
     };
@@ -155,15 +156,20 @@ class Fighter {
     } else {
       this.speedY += GRAVITY;
     }
+	
 
     // Apply horizontal screen boundaries
-    if (this.x < 0) {
-      this.x = 0;
+    if (this.x < 80) {
+      this.x = 80;
     }
+
+	
+	
     if (this.x + this.frameWidth > canvasWidth) {
       this.x = canvasWidth - this.frameWidth;
     }
-
+	
+	
     // Prevent or reset if the fighters cross sides
     let thatsCloseEnoughX = this.frameWidth * 0.5;
     if (this.opponent) {
