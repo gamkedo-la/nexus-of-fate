@@ -24,6 +24,8 @@ function loadingDoneSoStartGame() {
   var dimH = 1913;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
+  scaleH = Math.floor(scaleH) + 1;
+  console.log("FrameHeight" + scaleH);
   var cornerX = 1304;
   var cornerY = 1400;
   canvas.width = scaleW*animFacings;
