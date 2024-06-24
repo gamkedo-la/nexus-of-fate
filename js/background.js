@@ -1,4 +1,4 @@
-var bgImage1,bgImage2,bgImage3,bgImage4;
+var bgImage1,bgImage2,bgImage3,bgImage4,bgImage5,bgImage6;
 
 var background = {
     draw : function() {
@@ -35,11 +35,24 @@ var background = {
             bgImage4.src="images/background4.png";
             bgImage4.onload = function() { this.loaded=true; }
         }
+        if (!bgImage5) { 
+            bgImage5 = new Image();
+            bgImage5.src="images/background5.png";
+            bgImage5.onload = function() { this.loaded=true; }
+        }
+        if (!bgImage6) { 
+            bgImage6 = new Image();
+            bgImage6.src="images/background6.png";
+            bgImage6.onload = function() { this.loaded=true; }
+        }
 
         if (bgImage1 && bgImage1.loaded) context.drawImage(bgImage1,-player.x/7,0);
         if (bgImage2 && bgImage2.loaded) context.drawImage(bgImage2,-player.x/6,0);
         if (bgImage3 && bgImage3.loaded) context.drawImage(bgImage3,-player.x/5,0);
         if (bgImage4 && bgImage4.loaded) context.drawImage(bgImage4,-player.x/4,0);
+        if (bgImage5 && bgImage5.loaded) context.drawImage(bgImage5,-player.x/3,0);
+        // FOREGROUND: should be drawn AFTER the player sprites if it overlaps
+        if (bgImage6 && bgImage6.loaded) context.drawImage(bgImage6,-player.x/2.5,0);
     }
 }
 
