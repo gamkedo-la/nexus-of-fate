@@ -3,8 +3,7 @@ const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
-const BODY_WIDTH = 150;
-
+const BODY_WIDTH = 170;
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -16,15 +15,11 @@ const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
 
-
-
-
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
     this.keys = {};
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
-	//this.health = new Health();
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
@@ -33,7 +28,7 @@ class Fighter {
       [ANIM_JUMP]: new Image(),
       [ANIM_KICK]: new Image(),
       [ANIM_PUNCH]: new Image(),
-	  [ANIM_DEATH]: new Image(),
+      [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image()
     };
 
@@ -44,7 +39,7 @@ class Fighter {
     this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
-	this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
+    this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
 
     // Frame counts for each animation
@@ -58,7 +53,7 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
     };
-	
+
     this.frameHeight = { // scale dim times frameheight from export
       [ANIM_IDLE]: 383, // note: not locked to exact pixel multiples, probably should on export
       [ANIM_WALK_FORWARD]: 382.6,
@@ -66,7 +61,7 @@ class Fighter {
       [ANIM_CROUCH]: 382.6,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 360,
-      [ANIM_PUNCH]: 10,
+      [ANIM_PUNCH]: 300,
       [ANIM_DEATH]: 7
     };
     this.x = initialX;
@@ -92,17 +87,16 @@ class Fighter {
       this.frameNum %= this.frameCounts[this.currentAnimation];
       this.timeTillNextFrame += 1 / ANIM_FPS;
     }
-	
-    if(this.currentAnimation < 0 || this.currentAnimation >= this.images.length) {
-		
-		console.log(" invalid animation frame " + this.currentAnimation + " AI? " + this.AI);
-		return;
-	}
-		
+
+    if (this.currentAnimation < 0 || this.currentAnimation >= this.images.length) {
+      console.log(" invalid animation frame " + this.currentAnimation + " AI? " + this.AI);
+      return;
+    }
+
     let image = this.images[this.currentAnimation];
     let frameW = image.width;
     let frameH = this.frameHeight[this.currentAnimation];
-    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW/2, this.y, frameW, frameH);
+    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
   }
 
   update(canvasWidth) {
@@ -113,7 +107,7 @@ class Fighter {
       this.moveLeft();
     } else if (this.keys['d']) {
       this.moveRight();
-    } else if(this.y >= FLOOR_Y && this.speedY == 0 ){
+    } else if (this.y >= FLOOR_Y && this.speedY == 0) {
       if (this.currentAnimation !== ANIM_IDLE) {
         this.currentAnimation = ANIM_IDLE;
         this.frameNum = 0;
@@ -140,11 +134,10 @@ class Fighter {
     if (this.keys['s'] && this.keys['p']) {
       this.crouchPunch();
     }
-	
-	if(this.health <= 0){
-		
-		this.died();
-	}
+
+    if (this.health <= 0) {
+      this.died();
+    }
 
     this.boundsCheck(canvasWidth);
   }
@@ -155,25 +148,26 @@ class Fighter {
     // Apply gravity and floor constraint
     this.y += this.speedY;
     if (this.y > FLOOR_Y) {
+      if (this.currentAnimation === ANIM_JUMP) {
+        this.currentAnimation = ANIM_IDLE;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+      }
       this.y = FLOOR_Y;
       this.speedY = 0;
     } else {
       this.speedY += GRAVITY;
     }
-	
 
     // Apply horizontal screen boundaries
     if (this.x < 80) {
       this.x = 80;
     }
 
-	
-	
     if (this.x + BODY_WIDTH > canvasWidth) {
       this.x = canvasWidth - BODY_WIDTH;
     }
-	
-	
+
     // Prevent or reset if the fighters cross sides
     let thatsCloseEnoughX = this.frameWidth * 0.5;
     if (this.opponent) {
@@ -194,7 +188,7 @@ class Fighter {
   }
 
   moveLeft() {
-    if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
+    if (this.currentAnimation !== ANIM_WALK_BACKWARD || this.currentAnimation !== ANIM_JUMP) {
       this.currentAnimation = ANIM_WALK_BACKWARD;
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
@@ -203,7 +197,7 @@ class Fighter {
   }
 
   moveRight() {
-    if (this.currentAnimation !== ANIM_WALK_FORWARD) {
+    if (this.currentAnimation !== ANIM_WALK_FORWARD || this.currentAnimation !== ANIM_JUMP) {
       this.currentAnimation = ANIM_WALK_FORWARD;
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
@@ -212,11 +206,11 @@ class Fighter {
   }
 
   jump() {
-    if (this.y >= FLOOR_Y) {
+    if (this.y >= FLOOR_Y && this.speedY === 0) {
       this.currentAnimation = ANIM_JUMP;
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
-	  this.speedY = JUMP_POWER;
+      this.speedY = JUMP_POWER;
     }
   }
 
@@ -243,25 +237,14 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-  
-  died(){
-	  
-	this.currentAnimation = ANIM_DEATH;
+
+  died() {
+    this.currentAnimation = ANIM_DEATH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-
-  getCurrentAnimationFrameCount() {
-    return this.frameCounts[this.currentAnimation];
-  }
-}
-
-function input_keyboard() {
-  window.addEventListener('keydown', (event) => {
-    player.keys[event.key] = true;
-  });
-
-  window.addEventListener('keyup', (event) => {
-    player.keys[event.key] = false;
-  });
+  
+   getCurrentAnimationFrameCount() {
+    return
+   }
 }
