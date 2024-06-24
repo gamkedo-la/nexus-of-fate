@@ -188,19 +188,23 @@ class Fighter {
   }
 
   moveLeft() {
-    if (this.currentAnimation !== ANIM_WALK_BACKWARD || this.currentAnimation !== ANIM_JUMP) {
-      this.currentAnimation = ANIM_WALK_BACKWARD;
-      this.frameNum = 0;
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+     if (this.currentAnimation !== ANIM_JUMP) {
+        if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
+            this.currentAnimation = ANIM_WALK_BACKWARD;
+            this.frameNum = 0;
+            this.timeTillNextFrame = 1 / ANIM_FPS;
+        }
     }
     this.x -= MOVE_SPEED;
   }
 
   moveRight() {
-    if (this.currentAnimation !== ANIM_WALK_FORWARD || this.currentAnimation !== ANIM_JUMP) {
-      this.currentAnimation = ANIM_WALK_FORWARD;
-      this.frameNum = 0;
-      this.timeTillNextFrame = 1 / ANIM_FPS;
+    if (this.currentAnimation !== ANIM_JUMP) {
+        if (this.currentAnimation !== ANIM_WALK_FORWARD) {
+            this.currentAnimation = ANIM_WALK_FORWARD;
+            this.frameNum = 0;
+            this.timeTillNextFrame = 1 / ANIM_FPS;
+        }
     }
     this.x += MOVE_SPEED;
   }
