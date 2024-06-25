@@ -159,7 +159,6 @@ class Fighter {
       this.speedY += GRAVITY;
     }
 
-    debugger; 
     // Apply horizontal screen boundaries
     if (this.x < 80) {
       this.x = 80;
