@@ -159,6 +159,7 @@ class Fighter {
       this.speedY += GRAVITY;
     }
 
+    debugger; 
     // Apply horizontal screen boundaries
     if (this.x < 80) {
       this.x = 80;
@@ -169,7 +170,7 @@ class Fighter {
     }
 
     // Prevent or reset if the fighters cross sides
-    let thatsCloseEnoughX = this.frameWidth * 0.5;
+    let thatsCloseEnoughX = BODY_WIDTH * 0.5;
     if (this.opponent) {
       if (this.opponent === player) {
         // This is the robot, keep to the right of opponent
@@ -181,7 +182,7 @@ class Fighter {
         // This is the player, keep to the left of opponent
         let maxX = this.opponent.x - thatsCloseEnoughX;
         if (this.x > maxX) {
-          this.x = Math.min(maxX, canvasWidth - this.frameWidth); // Ensure the player stays within the right screen boundary
+          this.x = Math.min(maxX, canvasWidth - BODY_WIDTH); // Ensure the player stays within the right screen boundary
         }
       }
     }
