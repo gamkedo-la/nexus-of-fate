@@ -10,7 +10,7 @@ function input_ai() {
     
     // select a new key to hold down for a while
     let choice = Math.random();
-    if (choice < 0.11) {
+    if (choice < 0.07) {
         //console.log("ai is going to move left!");
         this.keys['a'] = true;
         this.keys['d'] = false;
