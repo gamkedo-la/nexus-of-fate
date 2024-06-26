@@ -81,6 +81,37 @@ class Fighter {
     this.previousFrameTimestamp = now;
 
     // Only update frame if enough time has passed
+	if(this.currentAnimation != ANIM_JUMP) {
+		this.timeTillNextFrame -= deltaTime;
+		if (this.timeTillNextFrame <= 0) {
+		  this.frameNum++;
+		  this.frameNum %= this.frameCounts[this.currentAnimation];
+		  this.timeTillNextFrame += 1 / ANIM_FPS;
+		}
+	} else { 
+	    if(this.speedY < -8) {
+		  this.frameNum = 0;
+		} else if(this.speedY < -6) {
+		  this.frameNum = 1;
+		}  else if(this.speedY < -4) {
+		  this.frameNum = 2;
+		}  else if(this.speedY < -2) {
+		  this.frameNum = 3;
+		} /* else if(this.speedY < 0) { // skipping middle to hold pose at peak
+		  this.frameNum = 4;
+		} */ else if(this.speedY < 2) {
+		  this.frameNum = 4;
+		} else if(this.speedY < 4) {
+		  this.frameNum = 5;
+		} else if(this.speedY < 6) {
+		  this.frameNum = 6;
+		} else if(this.speedY < 8) {
+		  this.frameNum = 7;
+		} else {
+		  this.frameNum = 8;
+		}
+	} 
+	
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
