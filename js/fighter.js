@@ -58,7 +58,7 @@ class Fighter {
       [ANIM_IDLE]: 383, // note: not locked to exact pixel multiples, probably should on export
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
-      [ANIM_CROUCH]: 382.6,
+      [ANIM_CROUCH]: 2200 * 0.2,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 360,
       [ANIM_PUNCH]: 300,
@@ -108,7 +108,14 @@ class Fighter {
     } else if (this.keys['d']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
-      if (this.currentAnimation !== ANIM_IDLE) {
+	   if(this.currentAnimation == ANIM_CROUCH){
+		   //prevent idle from preventing crouch
+		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
+			   this.frameNum--;
+			   // prevent looping
+		   }
+	   }
+      else if (this.currentAnimation !== ANIM_IDLE) {
         this.currentAnimation = ANIM_IDLE;
         this.frameNum = 0;
         this.timeTillNextFrame = 1 / ANIM_FPS;
