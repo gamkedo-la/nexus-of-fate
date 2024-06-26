@@ -21,12 +21,12 @@ window.onload = function() {
 
 function loadingDoneSoStartGame() {
   var scaleBy = 0.2;
-  var dimW = 1500;
-  var dimH = 1913;
+  var dimW = 1596;
+  var dimH = 2200;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
-  var cornerX = 0;
-  var cornerY = 0;
+  var cornerX = 1705;
+  var cornerY = 1350;
   canvas.width = scaleW*animFacings;
   canvas.height = scaleH*animFrames;
 
