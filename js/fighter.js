@@ -91,19 +91,19 @@ class Fighter {
 	} else { 
 	    if(this.speedY < -8) {
 		  this.frameNum = 0;
-		} else if(this.speedY < -6) {
+		} else if(this.speedY < -5) {
 		  this.frameNum = 1;
-		}  else if(this.speedY < -4) {
-		  this.frameNum = 2;
 		}  else if(this.speedY < -2) {
+		  this.frameNum = 2;
+		}  else if(this.speedY < -0.5) {
 		  this.frameNum = 3;
 		} /* else if(this.speedY < 0) { // skipping middle to hold pose at peak
 		  this.frameNum = 4;
-		} */ else if(this.speedY < 2) {
+		} */ else if(this.speedY < 0.5) {
 		  this.frameNum = 4;
-		} else if(this.speedY < 4) {
+		} else if(this.speedY < 2) {
 		  this.frameNum = 5;
-		} else if(this.speedY < 6) {
+		} else if(this.speedY < 5) {
 		  this.frameNum = 6;
 		} else if(this.speedY < 8) {
 		  this.frameNum = 7;
