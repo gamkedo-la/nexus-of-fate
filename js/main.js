@@ -39,8 +39,18 @@ window.onload = function() {
   // Load Main Menu Title Art
   context.drawImage(mainMenuImage, 0, 0); // load image for main menu
   addEventListener("click", (event) => {
-    if(userClicksStartText(event)){
+    if(userIsOnStartText(event)){
       draw();
+    }
+  });
+
+  // Cursor Styling when over Start Text
+  addEventListener("mousemove", (event) => {
+    // console.log(event.clientX)
+    if(userIsOnStartText(event)){
+      document.body.style.cursor = "pointer";
+    } else {
+      document.body.style.cursor = "default";
     }
   });
 
@@ -55,7 +65,7 @@ window.onload = function() {
   }
 };
 
-function userClicksStartText(mouseClick) {
+function userIsOnStartText(mouseClick) {
   // console.log("clicked ", event.clientX, ":", event.clientY);
   // current Start text: clientX(610-900); clientY(500-600)
   return (mouseClick.clientX >= 610 && mouseClick.clientX <= 900 && 
