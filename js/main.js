@@ -3,7 +3,7 @@ const context = canvas.getContext('2d');
 
 var mainMenuImage = document.createElement("img"); // create element for main menu background
 mainMenuImage.src = "./source_art/main-menu-title-Art/MainMenu95.png"; // attach source for main menu
-
+let onMainMenu = true;
   
 const player = new Fighter(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
@@ -40,6 +40,7 @@ window.onload = function() {
   context.drawImage(mainMenuImage, 0, 0); // load image for main menu
   addEventListener("click", (event) => {
     if(userIsOnStartText(event)){
+      onMainMenu = false;
       draw();
     }
   });
@@ -47,7 +48,7 @@ window.onload = function() {
   // Cursor Styling when over Start Text
   addEventListener("mousemove", (event) => {
     // console.log(event.clientX)
-    if(userIsOnStartText(event)){
+    if(userIsOnStartText(event) && onMainMenu){
       document.body.style.cursor = "pointer";
     } else {
       document.body.style.cursor = "default";
