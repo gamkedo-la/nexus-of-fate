@@ -20,13 +20,13 @@ window.onload = function() {
 }
 
 function loadingDoneSoStartGame() {
-  var scaleBy = 0.2;
-  var dimW = 1500;
-  var dimH = 2000;
+  var scaleBy = 0.2 * 3;
+  var dimW = 601;
+  var dimH = 648;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
-  var cornerX = 513;
-  var cornerY = 600;
+  var cornerX = 625;
+  var cornerY = 298;
   canvas.width = scaleW*animFacings;
   canvas.height = scaleH*animFrames;
 
