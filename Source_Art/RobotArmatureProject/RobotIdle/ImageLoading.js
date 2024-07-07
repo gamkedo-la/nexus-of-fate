@@ -20,7 +20,7 @@ window.onload = function() {
 }
 
 function loadingDoneSoStartGame() {
-  var scaleBy = 0.2 * 3;
+  var scaleBy = 0.2 * 3.5;
   var dimW = 601;
   var dimH = 648;
   var scaleW = dimW * scaleBy;
