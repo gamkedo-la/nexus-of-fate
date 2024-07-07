@@ -2,7 +2,7 @@ const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
 
 var mainMenuImage = document.createElement("img"); // create element for main menu background
-mainMenuImage.src = "images/MainMenu95.png"; // attach source for main menu
+mainMenuImage.src = "images/mainmenu95.png"; // attach source for main menu
 let onMainMenu = true;
   
 const player = new Fighter(input_keyboard, {
