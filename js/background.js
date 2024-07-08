@@ -1,4 +1,4 @@
-var bgImage1,bgImage5,bgImage6,cloudImage,fogImage;
+var bgImage1,bgImage5,bgImage6,cloudImage,fogImage,leftBorderImage,rightBorderImage;
 
 var background = {
     draw : function() {
@@ -23,6 +23,16 @@ var background = {
             cloudImage.src="images/clouds.png";
             cloudImage.onload = function() { this.loaded=true; }
         }
+        if (!leftBorderImage) { 
+            leftBorderImage = new Image();
+            leftBorderImage.src="images/debris-left.png";
+            leftBorderImage.onload = function() { this.loaded=true; }
+        }
+        if (!rightBorderImage) { 
+            rightBorderImage = new Image();
+            rightBorderImage.src="images/debris-right.png";
+            rightBorderImage.onload = function() { this.loaded=true; }
+        }
 
         if (bgImage1.loaded) context.drawImage(bgImage1,-player.x/7,0);
         context.globalAlpha = 0.1;
@@ -30,6 +40,11 @@ var background = {
         context.globalAlpha = 1;
         if (bgImage5.loaded) context.drawImage(bgImage5,-player.x/3,0);
         if (bgImage6.loaded) context.drawImage(bgImage6,-player.x/2.5,0);
+
+        if (leftBorderImage.loaded) context.drawImage(leftBorderImage,-player.x/2.5-1000,canvas.height-592);
+        if (rightBorderImage.loaded) context.drawImage(rightBorderImage,-player.x/2.5+1000,canvas.height-270);
+
+
     }
 }
 
