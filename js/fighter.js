@@ -66,7 +66,7 @@ class Fighter {
     };
 	
 	 this.frameHeightRobot = { // scale dim times frameheight from export
-      [ANIM_IDLE]: 648 * 0.2 * 3, // note: not locked to exact pixel multiples, probably should on export
+      [ANIM_IDLE]: 700,
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 2200 * 0.2,
