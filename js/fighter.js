@@ -75,6 +75,17 @@ class Fighter {
       [ANIM_PUNCH]: 300,
       [ANIM_DEATH]: 7
     };
+
+   this.frameCountsRobot = {
+      [ANIM_IDLE]: 27,
+      [ANIM_WALK_FORWARD]: 12,
+      [ANIM_WALK_BACKWARD]: 39,
+      [ANIM_CROUCH]: 19,
+      [ANIM_JUMP]: 9,
+      [ANIM_KICK]: 12,
+      [ANIM_PUNCH]: 10,
+      [ANIM_DEATH]: 7
+    };    
 	
     this.x = initialX;
     this.y = initialY;
@@ -97,7 +108,11 @@ class Fighter {
   		this.timeTillNextFrame -= deltaTime;
   		if (this.timeTillNextFrame <= 0) {
   		  this.frameNum++;
-  		  this.frameNum %= this.frameCounts[this.currentAnimation];
+  		  if (this.AI) {
+            this.frameNum %= this.frameCountsRobot[this.currentAnimation];
+          } else {
+            this.frameNum %= this.frameCounts[this.currentAnimation];
+          }
   		  this.timeTillNextFrame += 1 / ANIM_FPS;
   		}
   	} else { 
