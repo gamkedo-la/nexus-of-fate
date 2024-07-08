@@ -56,10 +56,10 @@ window.onload = function() {
   function draw() {
     player.update(canvas.width);
     robot.update(canvas.width);
-    //context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 	background.draw();
     player.draw();
     robot.draw();
+    fog.draw();
     requestAnimationFrame(draw);
   }
 };

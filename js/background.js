@@ -1,4 +1,4 @@
-var bgImage1,bgImage5,bgImage6,cloudImage;
+var bgImage1,bgImage5,bgImage6,cloudImage,fogImage;
 
 var background = {
     draw : function() {
@@ -32,4 +32,23 @@ var background = {
         if (bgImage6.loaded) context.drawImage(bgImage6,-player.x/2.5,0);
     }
 }
+
+var fog = { 
+    draw: function() {
+
+        if (!fogImage) { 
+            fogImage = new Image();
+            fogImage.src="images/fog.png";
+            fogImage.onload = function() { this.loaded=true; }
+        }
+
+        //context.globalAlpha = 0.1;
+        if (fogImage.loaded) {
+            context.drawImage(fogImage,Math.sin(performance.now()/64000)*1000-1000-player.x,canvas.height-250+Math.sin(performance.now()/33000)*100);
+            context.drawImage(fogImage,Math.sin(performance.now()/88000)*-1234-1000-player.x,canvas.height-200+Math.sin(performance.now()/66000)*-100);
+            context.drawImage(fogImage,Math.sin(performance.now()/99000)*1000-1000-player.x,canvas.height-150+Math.sin(performance.now()/99000)*-100);
+        }
+        //context.globalAlpha = 1;
+    }
+};
 
