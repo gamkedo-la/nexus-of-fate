@@ -77,7 +77,7 @@ class Fighter {
     };
 
    this.frameCountsRobot = {
-      [ANIM_IDLE]: 27,
+      [ANIM_IDLE]: 19,
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
