@@ -14,6 +14,7 @@ const ANIM_KICK = 'kick';
 const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
+const ANIM_BLOCK = 'block';
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
@@ -29,7 +30,8 @@ class Fighter {
       [ANIM_KICK]: new Image(),
       [ANIM_PUNCH]: new Image(),
       [ANIM_DEATH]: new Image(),
-      [ANIM_CROUCH_PUNCH]: new Image()
+      [ANIM_CROUCH_PUNCH]: new Image(),
+	  [ANIM_BLOCK] : new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -41,6 +43,7 @@ class Fighter {
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
     this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
+	this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 
     // Frame counts for each animation
     this.frameCounts = {
@@ -51,7 +54,8 @@ class Fighter {
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 12,
       [ANIM_PUNCH]: 10,
-      [ANIM_DEATH]: 7
+      [ANIM_DEATH]: 7,
+	  [ANIM_BLOCK]: 3
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -62,7 +66,8 @@ class Fighter {
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 360,
       [ANIM_PUNCH]: 300,
-      [ANIM_DEATH]: 7
+      [ANIM_DEATH]: 7,
+	  [ANIM_BLOCK]: 3
     };
 	
 	 this.frameHeightRobot = { // scale dim times frameheight from export
@@ -189,6 +194,10 @@ class Fighter {
     if (this.keys['p']) {
       this.punch();
     }
+	
+	if(this.keys['z']){
+	   this.block();
+	}
 
     if (this.keys['s'] && this.keys['p']) {
       this.crouchPunch();
@@ -303,6 +312,12 @@ class Fighter {
 
   died() {
     this.currentAnimation = ANIM_DEATH;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+  }
+  
+  block(){
+	this.currentAnimation = ANIM_BLOCK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
