@@ -33,7 +33,7 @@ player.opponent = robot;
 robot.opponent = player;
 player.AI = false;
 robot.AI = true;
-
+robot.x = 800; // give the player room to move while testing
 window.onload = function() {
   // Load Main Menu Title Art
   context.drawImage(mainMenuImage, 0, 0); // load image for main menu
