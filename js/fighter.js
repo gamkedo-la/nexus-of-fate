@@ -65,7 +65,7 @@ class Fighter {
       [ANIM_CROUCH]: 2200 * 0.2,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 360,
-      [ANIM_PUNCH]: 300,
+      [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 7,
 	  [ANIM_BLOCK]: 3
     };
@@ -170,6 +170,13 @@ class Fighter {
 		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
 			   this.frameNum--;
 			   // prevent looping
+		   }
+	   }
+	   else if(this.currentAnimation == ANIM_PUNCH){
+		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
+			this.currentAnimation = ANIM_IDLE;
+			this.frameNum = 0;
+			this.timeTillNextFrame = 1 / ANIM_FPS;
 		   }
 	   }
       else if (this.currentAnimation !== ANIM_IDLE) {
