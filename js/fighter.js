@@ -97,6 +97,7 @@ class Fighter {
     this.speedY = 0;
     this.currentAnimation = ANIM_IDLE;
     this.frameNum = 0;
+	this.animReturnToIdle = false;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.previousFrameTimestamp = performance.now() / 1000;
 
@@ -113,12 +114,21 @@ class Fighter {
   		this.timeTillNextFrame -= deltaTime;
   		if (this.timeTillNextFrame <= 0) {
   		  this.frameNum++;
-  		  if (this.AI) {
-            this.frameNum %= this.frameCountsRobot[this.currentAnimation];
+		  var frameCount;
+		  if (this.AI) {
+            frameCount = this.frameCountsRobot[this.currentAnimation];
           } else {
-            this.frameNum %= this.frameCounts[this.currentAnimation];
+             frameCount = this.frameCounts[this.currentAnimation];
           }
-  		  this.timeTillNextFrame += 1 / ANIM_FPS;
+		  if(this.animReturnToIdle && this.frameNum == frameCount){
+			this.animReturnToIdle = false;
+			this.currentAnimation = ANIM_IDLE;
+			this.frameNum = 0;
+			this.timeTillNextFrame = 1 / ANIM_FPS;
+		  }
+	
+			this.frameNum %= frameCount;
+			this.timeTillNextFrame += 1 / ANIM_FPS;
   		}
   	} else { 
   	  if(this.speedY < -8) {
@@ -174,14 +184,9 @@ class Fighter {
 			   // prevent looping
 		   }
 	   }
-	   else if(this.currentAnimation == ANIM_PUNCH ||
-               this.currentAnimation == ANIM_KICK){
+	   else if(this.animReturnToIdle){
 		   
-		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
-			this.currentAnimation = ANIM_IDLE;
-			this.frameNum = 0;
-			this.timeTillNextFrame = 1 / ANIM_FPS;
-		   }
+		   // don't let idle interrupt
 	   }
       else if (this.currentAnimation !== ANIM_IDLE) {
         this.currentAnimation = ANIM_IDLE;
@@ -307,12 +312,14 @@ class Fighter {
     this.currentAnimation = ANIM_KICK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
+	this.animReturnToIdle = true;
   }
 
   punch() {
     this.currentAnimation = ANIM_PUNCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
+	this.animReturnToIdle = true;
   }
 
   crouchPunch() {
