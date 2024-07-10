@@ -169,6 +169,8 @@ class Fighter {
 		   //prevent idle from preventing crouch
 		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
 			   this.frameNum--;
+			   this.timeTillNextFrame = 100 / ANIM_FPS;
+
 			   // prevent looping
 		   }
 	   }
