@@ -52,7 +52,7 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
       [ANIM_JUMP]: 9,
-      [ANIM_KICK]: 12,
+      [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
 	  [ANIM_BLOCK]: 3
