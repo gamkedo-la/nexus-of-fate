@@ -11,7 +11,7 @@ const player = new Fighter(input_keyboard, {
   [ANIM_WALK_BACKWARD]: 'images/player_walkbackwards.png',
   [ANIM_CROUCH]: 'images/player_crouch.png',
   [ANIM_JUMP]: 'images/player_jump.png',
-  [ANIM_KICK]: 'images/player_jump.png',
+  [ANIM_KICK]: 'images/player_kick.png',
   [ANIM_PUNCH]: 'images/player_punch.png',
   [ANIM_CROUCH_PUNCH]: 'images/player_punch.png',
   [ANIM_DEATH]: 'images/player_death.png',
