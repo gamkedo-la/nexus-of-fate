@@ -114,21 +114,22 @@ class Fighter {
   		this.timeTillNextFrame -= deltaTime;
   		if (this.timeTillNextFrame <= 0) {
   		  this.frameNum++;
-		  var frameCount;
-		  if (this.AI) {
-            frameCount = this.frameCountsRobot[this.currentAnimation];
-          } else {
-             frameCount = this.frameCounts[this.currentAnimation];
-          }
-		  if(this.animReturnToIdle && this.frameNum == frameCount){
-			this.animReturnToIdle = false;
-			this.currentAnimation = ANIM_IDLE;
-			this.frameNum = 0;
-			this.timeTillNextFrame = 1 / ANIM_FPS;
-		  }
-	
-			this.frameNum %= frameCount;
-			this.timeTillNextFrame += 1 / ANIM_FPS;
+        this.timeTillNextFrame += 1 / ANIM_FPS;
+
+  		  var frameCount;
+  		  if (this.AI) {
+          frameCount = this.frameCountsRobot[this.currentAnimation];
+        } else {
+           frameCount = this.frameCounts[this.currentAnimation];
+        }
+
+  		  if(this.animReturnToIdle && this.frameNum == frameCount){
+    			this.animReturnToIdle = false;
+    			this.currentAnimation = ANIM_IDLE;
+    			this.frameNum = 0;
+  		  } else {
+          this.frameNum %= frameCount;
+        }
   		}
   	} else { 
   	  if(this.speedY < -8) {
