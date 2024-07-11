@@ -1,6 +1,5 @@
 function input_ai() {
-    // always let go of jump after a single frame
-    this.keys[' '] = false;
+  
 
     // keep doing whatever we were doing before
     if (Math.random() > 0.1) return; 
