@@ -74,15 +74,19 @@ window.onload = function() {
         }
     });
 
-    function draw() {
-        player.update(canvas.width);
-        robot.update(canvas.width);
-        background.draw();
-        player.draw();
-        robot.draw();
-        fog.draw();
-        requestAnimationFrame(draw);
-    }
+ function draw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    background.draw();
+    fog.draw();
+    healthBar.draw();
+    player.update(canvas.width);
+    robot.update(canvas.width);
+    player.draw();
+    robot.draw();
+    requestAnimationFrame(draw);
+}
+
 };
 
 function userIsOnStartText(mouseClick) {

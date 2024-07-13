@@ -48,6 +48,7 @@ var background = {
     }
 }
 
+
 var fog = { 
     draw: function() {
 
@@ -65,5 +66,38 @@ var fog = {
         }
         //context.globalAlpha = 1;
     }
+	
 };
+
+
+var healthBar = {
+    width: 200,
+    height: 20,
+    padding: 10,
+
+    playerHealth: 100,
+    enemyHealth: 100,
+
+    draw: function() {
+        // Draw player health bar background
+        context.fillStyle = "black";
+        context.fillRect(this.padding, this.padding, this.width, this.height);
+
+        // Draw player health bar filled with blue
+        context.fillStyle = "blue";
+        context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (this.playerHealth / 100), this.height - 4);
+
+        // Draw robot health bar background
+        context.fillStyle = "black";
+        context.fillRect(canvas.width - this.width - this.padding, this.padding, this.width, this.height);
+
+        // Draw robot health bar filled with red
+        context.fillStyle = "red";
+        context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (this.enemyHealth / 100), this.height - 4);
+    }
+};
+
+
+
+
 
