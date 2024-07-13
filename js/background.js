@@ -1,4 +1,4 @@
-var bgImage1,bgImage5,bgImage6,cloudImage,fogImage,leftBorderImage,rightBorderImage;
+var bgImage1,bgImage5,bgImage6,cloudImage,fogImage,leftBorderImage,rightBorderImage,healthbarBackground;
 
 var background = {
     draw : function() {
@@ -72,10 +72,20 @@ var fog = {
 
 var healthBar = {
     width: 200,
-    height: 20,
-    padding: 10,
+    height: 25,
+    padding: 50,
 
     draw: function() {
+        
+        if (!healthbarBackground) {
+            healthbarBackground = new Image();
+            healthbarBackground.src="images/healthbarBackground.png";
+            healthbarBackground.onload = function() { this.loaded=true; }            
+        }
+
+        // draw gui header overlay
+        if (healthbarBackground.loaded) context.drawImage(healthbarBackground,0,0);
+        
         // Draw player health bar background
         context.fillStyle = "black";
         context.fillRect(this.padding, this.padding, this.width, this.height);
