@@ -101,6 +101,14 @@ var healthBar = {
         // Draw robot health bar filled with red
         context.fillStyle = "red";
         context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
+
+        // round number and timer
+        context.font = "20px Tohoma bold";
+        context.fillStyle = "white";
+        context.fillText(fightRoundNumber + " of " + fightRoundMax, 720, 40);
+        context.fillText(fightTimeRemaining.toFixed(2)+"s", 720, 84);
+
+
     }
 };
 
