@@ -18,6 +18,7 @@ const ANIM_BLOCK = 'block';
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
+    this.health = 100;
     this.keys = {};
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;

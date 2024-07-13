@@ -41,8 +41,8 @@ var background = {
         if (bgImage5.loaded) context.drawImage(bgImage5,-player.x/3,0);
         if (bgImage6.loaded) context.drawImage(bgImage6,-player.x/2.5,0);
 
-        if (leftBorderImage.loaded) context.drawImage(leftBorderImage,-player.x/2.5-1000,canvas.height-592);
-        if (rightBorderImage.loaded) context.drawImage(rightBorderImage,-player.x/2.5+1000,canvas.height-270);
+        if (leftBorderImage.loaded) context.drawImage(leftBorderImage,-player.x/2.5-400,canvas.height-640);
+        if (rightBorderImage.loaded) context.drawImage(rightBorderImage,-player.x/2.5+1500,canvas.height-270);
 
 
     }
@@ -75,9 +75,6 @@ var healthBar = {
     height: 20,
     padding: 10,
 
-    playerHealth: 100,
-    enemyHealth: 100,
-
     draw: function() {
         // Draw player health bar background
         context.fillStyle = "black";
@@ -85,7 +82,7 @@ var healthBar = {
 
         // Draw player health bar filled with blue
         context.fillStyle = "blue";
-        context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (this.playerHealth / 100), this.height - 4);
+        context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (player.health / 100), this.height - 4);
 
         // Draw robot health bar background
         context.fillStyle = "black";
@@ -93,7 +90,7 @@ var healthBar = {
 
         // Draw robot health bar filled with red
         context.fillStyle = "red";
-        context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (this.enemyHealth / 100), this.height - 4);
+        context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
     }
 };
 
