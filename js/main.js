@@ -9,9 +9,7 @@ var deltaTime = 0; // seconds since previous frame
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
 
-var mainMenuImage = document.createElement("img"); // create element for main menu background
-mainMenuImage.src = "images/mainmenu95.png"; // attach source for main menu
-let onMainMenu = true;
+const mainMenu = new MainMenu(context);
 
 const player = new Fighter(input_keyboard, {
     [ANIM_IDLE]: 'images/player_idle.png',
@@ -64,50 +62,30 @@ robot.update = function(canvasWidth) {
 };
 
 window.onload = function() {
-    // Load Main Menu Title Art
-    context.drawImage(mainMenuImage, 0, 0); // load image for main menu
-    addEventListener("click", (event) => {
-        if (userIsOnStartText(event)) {
-            onMainMenu = false;
-            draw();
+   (function draw() {
+        frameTimestamp = performance.now();
+        deltaTime = frameTimestamp - previousTimestamp;
+        previousTimestamp = frameTimestamp;
+
+        if (!mainMenu.show()) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            fightTimeRemaining -= deltaTime/1000;
+            if (fightTimeRemaining <= 0) {
+                fightTimeRemaining = 0;
+                // TODO: change rounds, reset health, end fight, etc
+            }
+            
+            background.draw();
+            fog.draw();
+            healthBar.draw();
+            player.update(canvas.width);
+            robot.update(canvas.width);
+            player.draw();
+            robot.draw();
         }
-    });
 
-    // Cursor Styling when over Start Text
-    addEventListener("mousemove", (event) => {
-        if (userIsOnStartText(event) && onMainMenu) {
-            document.body.style.cursor = "pointer";
-        } else {
-            document.body.style.cursor = "default";
-        }
-    });
-
- function draw() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    
-    frameTimestamp = performance.now();
-    deltaTime = frameTimestamp - previousTimestamp;
-    previousTimestamp = frameTimestamp;
-    fightTimeRemaining -= deltaTime/1000;
-    if (fightTimeRemaining <= 0) {
-        fightTimeRemaining = 0;
-        // TODO: change rounds, reset health, end fight, etc
-    }
-    
-    background.draw();
-    fog.draw();
-    healthBar.draw();
-    player.update(canvas.width);
-    robot.update(canvas.width);
-    player.draw();
-    robot.draw();
-    requestAnimationFrame(draw);
-}
-
+        requestAnimationFrame(draw);
+   })();
 };
 
-function userIsOnStartText(mouseClick) {
-    // current Start text: clientX(610-900); clientY(500-600)
-    return (mouseClick.clientX >= 610 && mouseClick.clientX <= 900 &&
-        mouseClick.clientY >= 500 && mouseClick.clientY <= 600);
-}
