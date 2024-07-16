@@ -20,14 +20,14 @@ window.onload = function() {
 
 function loadingDoneSoStartGame() {
   var scaleBy = 0.2;
-  var dimW = 2166;
-  var dimH = 2383;
+  var dimW = 2584;
+  var dimH = 2573;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
   scaleH = Math.floor(scaleH) + 1;
   console.log("FrameHeight" + scaleH);
-  var cornerX = 2100;
-  var cornerY = 1272;
+  var cornerX = 1914;
+  var cornerY = 1445;
   canvas.width = scaleW*animFacings;
   canvas.height = scaleH*animFrames;
 
