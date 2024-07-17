@@ -23,6 +23,8 @@ class Fighter {
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
 	this.walkSound = new Audio('audio/playerWalkSound.mp3');
+    this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
+
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
@@ -304,6 +306,7 @@ class Fighter {
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
       this.speedY = JUMP_POWER;
+	  this.jumpSound.play();
     }
   }
 
