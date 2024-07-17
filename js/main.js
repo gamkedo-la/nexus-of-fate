@@ -33,12 +33,10 @@ robot.opponent = player;
 player.AI = false;
 robot.AI = true;
 
-// Initialize robot position
-robot.y = FLOOR_Y; // Initial Y position
+robot.y = FLOOR_Y; 
 
-// Movement and flying effect for the robot
 robot.speed = 2;
-robot.baseY = FLOOR_Y - 100; // Adjust the base Y position for flying effect
+robot.baseY = FLOOR_Y - 100; 
 robot.angle = 0;
 
 robot.update = function(canvasWidth, playerX, playerY) {
@@ -47,31 +45,25 @@ robot.update = function(canvasWidth, playerX, playerY) {
     let dy = playerY - robot.y;
     let distanceToPlayer = Math.hypot(dx, dy);
 
-    // If the robot is very close to the player, stop moving
-    if (distanceToPlayer < 10) { // 10 is the threshold distance, adjust as needed
+    if (distanceToPlayer < 50) { 
         robot.speed = 0;
     } else {
         robot.speed = 2;
 
-        // Normalize direction to get unit vector
         let directionX = dx / distanceToPlayer;
         let directionY = dy / distanceToPlayer;
 
-        // Move the robot towards the player
         robot.x += directionX * robot.speed;
-        robot.baseY += directionY * robot.speed; // Adjust baseY for vertical movement
+        robot.baseY += directionY * robot.speed;
     }
 
-    // Vertical flying effect using a sinusoidal function
     robot.angle += 0.05;
     robot.y = robot.baseY + Math.sin(robot.angle) * 20;
 
-    // Ensure the robot stays within the canvas boundaries
     if (robot.x < 0) robot.x = 0;
     if (robot.x > canvasWidth) robot.x = canvasWidth;
 
-    // Call the original update logic, if any
-    // robot.originalUpdate(canvasWidth); // Uncomment if there was an original update method
+   
 };
 
 window.onload = function() {
