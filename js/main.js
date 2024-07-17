@@ -33,32 +33,45 @@ robot.opponent = player;
 player.AI = false;
 robot.AI = true;
 
-// Random movement for robot with smoothing and flying effect
+// Initialize robot position
+robot.y = FLOOR_Y; // Initial Y position
+
+// Movement and flying effect for the robot
 robot.speed = 2;
-robot.direction = 1; // 1 for forward, -1 for backward
-robot.framesToChangeDirection = 0;
 robot.baseY = FLOOR_Y - 100; // Adjust the base Y position for flying effect
 robot.angle = 0;
-robot.update = function(canvasWidth) {
-    if (this.framesToChangeDirection <= 0) {
-        this.direction = Math.random() > 0.5 ? 1 : -1;
-        this.framesToChangeDirection = Math.floor(Math.random() * 60) + 30; // Change direction every 30 to 90 frames
+
+robot.update = function(canvasWidth, playerX, playerY) {
+    // Calculate the distance and direction to the player
+    let dx = playerX - robot.x;
+    let dy = playerY - robot.y;
+    let distanceToPlayer = Math.hypot(dx, dy);
+
+    // If the robot is very close to the player, stop moving
+    if (distanceToPlayer < 10) { // 10 is the threshold distance, adjust as needed
+        robot.speed = 0;
     } else {
-        this.framesToChangeDirection--;
+        robot.speed = 2;
+
+        // Normalize direction to get unit vector
+        let directionX = dx / distanceToPlayer;
+        let directionY = dy / distanceToPlayer;
+
+        // Move the robot towards the player
+        robot.x += directionX * robot.speed;
+        robot.baseY += directionY * robot.speed; // Adjust baseY for vertical movement
     }
 
-    this.x += this.direction * this.speed;
-
     // Vertical flying effect using a sinusoidal function
-    this.angle += 0.05;
-    this.y = this.baseY + Math.sin(this.angle) * 20;
+    robot.angle += 0.05;
+    robot.y = robot.baseY + Math.sin(robot.angle) * 20;
 
     // Ensure the robot stays within the canvas boundaries
-    if (this.x < 0) this.x = 0;
-    if (this.x > canvasWidth) this.x = canvasWidth;
+    if (robot.x < 0) robot.x = 0;
+    if (robot.x > canvasWidth) robot.x = canvasWidth;
 
     // Call the original update logic, if any
-    // this.originalUpdate(canvasWidth); // Uncomment if there was an original update method
+    // robot.originalUpdate(canvasWidth); // Uncomment if there was an original update method
 };
 
 window.onload = function() {
@@ -70,17 +83,17 @@ window.onload = function() {
         if (!mainMenu.show()) {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            fightTimeRemaining -= deltaTime/1000;
+            fightTimeRemaining -= deltaTime / 1000;
             if (fightTimeRemaining <= 0) {
                 fightTimeRemaining = 0;
                 // TODO: change rounds, reset health, end fight, etc
             }
-            
+
             background.draw();
             fog.draw();
             healthBar.draw();
             player.update(canvas.width);
-            robot.update(canvas.width);
+            robot.update(canvas.width, player.x, player.y);
             player.draw();
             robot.draw();
         }
@@ -88,4 +101,3 @@ window.onload = function() {
         requestAnimationFrame(draw);
    })();
 };
-
