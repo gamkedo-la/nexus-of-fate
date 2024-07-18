@@ -175,9 +175,9 @@ class Fighter {
     this.getInput();
 
     // Update the animation state based on movement
-    if (this.keys['a']) {
+    if (this.keys['a'] || this.keys['gamepad_left']) {
       this.moveLeft();
-    } else if (this.keys['d']) {
+    } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
 	   if(this.currentAnimation == ANIM_CROUCH || this.currentAnimation == ANIM_BLOCK){
@@ -200,27 +200,28 @@ class Fighter {
       }
     }
 
-    if (this.keys[' ']) {
+    if (this.keys[' '] || this.keys['gamepad_a_button']) {
       this.jump();
     }
 
-    if (this.keys['s']) {
+    if (this.keys['s'] || this.keys['gamepad_down']) {
       this.crouch();
     }
 
-    if (this.keys['k']) {
+    if (this.keys['k'] || this.keys['gamepad_b_button']) {
       this.kick();
     }
 
-    if (this.keys['p']) {
+    if (this.keys['p'] || this.keys['gamepad_a_button']) {
       this.punch();
     }
 	
-	if(this.keys['z']){
+	if(this.keys['z'] || this.keys['gamepad_x_button']){
 	   this.block();
 	}
 
-    if (this.keys['s'] && this.keys['p']) {
+    if ((this.keys['s'] && this.keys['p']) 
+        || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.crouchPunch();
     }
 

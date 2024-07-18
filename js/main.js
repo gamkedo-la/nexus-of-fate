@@ -56,6 +56,7 @@ window.onload = function() {
             background.draw();
             fog.draw();
             healthBar.draw();
+            check_gamepad();
             player.update(canvas.width);
             robot.update();
             player.draw();
