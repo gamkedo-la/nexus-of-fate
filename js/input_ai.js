@@ -1,39 +1,52 @@
-function input_ai() {
-    // Movement and flying effect for the robot
-    robot.speed = 2;
-    robot.baseY = FLOOR_Y - 100; // Adjust the base Y position for flying effect
-    robot.angle = 0;
+const AI_TOO_CLOSE_DIST = 250;
 
-    robot.update = function(canvasWidth, player) {
-        // Calculate the distance and direction to the player
-        let dx = player.x - this.x;
-        let dy = player.y - this.y;
-        let distanceToPlayer = Math.hypot(dx, dy);
+// this function becomes robot.update()
+function ai_update() {
 
-        // If the robot is very close to the player, stop moving
-        if (distanceToPlayer < 10) { // 10 is the threshold distance, adjust as needed
-            this.speed = 0;
-        } else {
-            this.speed = 2;
+    // Calculate the distance and direction to the player
+    let dx = player.x - this.x;
+    let dy = player.y - this.y;
+    let distanceToPlayer = Math.hypot(dx, dy);
 
-            // Normalize direction to get unit vector
-            let directionX = dx / distanceToPlayer;
-            let directionY = dy / distanceToPlayer;
+    //console.log("distance to player: " + distanceToPlayer.toFixed(1));
+    
+    // If the robot is very close to the player, stop moving
+    if (distanceToPlayer < AI_TOO_CLOSE_DIST) {
+        // Move the robot away from the player
+        this.speed = -2; // if this is zero we just stop
+        // but when the robot just stops, player gets trapped
+        // in an region that always shrinks
+    } else {
+        // Move the robot towards the player
+        this.speed = 2;
+    }
+    
+    // move the robot (unless speed is zero)
+    let angle = Math.atan2(dy, dx);
+    this.x += Math.cos(angle)*this.speed;
+    this.baseY += Math.sin(angle)*this.speed;
 
-            // Move the robot towards the player
-            this.x += directionX * this.speed;
-            this.baseY += directionY * this.speed; // Adjust baseY for vertical movement
-        }
+    // Vertical flying effect using a sinusoidal function
+    this.angle += 0.05;
+    this.y = this.baseY + Math.sin(this.angle) * 20;
 
-        // Vertical flying effect using a sinusoidal function
-        this.angle += 0.05;
-        this.y = this.baseY + Math.sin(this.angle) * 20;
-
-        // Ensure the robot stays within the canvas boundaries
-        if (this.x < 0) this.x = 0;
-        if (this.x > canvasWidth) this.x = canvasWidth;
-
-        // Call the original update logic, if any
-        // this.originalUpdate(canvasWidth); // Uncomment if there was an original update method
-    };
+    // Ensure the robot stays within the canvas boundaries
+    if (this.x < 0) this.x = 0;
+    if (this.x > canvas.width) this.x = canvas.width;
 }
+
+
+
+
+
+
+
+function input_ai() {
+    // currently unused.
+    // this function used to control the AI with keypresses
+    // and would update this.keys[] array
+    // so it followed all the same fighter.js logic as the player
+    // but since we've decided to have the robot use different logic
+    // it made no sense to have AI control itself like a player
+}
+

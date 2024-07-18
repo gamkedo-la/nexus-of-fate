@@ -8,7 +8,6 @@ var deltaTime = 0; // seconds since previous frame
 
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
-
 const mainMenu = new MainMenu(context);
 
 const player = new Fighter(input_keyboard, {
@@ -23,48 +22,21 @@ const player = new Fighter(input_keyboard, {
     [ANIM_DEATH]: 'images/player_death.png',
     [ANIM_BLOCK]: 'images/player_block.png'
 }, 100, FLOOR_Y);
+player.AI = false;
 
 const robot = new Fighter(input_ai, {
     [ANIM_IDLE]: 'images/robot_idle.png',
 }, 2000, FLOOR_Y);
+robot.speed = 2;
+robot.baseY = FLOOR_Y - 100;
+robot.angle = 0;
+robot.update = ai_update;
+robot.y = FLOOR_Y; 
+robot.speed = 2;
+robot.AI = true;
 
 player.opponent = robot;
 robot.opponent = player;
-player.AI = false;
-robot.AI = true;
-
-robot.y = FLOOR_Y; 
-
-robot.speed = 2;
-robot.baseY = FLOOR_Y - 100; 
-robot.angle = 0;
-
-robot.update = function(canvasWidth, playerX, playerY) {
-    // Calculate the distance and direction to the player
-    let dx = playerX - robot.x;
-    let dy = playerY - robot.y;
-    let distanceToPlayer = Math.hypot(dx, dy);
-
-    if (distanceToPlayer < 50) { 
-        robot.speed = 0;
-    } else {
-        robot.speed = 2;
-
-        let directionX = dx / distanceToPlayer;
-        let directionY = dy / distanceToPlayer;
-
-        robot.x += directionX * robot.speed;
-        robot.baseY += directionY * robot.speed;
-    }
-
-    robot.angle += 0.05;
-    robot.y = robot.baseY + Math.sin(robot.angle) * 20;
-
-    if (robot.x < 0) robot.x = 0;
-    if (robot.x > canvasWidth) robot.x = canvasWidth;
-
-   
-};
 
 window.onload = function() {
    (function draw() {
@@ -85,7 +57,7 @@ window.onload = function() {
             fog.draw();
             healthBar.draw();
             player.update(canvas.width);
-            robot.update(canvas.width, player.x, player.y);
+            robot.update();
             player.draw();
             robot.draw();
         }
