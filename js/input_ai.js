@@ -1,7 +1,32 @@
-const AI_TOO_CLOSE_DIST = 250;
+const AI_TOO_CLOSE_DIST = 400;
+const ANIM_IDLE = 'idle';
+const ANIM_ROBOT_PUNCH = 'punch';
+const ANIM_ROBOT_KICK = 'kick';
 
 // this function becomes robot.update()
 function ai_update() {
+	
+this.images = {
+      [ANIM_IDLE]: new Image(),
+      [ANIM_ROBOT_PUNCH]: new Image(),
+      [ANIM_ROBOT_KICK]: new Image()
+    };
+	
+	this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
+    this.images[ANIM_ROBOT_PUNCH].src = imageSrcs[ANIM_WALK_FORWARD];
+    this.images[ANIM_ROBOT_KICK].src = imageSrcs[ANIM_WALK_BACKWARD];
+	
+	   this.frameCounts = {
+      [ANIM_IDLE]: 58,
+      [ANIM_ROBOT_PUNCH]: 12,
+      [ANIM_ROBOT_KICK]: 39,
+    };
+
+    this.frameHeight = { // scale dim times frameheight from export
+      [ANIM_IDLE]: 383, // note: not locked to exact pixel multiples, probably should on export
+      [ANIM_ROBOT_PUNCH]: 382.6,
+      [ANIM_ROBOT_KICK]: 382.6,
+    };
 
     // Calculate the distance and direction to the player
     let dx = player.x - this.x;
@@ -35,10 +60,19 @@ function ai_update() {
     if (this.x > canvas.width) this.x = canvas.width;
 }
 
+  punch() {
+    this.currentAnimation = ANIM_ROBOT_PUNCH;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+	this.animReturnToIdle = true;
+  }
 
-
-
-
+  kick() {
+    this.currentAnimation = ANIM_ROBOT_KICK;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+	this.animReturnToIdle = true;
+  }
 
 
 function input_ai() {
