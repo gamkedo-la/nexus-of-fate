@@ -1,9 +1,3 @@
-const AI_TOO_CLOSE_DIST = 400;
-const ANIM_IDLE = 'robotidle';
-const ANIM_ROBOT_PUNCH = 'punch';
-const ANIM_ROBOT_KICK = 'kick';
-const ANIM_FPS = 24; // Assuming 24 frames per second
-
 // Ensure these variables are initialized in the robot object
 robot.angle = 0;
 robot.baseY = robot.y;
@@ -58,7 +52,7 @@ function ai_update() {
     this.speed = 2;
     this.currentAnimation = ANIM_IDLE; // Reset to idle when moving towards the player
   }
-  
+
   // Move the robot (unless speed is zero)
   let angle = Math.atan2(dy, dx);
   this.x += Math.cos(angle) * this.speed;
@@ -73,14 +67,14 @@ function ai_update() {
   if (this.x > canvas.width) this.x = canvas.width;
 }
 
-robot.punch = function() {
+robot.punch = function () {
   this.currentAnimation = ANIM_ROBOT_PUNCH;
   this.frameNum = 0;
   this.timeTillNextFrame = 1 / ANIM_FPS;
   this.animReturnToIdle = true;
 };
 
-robot.kick = function() {
+robot.kick = function () {
   this.currentAnimation = ANIM_ROBOT_KICK;
   this.frameNum = 0;
   this.timeTillNextFrame = 1 / ANIM_FPS;

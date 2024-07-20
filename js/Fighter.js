@@ -1,9 +1,11 @@
-const ANIM_FPS = 20; // how fast the animations play
+const AI_TOO_CLOSE_DIST = 400;
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
+
+const ANIM_FPS = 24; // how fast the animations play
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -22,7 +24,7 @@ class Fighter {
     this.keys = {};
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
-	this.walkSound = new Audio('audio/playerWalkSound.mp3');
+    this.walkSound = new Audio('audio/playerWalkSound.mp3');
     this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
 
     this.images = {
@@ -35,7 +37,7 @@ class Fighter {
       [ANIM_PUNCH]: new Image(),
       [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image(),
-	  [ANIM_BLOCK] : new Image()
+      [ANIM_BLOCK]: new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -47,7 +49,7 @@ class Fighter {
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
     this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
-	this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
+    this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 
     // Frame counts for each animation
     this.frameCounts = {
@@ -59,7 +61,7 @@ class Fighter {
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
-	  [ANIM_BLOCK]: 4
+      [ANIM_BLOCK]: 4
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -71,10 +73,10 @@ class Fighter {
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 7,
-	  [ANIM_BLOCK]: 2584 * 0.2
+      [ANIM_BLOCK]: 2584 * 0.2
     };
-	
-	 this.frameHeightRobot = { // scale dim times frameheight from export
+
+    this.frameHeightRobot = { // scale dim times frameheight from export
       [ANIM_IDLE]: 1700 * 0.2 * 1.5,
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
@@ -85,7 +87,7 @@ class Fighter {
       [ANIM_DEATH]: 7
     };
 
-   this.frameCountsRobot = {
+    this.frameCountsRobot = {
       [ANIM_IDLE]: 19,
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
@@ -94,14 +96,14 @@ class Fighter {
       [ANIM_KICK]: 12,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7
-    };    
-	
+    };
+
     this.x = initialX;
     this.y = initialY;
     this.speedY = 0;
     this.currentAnimation = ANIM_IDLE;
     this.frameNum = 0;
-	this.animReturnToIdle = false;
+    this.animReturnToIdle = false;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.previousFrameTimestamp = performance.now() / 1000;
 
@@ -114,48 +116,48 @@ class Fighter {
     this.previousFrameTimestamp = now;
 
     // Only update frame if enough time has passed
-  	if(this.currentAnimation != ANIM_JUMP) {
-  		this.timeTillNextFrame -= deltaTime;
-  		if (this.timeTillNextFrame <= 0) {
-  		  this.frameNum++;
+    if (this.currentAnimation != ANIM_JUMP) {
+      this.timeTillNextFrame -= deltaTime;
+      if (this.timeTillNextFrame <= 0) {
+        this.frameNum++;
         this.timeTillNextFrame += 1 / ANIM_FPS;
 
-  		  var frameCount;
-  		  if (this.AI) {
+        var frameCount;
+        if (this.AI) {
           frameCount = this.frameCountsRobot[this.currentAnimation];
         } else {
-           frameCount = this.frameCounts[this.currentAnimation];
+          frameCount = this.frameCounts[this.currentAnimation];
         }
 
-  		  if(this.animReturnToIdle && this.frameNum == frameCount){
-    			this.animReturnToIdle = false;
-    			this.currentAnimation = ANIM_IDLE;
-    			this.frameNum = 0;
-  		  } else {
+        if (this.animReturnToIdle && this.frameNum == frameCount) {
+          this.animReturnToIdle = false;
+          this.currentAnimation = ANIM_IDLE;
+          this.frameNum = 0;
+        } else {
           this.frameNum %= frameCount;
         }
-  		}
-  	} else { 
-  	  if(this.speedY < -8) {
-  		  this.frameNum = 0;
-  		} else if(this.speedY < -5) {
-  		  this.frameNum = 1;
-  		}  else if(this.speedY < -2) {
-  		  this.frameNum = 2;
-  		}  else if(this.speedY < -0.5) {
-  		  this.frameNum = 3;
-  		} else if(this.speedY < 0.5) {
-  		  this.frameNum = 4;
-  		} else if(this.speedY < 2) {
-  		  this.frameNum = 5;
-  		} else if(this.speedY < 5) {
-  		  this.frameNum = 6;
-  		} else if(this.speedY < 8) {
-  		  this.frameNum = 7;
-  		} else {
-  		  this.frameNum = 8;
-  		}
-  	} 
+      }
+    } else {
+      if (this.speedY < -8) {
+        this.frameNum = 0;
+      } else if (this.speedY < -5) {
+        this.frameNum = 1;
+      } else if (this.speedY < -2) {
+        this.frameNum = 2;
+      } else if (this.speedY < -0.5) {
+        this.frameNum = 3;
+      } else if (this.speedY < 0.5) {
+        this.frameNum = 4;
+      } else if (this.speedY < 2) {
+        this.frameNum = 5;
+      } else if (this.speedY < 5) {
+        this.frameNum = 6;
+      } else if (this.speedY < 8) {
+        this.frameNum = 7;
+      } else {
+        this.frameNum = 8;
+      }
+    }
 
     if (this.currentAnimation < 0 || this.currentAnimation >= this.images.length) {
       console.log(" invalid animation frame " + this.currentAnimation + " AI? " + this.AI);
@@ -165,9 +167,9 @@ class Fighter {
     let image = this.images[this.currentAnimation];
     let frameW = image.width;
     let frameH = this.frameHeight[this.currentAnimation];
-	if(this.AI){
-	    frameH = this.frameHeightRobot[this.currentAnimation];
-	}
+    if (this.AI) {
+      frameH = this.frameHeightRobot[this.currentAnimation];
+    }
     context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
   }
 
@@ -180,19 +182,19 @@ class Fighter {
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
-	   if(this.currentAnimation == ANIM_CROUCH || this.currentAnimation == ANIM_BLOCK){
-		   //prevent idle from preventing crouch
-		   if(this.frameNum == this.frameCounts[this.currentAnimation] - 1){
-			   this.frameNum--;
-			   this.timeTillNextFrame = 100 / ANIM_FPS;
+      if (this.currentAnimation == ANIM_CROUCH || this.currentAnimation == ANIM_BLOCK) {
+        //prevent idle from preventing crouch
+        if (this.frameNum == this.frameCounts[this.currentAnimation] - 1) {
+          this.frameNum--;
+          this.timeTillNextFrame = 100 / ANIM_FPS;
 
-			   // prevent looping
-		   }
-	   }
-	   else if(this.animReturnToIdle){
-		   
-		   // don't let idle interrupt
-	   }
+          // prevent looping
+        }
+      }
+      else if (this.animReturnToIdle) {
+
+        // don't let idle interrupt
+      }
       else if (this.currentAnimation !== ANIM_IDLE) {
         this.currentAnimation = ANIM_IDLE;
         this.frameNum = 0;
@@ -215,13 +217,13 @@ class Fighter {
     if (this.keys['p'] || this.keys['gamepad_a_button']) {
       this.punch();
     }
-	
-	if(this.keys['z'] || this.keys['gamepad_x_button']){
-	   this.block();
-	}
 
-    if ((this.keys['s'] && this.keys['p']) 
-        || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
+    if (this.keys['z'] || this.keys['gamepad_x_button']) {
+      this.block();
+    }
+
+    if ((this.keys['s'] && this.keys['p'])
+      || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.crouchPunch();
     }
 
@@ -278,25 +280,25 @@ class Fighter {
   }
 
   moveLeft() {
-     if (this.currentAnimation !== ANIM_JUMP) {
-        if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
-            this.currentAnimation = ANIM_WALK_BACKWARD;
-            this.frameNum = 0;
-            this.timeTillNextFrame = 1 / ANIM_FPS;
-			this.walkSound.play();
-        }
+    if (this.currentAnimation !== ANIM_JUMP) {
+      if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
+        this.currentAnimation = ANIM_WALK_BACKWARD;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+        this.walkSound.play();
+      }
     }
     this.x -= MOVE_SPEED;
   }
 
   moveRight() {
     if (this.currentAnimation !== ANIM_JUMP) {
-        if (this.currentAnimation !== ANIM_WALK_FORWARD) {
-            this.currentAnimation = ANIM_WALK_FORWARD;
-            this.frameNum = 0;
-            this.timeTillNextFrame = 1 / ANIM_FPS;
-			this.walkSound.play();
-        }
+      if (this.currentAnimation !== ANIM_WALK_FORWARD) {
+        this.currentAnimation = ANIM_WALK_FORWARD;
+        this.frameNum = 0;
+        this.timeTillNextFrame = 1 / ANIM_FPS;
+        this.walkSound.play();
+      }
     }
     this.x += MOVE_SPEED;
   }
@@ -307,7 +309,7 @@ class Fighter {
       this.frameNum = 0;
       this.timeTillNextFrame = 1 / ANIM_FPS;
       this.speedY = JUMP_POWER;
-	  this.jumpSound.play();
+      this.jumpSound.play();
     }
   }
 
@@ -321,14 +323,14 @@ class Fighter {
     this.currentAnimation = ANIM_KICK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
-	this.animReturnToIdle = true;
+    this.animReturnToIdle = true;
   }
 
   punch() {
     this.currentAnimation = ANIM_PUNCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
-	this.animReturnToIdle = true;
+    this.animReturnToIdle = true;
   }
 
   crouchPunch() {
@@ -342,14 +344,14 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-  
-  block(){
-	this.currentAnimation = ANIM_BLOCK;
+
+  block() {
+    this.currentAnimation = ANIM_BLOCK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-  
-   getCurrentAnimationFrameCount() {
+
+  getCurrentAnimationFrameCount() {
     return
-   }
+  }
 }
