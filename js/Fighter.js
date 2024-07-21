@@ -73,7 +73,7 @@ class Fighter {
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 7,
-      [ANIM_BLOCK]: 2584 * 0.2
+      [ANIM_BLOCK]: 2274 * 0.2
     };
 
     this.frameHeightRobot = { // scale dim times frameheight from export
