@@ -21,7 +21,7 @@ window.onload = function() {
 function loadingDoneSoStartGame() {
   var scaleBy = 0.2;
   var dimW = 1752;
-  var dimH = 2274;
+  var dimH = 1913;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
   scaleH = Math.floor(scaleH) + 1;
