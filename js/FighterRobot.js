@@ -6,6 +6,8 @@ class Robot extends Fighter {
     this.angle = 0;
     this.y = FLOOR_Y;
     this.AI = true;
+	this.thurstSound = new Audio('audio/RobotThrust.mp3');
+
 
     // Ensure these variables are initialized in the robot object
     this.angle = 0;
@@ -18,14 +20,14 @@ class Robot extends Fighter {
 
     this.frameCounts = {
       [ANIM_IDLE]: 58,
-      [ANIM_PUNCH]: 12,
-      [ANIM_KICK]: 39,
+      [ANIM_PUNCH]: 11,
+      [ANIM_KICK]: 19,
     };
 
     this.frameHeight = {
       [ANIM_IDLE]: 1700 * 0.2 * 1.5,
-      [ANIM_PUNCH]: 382.6,
-      [ANIM_KICK]: 382.6,
+      [ANIM_PUNCH]: 0.2 * 1280,
+      [ANIM_KICK]: 0.2 * 1400,
     };
   }
 
@@ -50,6 +52,7 @@ class Robot extends Fighter {
     } else {
       // Move the robot towards the player
       this.speed = 2;
+	  this.thurstSound.play();
       this.currentAnimation = ANIM_IDLE; // Reset to idle when moving towards the player
     }
 

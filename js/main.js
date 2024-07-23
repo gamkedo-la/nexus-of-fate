@@ -24,16 +24,10 @@ const player = new Player(input_keyboard, {
 }, 100, FLOOR_Y);
 
 const robot = new Robot(input_ai, {
-  [ANIM_IDLE]: 'images/robot_idle.png',
-  [ANIM_WALK_FORWARD]: 'images/robot_walk.png',
-  [ANIM_WALK_BACKWARD]: 'images/robot_walkbackwards.png',
-  [ANIM_CROUCH]: 'images/robot.png',
-  [ANIM_JUMP]: 'images/robot.png',
-  [ANIM_KICK]: 'images/robot.png',
-  [ANIM_PUNCH]: 'images/robot_combo.png',
-  [ANIM_CROUCH_PUNCH]: 'images/robot_combo.png',
-  [ANIM_DEATH]: 'images/robot.png',
-  [ANIM_BLOCK]: 'images/robot_combo.png'
+  [ANIM_IDLE]: 'images/robot_idle.png', 
+  [ANIM_KICK]: 'images/robot_kick.png',
+  [ANIM_PUNCH]: 'images/robot_punch.png',
+
 }, 2000, FLOOR_Y);
 
 player.opponent = robot;
