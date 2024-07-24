@@ -18,17 +18,6 @@ class Robot extends Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = false;
 
-    this.frameCounts = {
-      [ANIM_IDLE]: 58,
-      [ANIM_PUNCH]: 11,
-      [ANIM_KICK]: 19,
-    };
-
-    this.frameHeight = {
-      [ANIM_IDLE]: 1700 * 0.2 * 1.5,
-      [ANIM_PUNCH]: 0.2 * 1280,
-      [ANIM_KICK]: 0.2 * 1400,
-    };
   }
 
   update() {
@@ -47,7 +36,7 @@ class Robot extends Fighter {
       // Trigger random kick or punch animation
       if (this.currentAnimation === ANIM_IDLE) {
         if (Math.random() < 0.5) {
-          this.punch();
+          //this.punch(); // debugging kick
         } else {
           this.kick();
         }

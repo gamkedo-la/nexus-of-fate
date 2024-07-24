@@ -82,8 +82,8 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 2200 * 0.2,
       [ANIM_JUMP]: 407,
-      [ANIM_KICK]: 360,
-      [ANIM_PUNCH]: 300,
+      [ANIM_KICK]: 0.2 * 1.5 * 1400,
+      [ANIM_PUNCH]: 0.2 * 1280,
       [ANIM_DEATH]: 7
     };
 
@@ -93,8 +93,8 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
       [ANIM_JUMP]: 9,
-      [ANIM_KICK]: 12,
-      [ANIM_PUNCH]: 10,
+      [ANIM_KICK]: 19,
+      [ANIM_PUNCH]: 11,
       [ANIM_DEATH]: 7
     };
 
