@@ -52,6 +52,9 @@ class Robot extends Fighter {
     } else {
       // Move the robot towards the player
       this.speed = 2;
+	  if(debugSoundVolume){
+		  this.thurstSound.volume = 0.01;
+	  }
 	  this.thurstSound.play();
       this.currentAnimation = ANIM_IDLE; // Reset to idle when moving towards the player
     }

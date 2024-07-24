@@ -5,6 +5,7 @@ var fightTimeRemaining = fightDurationSeconds;
 var frameTimestamp = performance.now();
 var previousTimestamp = frameTimestamp;
 var deltaTime = 0; // seconds since previous frame
+var debugSoundVolume = true;
 
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
