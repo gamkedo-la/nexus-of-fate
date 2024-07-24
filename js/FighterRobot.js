@@ -28,6 +28,7 @@ class Robot extends Fighter {
 
 	if(this.animReturnToIdle){
 		// block changing animation while mid kick/punch
+		this.speed = 0;
 	}
     else if (distanceToPlayer < AI_TOO_CLOSE_DIST) {             // If the robot is very close to the player, stop moving
 
@@ -36,7 +37,7 @@ class Robot extends Fighter {
       // Trigger random kick or punch animation
       if (this.currentAnimation === ANIM_IDLE) {
         if (Math.random() < 0.5) {
-          //this.punch(); // debugging kick
+          this.punch(); 
         } else {
           this.kick();
         }
