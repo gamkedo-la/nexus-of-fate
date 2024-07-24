@@ -37,9 +37,12 @@ class Robot extends Fighter {
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
 
-    // If the robot is very close to the player, stop moving
-    if (distanceToPlayer < AI_TOO_CLOSE_DIST) {
-      // Move the robot away from the player
+	if(this.animReturnToIdle){
+		// block changing animation while mid kick/punch
+	}
+    else if (distanceToPlayer < AI_TOO_CLOSE_DIST) {             // If the robot is very close to the player, stop moving
+
+      // Move the robot away from the player       
       this.speed = -2;
       // Trigger random kick or punch animation
       if (this.currentAnimation === ANIM_IDLE) {
@@ -78,6 +81,7 @@ class Robot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
+	console.log("Punch anim started");
   }
 
   kick() {
@@ -85,6 +89,8 @@ class Robot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
+    console.log("Kick anim started");
+
   }
 }
 
