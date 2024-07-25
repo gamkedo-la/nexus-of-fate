@@ -36,11 +36,13 @@ class Robot extends Fighter {
       this.speed = -2;
       // Trigger random kick or punch animation
       if (this.currentAnimation === ANIM_IDLE) {
-        if (Math.random() < 0.5) {
-          this.punch(); 
-        } else {
-          this.kick();
-        }
+		if (Math.random() < 0.03) { // only sometimes attack 
+			if (Math.random() < 0.5) { // which attack?
+			  this.punch(); 
+			} else {
+			  this.kick();
+			}
+		}
       }
     } else {
       // Move the robot towards the player
@@ -64,6 +66,8 @@ class Robot extends Fighter {
     // Ensure the robot stays within the canvas boundaries
     if (this.x < 0) this.x = 0;
     if (this.x > canvas.width) this.x = canvas.width;
+    if (this.y < 150) this.y = 150;
+    if (this.y > canvas.height - 200) this.y = canvas.height - 200;
   }
 
   punch() {
