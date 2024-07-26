@@ -44,7 +44,7 @@ class Robot extends Fighter {
 			}
 		}
       }
-    } else {
+    } else if (distanceToPlayer > AI_PREFERRED_DIST) { 
       // Move the robot towards the player
       this.speed = 2;
 	  if(debugSoundVolume){
@@ -52,6 +52,10 @@ class Robot extends Fighter {
 	  }
 	  this.thurstSound.play();
       this.currentAnimation = ANIM_IDLE; // Reset to idle when moving towards the player
+    } else {
+        // the robot is in between AI_PREFERRED_DIST and AI_TOO_CLOSE_DIST
+        // so just stay here and fight!
+        this.speed = 0;
     }
 
     // Move the robot (unless speed is zero)

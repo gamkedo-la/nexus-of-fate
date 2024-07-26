@@ -1,4 +1,6 @@
-const AI_TOO_CLOSE_DIST = 250;
+const AI_TOO_CLOSE_DIST = 220; // when to back up (if player walks into robot, it will back up)
+const AI_PREFERRED_DIST = 260; // when to stop moving forward - the ideal target distance
+
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
