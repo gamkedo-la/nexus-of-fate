@@ -7,6 +7,10 @@ var previousTimestamp = frameTimestamp;
 var deltaTime = 0; // seconds since previous frame
 var debugSoundVolume = true;
 
+var roundStarted = false;
+var roundStartCountdownTick = 120;
+var roundStartCountdown = 3;
+
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
 const mainMenu = new MainMenu(context);
@@ -25,7 +29,7 @@ const player = new Player(input_keyboard, {
 }, 100, FLOOR_Y);
 
 const robot = new Robot(input_ai, {
-  [ANIM_IDLE]: 'images/robot_idle.png', 
+  [ANIM_IDLE]: 'images/robot_idle.png',
   [ANIM_KICK]: 'images/robot_kick.png',
   [ANIM_PUNCH]: 'images/robot_punch.png',
 
@@ -43,18 +47,42 @@ window.onload = function () {
     if (!mainMenu.show()) {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      fightTimeRemaining -= deltaTime / 1000;
-      if (fightTimeRemaining <= 0) {
-        fightTimeRemaining = 0;
-        // TODO: change rounds, reset health, end fight, etc
+      if (roundStarted) {
+        fightTimeRemaining -= deltaTime / 1000;
+        if (fightTimeRemaining <= 0) {
+          fightTimeRemaining = 0;
+          // TODO: change rounds, reset health, end fight, etc
+        }
+
+        check_gamepad();
+        player.update(canvas.width);
+        robot.update();
+      }
+      else {
+        if (roundStartCountdownTick < 0) {
+          roundStarted = true;
+        }
+        else {
+          roundStartCountdownTick--;
+          if (roundStartCountdownTick % 30 == 0) {
+            roundStartCountdown--;
+          }
+        }
       }
 
       background.draw();
+
+      // 3, 2, 1, SLAY!
+      if (roundStartCountdownTick > 0) {
+        const fontSize = 240;
+        context.font = `${fontSize}px Tohoma bold`;
+        context.fillStyle = "white";
+        var drawn = roundStartCountdown > 0 ? roundStartCountdown : "SLAY!";
+        context.fillText(drawn, canvas.width / 2 - context.measureText(drawn).width / 2, canvas.height / 2);
+      }
+
       fog.draw();
       healthBar.draw();
-      check_gamepad();
-      player.update(canvas.width);
-      robot.update();
       player.draw();
       robot.draw();
     }
