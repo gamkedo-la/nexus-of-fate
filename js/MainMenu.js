@@ -3,7 +3,7 @@ class MainMenu {
       this.context = context;
 
       this.mainMenuImage = document.createElement("img");
-      this.mainMenuImage.src = "images/mainmenu95.png";
+      this.mainMenuImage.src = "images/MainMenuScreen.png";
       this.onMainMenu = true;
 
       function userIsOnStartText(mouseClick) {
