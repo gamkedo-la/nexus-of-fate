@@ -1,116 +1,115 @@
-class Robot extends Fighter {
-  constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
-    super(whichInput, imageSrcs, initialX, initialY);
-    this.speed = 2;
-    this.baseY = FLOOR_Y - 100;
-    this.angle = 0;
-    this.y = FLOOR_Y;
-    this.AI = true;
-    this.thurstSound = new Audio('audio/RobotThrust.mp3');
+var bgImage1, bgImage5, bgImage6, cloudImage, fogImage, leftBorderImage, rightBorderImage, healthbarBackground, powerbarBackground;
 
-    this.angle = 0;
-    this.baseY = this.y;
-    this.speed = 0;
-    this.currentAnimation = ANIM_IDLE;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = false;
-    this.retreatDistance = 0;
-
-    this.lasers = [];
-    this.lastShotTime = 0;
-    this.shotCooldown = 1; // Cooldown time in seconds
-  }
-
-  update(deltaTime) {
-    let dx = player.x - this.x;
-    let dy = player.y - this.y;
-    let distanceToPlayer = Math.hypot(dx, dy);
-
-    if (this.animReturnToIdle) {
-      this.speed = -2;
-      if (this.retreatDistance > 0) {
-        let angle = Math.atan2(dy, dx);
-        this.x -= Math.cos(angle) * this.speed;
-        this.baseY -= Math.sin(angle) * this.speed;
-        this.retreatDistance -= this.speed;
-      } else {
-        this.animReturnToIdle = false;
-      }
-    } else if (distanceToPlayer < AI_TOO_CLOSE_DIST) {
-      this.speed = -2;
-      if (this.currentAnimation === ANIM_IDLE) {
-        if (Math.random() < 0.03) {
-          if (Math.random() < 0.5) {
-            this.punch();
-          } else {
-            this.kick();
-          }
+var background = {
+    draw: function() {
+        if (!bgImage1) { 
+            bgImage1 = new Image();
+            bgImage1.src = "images/background1.png";
+            bgImage1.onload = function() { this.loaded = true; }
         }
-      }
-    } else if (distanceToPlayer > AI_PREFERRED_DIST) {
-      this.speed = 2;
-      if (debugSoundVolume) {
-        this.thurstSound.volume = 0.01;
-      }
-      this.thurstSound.play();
-      this.currentAnimation = ANIM_IDLE;
-    } else {
-      this.speed = 0;
+        if (!bgImage5) { 
+            bgImage5 = new Image();
+            bgImage5.src = "images/background5.png";
+            bgImage5.onload = function() { this.loaded = true; }
+        }
+        if (!bgImage6) { 
+            bgImage6 = new Image();
+            bgImage6.src = "images/background6.png";
+            bgImage6.onload = function() { this.loaded = true; }
+        }
+        if (!cloudImage) { 
+            cloudImage = new Image();
+            cloudImage.src = "images/clouds.png";
+            cloudImage.onload = function() { this.loaded = true; }
+        }
+        if (!leftBorderImage) { 
+            leftBorderImage = new Image();
+            leftBorderImage.src = "images/debris-left.png";
+            leftBorderImage.onload = function() { this.loaded = true; }
+        }
+        if (!rightBorderImage) { 
+            rightBorderImage = new Image();
+            rightBorderImage.src = "images/debris-right.png";
+            rightBorderImage.onload = function() { this.loaded = true; }
+        }
+
+        if (bgImage1.loaded) context.drawImage(bgImage1, -player.x / 7, 0);
+        context.globalAlpha = 0.1;
+        if (cloudImage.loaded) context.drawImage(cloudImage, Math.sin(performance.now() / 32000) * 1000 - 1000 - player.x / 7, 0);
+        context.globalAlpha = 1;
+        if (bgImage5.loaded) context.drawImage(bgImage5, -player.x / 3, 0);
+        if (bgImage6.loaded) context.drawImage(bgImage6, -player.x / 2.5, 0);
+
+        if (leftBorderImage.loaded) context.drawImage(leftBorderImage, -player.x / 2.5 - 400, canvas.height - 640);
+        if (rightBorderImage.loaded) context.drawImage(rightBorderImage, -player.x / 2.5 + 1500, canvas.height - 270);
     }
+};
 
-    if (Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
-      console.log("Shooting condition met");
-      this.shoot(dx, dy);
-      this.lastShotTime = Date.now();
+var fog = { 
+    draw: function() {
+        if (!fogImage) { 
+            fogImage = new Image();
+            fogImage.src = "images/fog.png";
+            fogImage.onload = function() { this.loaded = true; }
+        }
+
+        if (fogImage.loaded) {
+            context.drawImage(fogImage, Math.sin(performance.now() / 64000) * 1000 - 1000 - player.x, canvas.height - 250 + Math.sin(performance.now() / 33000) * 100);
+            context.drawImage(fogImage, Math.sin(performance.now() / 88000) * -1234 - 1000 - player.x, canvas.height - 200 + Math.sin(performance.now() / 66000) * -100);
+            context.drawImage(fogImage, Math.sin(performance.now() / 99000) * 1000 - 1000 - player.x, canvas.height - 150 + Math.sin(performance.now() / 99000) * -100);
+        }
     }
+};
 
-    let angle = Math.atan2(dy, dx);
-    this.x += Math.cos(angle) * this.speed;
-    this.baseY += Math.sin(angle) * this.speed;
+var healthBar = {
+    width: 200,
+    height: 25,
+    padding: 50,
 
-    this.angle += 0.05;
-    this.y = this.baseY + Math.sin(this.angle) * 20;
+    draw: function() {
+        if (!healthbarBackground) {
+            healthbarBackground = new Image();
+            healthbarBackground.src = "images/healthbarBackground.png";
+            healthbarBackground.onload = function() { this.loaded = true; }
+        }
 
-    if (this.x < 0) this.x = 0;
-    if (this.x > canvas.width) this.x = canvas.width;
-    if (this.y < 150) this.y = 150;
-    if (this.y > canvas.height - 200) this.y = canvas.height - 200;
+        if (!powerbarBackground) {
+            powerbarBackground = new Image();
+            powerbarBackground.src = "images/powerbarBackground.png";
+            powerbarBackground.onload = function() { this.loaded = true; }
+        }
 
-    this.lasers.forEach(laser => laser.update());
-    this.lasers = this.lasers.filter(laser => laser.active);
-  }
+        // Draw GUI header overlay
+        if (healthbarBackground.loaded) context.drawImage(healthbarBackground, 0, 0);
 
-  draw(context) {
-    // Call the draw method of the super class
-    super.draw(context);
+        // Draw player health bar background
+        context.fillStyle = "black";
+        context.fillRect(this.padding, this.padding, this.width, this.height);
 
-    // Draw the lasers
-    this.lasers.forEach(laser => laser.draw(context));
-  }
+        // Draw player health bar filled with blue
+        context.fillStyle = "blue";
+        context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (player.health / 100), this.height - 4);
 
-  punch() {
-    this.currentAnimation = ANIM_PUNCH;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 100 + 50;
-    console.log("Punch anim started");
-  }
+        // Draw robot health bar background
+        context.fillStyle = "black";
+        context.fillRect(canvas.width - this.width - this.padding, this.padding, this.width, this.height);
 
-  kick() {
-    this.currentAnimation = ANIM_KICK;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 100 + 50;
-    console.log("Kick anim started");
-  }
+        // Draw robot health bar filled with red
+        context.fillStyle = "red";
+        context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
 
-  shoot(dx, dy) {
-    let angle = Math.atan2(dy, dx);
-    let laser = new Laser(this.x, this.y, angle);
-    this.lasers.push(laser);
-    console.log("Laser shot");
-  }
-}
+        // Draw player power bar background
+        context.fillStyle = "grey";
+        context.fillRect(this.padding + 350, this.padding  + this.height - 27, this.width, this.height);
+
+        // Draw player power bar filled with green
+        context.fillStyle = "green";
+        context.fillRect(this.padding + 2, this.padding + this.height, (this.width - 4) * (player.power / 100), this.height - 4);
+
+        // Round number and timer
+        context.font = "20px Tohoma bold";
+        context.fillStyle = "white";
+        context.fillText(fightRoundNumber + " of " + fightRoundMax, 720, 40);
+        context.fillText(fightTimeRemaining.toFixed(2) + "s", 720, 84);
+    }
+};

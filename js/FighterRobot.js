@@ -1,4 +1,4 @@
-class Robot extends Fighter {
+class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
     super(whichInput, imageSrcs, initialX, initialY);
     this.speed = 2;
@@ -110,4 +110,5 @@ class Robot extends Fighter {
     this.lasers.push(laser);
     console.log("Laser shot");
   }
+  
 }

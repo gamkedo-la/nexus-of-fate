@@ -28,7 +28,7 @@ const player = new Player(input_keyboard, {
   [ANIM_BLOCK]: 'images/player_block.png'
 }, 100, FLOOR_Y);
 
-const robot = new Robot(input_ai, {
+const robot = new FighterRobot(input_ai, {
   [ANIM_IDLE]: 'images/robot_idle.png',
   [ANIM_KICK]: 'images/robot_kick.png',
   [ANIM_PUNCH]: 'images/robot_punch.png',
