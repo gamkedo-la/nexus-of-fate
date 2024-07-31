@@ -4,6 +4,7 @@ class Laser {
     this.y = y;
     this.angle = angle;
     this.speed = 10;
+    this.length = 20;
     this.active = true;
   }
 
@@ -11,18 +12,18 @@ class Laser {
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
 
-    // Deactivate laser if it goes out of bounds
+    // Deactivate the laser if it goes off screen
     if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
       this.active = false;
     }
   }
 
   draw(context) {
+    context.strokeStyle = 'red';
+    context.lineWidth = 2;
     context.beginPath();
     context.moveTo(this.x, this.y);
-    context.lineTo(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20);
-    context.strokeStyle = 'red';
-    context.lineWidth = 3;
+    context.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
     context.stroke();
   }
 }
