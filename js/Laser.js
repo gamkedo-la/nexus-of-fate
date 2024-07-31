@@ -18,7 +18,7 @@ class Laser {
     }
   }
 
-  draw(context) {
+  draw() {
     context.strokeStyle = 'red';
     context.lineWidth = 2;
     context.beginPath();

@@ -83,7 +83,7 @@ class FighterRobot extends Fighter {
     super.draw(context);
 
     // Draw the lasers
-    this.lasers.forEach(laser => laser.draw(context));
+    this.lasers.forEach(laser => laser.draw());
   }
 
   punch() {

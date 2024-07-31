@@ -73,11 +73,11 @@ var healthBar = {
             healthbarBackground.onload = function() { this.loaded = true; }
         }
 
-        if (!powerbarBackground) {
+       /* if (!powerbarBackground) {
             powerbarBackground = new Image();
             powerbarBackground.src = "images/powerbarBackground.png";
             powerbarBackground.onload = function() { this.loaded = true; }
-        }
+        }*/
 
         // Draw GUI header overlay
         if (healthbarBackground.loaded) context.drawImage(healthbarBackground, 0, 0);
