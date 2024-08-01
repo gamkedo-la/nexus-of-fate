@@ -16,7 +16,9 @@ class FighterRobot extends Fighter {
 
     this.lasers = [];
     this.lastShotTime = 0;
-    this.shotCooldown = 1; // Cooldown time in seconds
+    this.shotCooldown = 3; // Cooldown time in seconds
+    
+    this.canShootWhileRunning = true; // Boolean to control shooting
   }
 
   update(deltaTime) {
@@ -49,14 +51,18 @@ class FighterRobot extends Fighter {
       this.speed = 2;
       if (debugSoundVolume) {
         this.thrustSound.volume = 0.01;
+		this.canShootWhileRunning = true;
       }
       this.thrustSound.play();
       this.currentAnimation = ANIM_IDLE;
     } else {
       this.speed = 0;
+	  
+	  this.canShootWhileRunning = false;
     }
 
-    if (Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
+    // Check if the player is in a running state and if enough time has passed since the last shot
+    if (this.canShootWhileRunning && Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
       console.log("Shooting condition met");
       this.shoot(dx, dy);
       this.lastShotTime = Date.now();
@@ -110,5 +116,5 @@ class FighterRobot extends Fighter {
     this.lasers.push(laser);
     console.log("Laser shot");
   }
-  
+ 
 }

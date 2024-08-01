@@ -3,7 +3,7 @@ class Laser {
     this.x = x;
     this.y = y;
     this.angle = angle;
-    this.speed = 10;
+    this.speed = 35;
     this.length = 20;
     this.active = true;
   }
