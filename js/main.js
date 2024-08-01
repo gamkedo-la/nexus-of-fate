@@ -57,6 +57,8 @@ window.onload = function () {
         check_gamepad();
         player.update(canvas.width);
         robot.update();
+        player.check_collisions(robot);
+        robot.check_collisions(player);
       }
       else {
         if (roundStartCountdownTick < 0) {
