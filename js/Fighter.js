@@ -172,7 +172,13 @@ class Fighter {
     if (this.AI) {
       frameH = this.frameHeightRobot[this.currentAnimation];
     }
-    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
+
+    try { 
+        context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
+    } catch(e) {
+        console.log("fighter image is missing: image.src="+ image.src);
+    }
+
   }
 
   update(canvasWidth) {
@@ -355,5 +361,28 @@ class Fighter {
 
   getCurrentAnimationFrameCount() {
     return
+  }
+
+  check_collisions(myOpponent) {
+    if (!myOpponent) return;
+    let dist = Math.abs(this.x - myOpponent.x);
+    let beingBlocked = myOpponent.currentAnimation = ANIM_BLOCK;
+    
+    if (this.currentAnimation == ANIM_PUNCH) {
+        if (dist < 200) {
+            if (beingBlocked) {
+                console.log("punch was blocked!");
+                // play block sfx
+            } else if (closeEnough && !beingBlocked) {
+                console.log("punch hit!");
+                // play hit sfx
+                myOpponent.health -= 1;
+            }
+        } else {
+            console.log("punch missed: out of range!");
+            // play woosh sfx
+        }
+    } // punch
+
   }
 }
