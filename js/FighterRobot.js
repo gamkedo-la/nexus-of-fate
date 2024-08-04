@@ -36,10 +36,10 @@ class FighterRobot extends Fighter {
       } else {
         this.animReturnToIdle = false;
       }
-    } else if (distanceToPlayer < AI_TOO_CLOSE_DIST) {
+    } else if (distanceToPlayer < AI_PREFERRED_DIST) {
       this.speed = -2;
       if (this.currentAnimation === ANIM_IDLE) {
-        if (Math.random() < 0.03) {
+        if (Math.random() < 0.5) {
           if (Math.random() < 0.5) {
             this.punch();
           } else {
