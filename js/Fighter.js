@@ -134,7 +134,7 @@ class Fighter {
         }
 
         if (this.animReturnToIdle && this.frameNum == frameCount) {
-		  if(this.currentAnimation == ANIM_BLOCK){
+		  if(this.currentAnimation == ANIM_BLOCK || this.currentAnimation == ANIM_CROUCH){
 			  this.frameNum = frameCount - 1;
 		  }else{
 			  this.animReturnToIdle = false;
@@ -198,16 +198,8 @@ class Fighter {
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
-      if (this.currentAnimation == ANIM_CROUCH) {
-        //prevent idle from preventing crouch
-        if (this.frameNum == this.frameCounts[this.currentAnimation] - 1) {
-          this.frameNum--;
-          this.timeTillNextFrame = 100 / ANIM_FPS;
-
-          // prevent looping
-        }
-      }
-      else if (this.animReturnToIdle) {
+	 
+	  if (this.animReturnToIdle) {
 
         // don't let idle interrupt
       }
@@ -222,10 +214,6 @@ class Fighter {
       this.jump();
     }
 
-    if (this.keys['s'] || this.keys['gamepad_down']) {
-      this.crouch();
-    }
-
     if (this.keys['k'] || this.keys['gamepad_b_button']) {
       this.startAnimIfNew(ANIM_KICK);
     }
@@ -233,7 +221,14 @@ class Fighter {
     if (this.keys['p'] || this.keys['gamepad_a_button']) {
       this.startAnimIfNew(ANIM_PUNCH);
     }
-
+    // keys below here can be held, remember to check for currentAnim when returnTOIdle is used
+    if (this.keys['s'] || this.keys['gamepad_down']) {
+      this.startAnimIfNew(ANIM_CROUCH);
+    }
+	else if(this.currentAnimation == ANIM_CROUCH){
+		this.currentAnimation = ANIM_IDLE;
+	}
+	
     if (this.keys['z'] || this.keys['gamepad_x_button']) {
       this.startAnimIfNew(ANIM_BLOCK);
     }
