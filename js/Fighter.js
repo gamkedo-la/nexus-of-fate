@@ -63,7 +63,7 @@ class Fighter {
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
-      [ANIM_BLOCK]: 5
+      [ANIM_BLOCK]: 4
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -190,7 +190,7 @@ class Fighter {
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
-      if (this.currentAnimation == ANIM_CROUCH || this.currentAnimation == ANIM_BLOCK) {
+      if (this.currentAnimation == ANIM_CROUCH) {
         //prevent idle from preventing crouch
         if (this.frameNum == this.frameCounts[this.currentAnimation] - 1) {
           this.frameNum--;
