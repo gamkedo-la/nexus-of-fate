@@ -63,7 +63,7 @@ class Fighter {
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
-      [ANIM_BLOCK]: 4
+      [ANIM_BLOCK]: 5
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -345,6 +345,7 @@ class Fighter {
     this.currentAnimation = ANIM_CROUCH_PUNCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
+    this.animReturnToIdle = true;
   }
 
   died() {
@@ -357,6 +358,7 @@ class Fighter {
     this.currentAnimation = ANIM_BLOCK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
+	this.animReturnToIdle = true;
   }
 
   getCurrentAnimationFrameCount() {
