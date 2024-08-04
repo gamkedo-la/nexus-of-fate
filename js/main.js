@@ -56,7 +56,7 @@ window.onload = function () {
 
         check_gamepad();
         player.update(canvas.width);
-       // robot.update();
+        robot.update();
         player.check_collisions(robot);
         robot.check_collisions(player);
       }
@@ -74,12 +74,12 @@ window.onload = function () {
 
       background.draw();
 
-      // 3, 2, 1, SLAY!
+      // 3, 2, 1, FIGHT!
       if (roundStartCountdownTick > 0) {
         const fontSize = 240;
         context.font = `${fontSize}px Tohoma bold`;
         context.fillStyle = "white";
-        var drawn = roundStartCountdown > 0 ? roundStartCountdown : "SLAY!";
+        var drawn = roundStartCountdown > 0 ? roundStartCountdown : "FIGHT!";
         context.fillText(drawn, canvas.width / 2 - context.measureText(drawn).width / 2, canvas.height / 2);
       }
 

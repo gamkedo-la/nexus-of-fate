@@ -104,6 +104,8 @@ class Fighter {
     this.y = initialY;
     this.speedY = 0;
     this.currentAnimation = ANIM_IDLE;
+	this.prevAnim = ANIM_IDLE;
+	this.prevAnim = ANIM_IDLE;
     this.frameNum = 0;
     this.animReturnToIdle = false;
     this.timeTillNextFrame = 1 / ANIM_FPS;
@@ -132,9 +134,14 @@ class Fighter {
         }
 
         if (this.animReturnToIdle && this.frameNum == frameCount) {
-          this.animReturnToIdle = false;
-          this.currentAnimation = ANIM_IDLE;
-          this.frameNum = 0;
+		  if(this.currentAnimation == ANIM_BLOCK){
+			  this.frameNum = frameCount - 1;
+		  }else{
+			  this.animReturnToIdle = false;
+			  this.currentAnimation = ANIM_IDLE;
+			  this.frameNum = 0;
+		  }
+          
         } else {
           this.frameNum %= frameCount;
         }
@@ -182,6 +189,7 @@ class Fighter {
   }
 
   update(canvasWidth) {
+  this.prevAnim = this.currentAnimation;
     this.getInput();
 
     // Update the animation state based on movement
@@ -219,20 +227,23 @@ class Fighter {
     }
 
     if (this.keys['k'] || this.keys['gamepad_b_button']) {
-      this.kick();
+      this.startAnimIfNew(ANIM_KICK);
     }
 
     if (this.keys['p'] || this.keys['gamepad_a_button']) {
-      this.punch();
+      this.startAnimIfNew(ANIM_PUNCH);
     }
 
     if (this.keys['z'] || this.keys['gamepad_x_button']) {
-      this.block();
+      this.startAnimIfNew(ANIM_BLOCK);
     }
+	else if(this.currentAnimation == ANIM_BLOCK){
+		this.currentAnimation = ANIM_IDLE;
+	}
 
     if ((this.keys['s'] && this.keys['p'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
-      this.crouchPunch();
+      this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
 
     if (this.health <= 0) {
@@ -327,26 +338,17 @@ class Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
-  kick() {
-    this.currentAnimation = ANIM_KICK;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = true;
+  
+
+  startAnimIfNew(newAnim) {
+	if(this.currentAnimation != newAnim){
+		this.currentAnimation = newAnim;
+		this.frameNum = 0;
+		this.timeTillNextFrame = 1 / ANIM_FPS;
+		this.animReturnToIdle = true;
+	}
   }
 
-  punch() {
-    this.currentAnimation = ANIM_PUNCH;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = true;
-  }
-
-  crouchPunch() {
-    this.currentAnimation = ANIM_CROUCH_PUNCH;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-    this.animReturnToIdle = true;
-  }
 
   died() {
     this.currentAnimation = ANIM_DEATH;
@@ -354,12 +356,7 @@ class Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
-  block() {
-    this.currentAnimation = ANIM_BLOCK;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-	this.animReturnToIdle = true;
-  }
+ 
 
   getCurrentAnimationFrameCount() {
     return
