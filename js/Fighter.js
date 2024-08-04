@@ -366,7 +366,7 @@ class Fighter {
   check_collisions(myOpponent) {
     if (!myOpponent) return;
     let dist = Math.abs(this.x - myOpponent.x);
-    let beingBlocked = myOpponent.currentAnimation = ANIM_BLOCK;
+    let beingBlocked = myOpponent.currentAnimation == ANIM_BLOCK;
     
     if (this.currentAnimation == ANIM_PUNCH) {
         if (dist < 200) {
