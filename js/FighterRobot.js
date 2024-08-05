@@ -13,6 +13,8 @@ class FighterRobot extends Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = false;
     this.retreatDistance = 0;
+    this.retreatTime = 0; // Time when retreat started
+    this.retreatDuration = 2; // Duration to retreat in seconds
 
     this.lasers = [];
     this.lastShotTime = 0;
@@ -26,15 +28,17 @@ class FighterRobot extends Fighter {
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
 
+    // Handle retreating
     if (this.animReturnToIdle) {
-      this.speed = -2;
-      if (this.retreatDistance > 0) {
+      if (Date.now() - this.retreatTime < this.retreatDuration * 1000) {
+        this.speed = -2;
         let angle = Math.atan2(dy, dx);
         this.x -= Math.cos(angle) * this.speed;
         this.baseY -= Math.sin(angle) * this.speed;
         this.retreatDistance -= this.speed;
       } else {
         this.animReturnToIdle = false;
+        this.speed = 2; // Resume moving forward
       }
     } else if (distanceToPlayer < AI_PREFERRED_DIST) {
       this.speed = -2;
@@ -51,14 +55,13 @@ class FighterRobot extends Fighter {
       this.speed = 2;
       if (debugSoundVolume) {
         this.thrustSound.volume = 0.01;
-		this.canShootWhileRunning = true;
+        this.canShootWhileRunning = true;
       }
       this.thrustSound.play();
       this.currentAnimation = ANIM_IDLE;
     } else {
       this.speed = 0;
-	  
-	  this.canShootWhileRunning = false;
+      this.canShootWhileRunning = false;
     }
 
     // Check if the player is in a running state and if enough time has passed since the last shot
@@ -97,7 +100,8 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 100 + 50;
+    this.retreatDistance = Math.random() * 500 + 50;
+    this.retreatTime = Date.now(); // Start retreating now
     console.log("Punch anim started");
   }
 
@@ -106,7 +110,8 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 100 + 50;
+    this.retreatDistance = Math.random() * 500 + 50;
+    this.retreatTime = Date.now(); // Start retreating now
     console.log("Kick anim started");
   }
 
@@ -116,5 +121,4 @@ class FighterRobot extends Fighter {
     this.lasers.push(laser);
     console.log("Laser shot");
   }
- 
 }
