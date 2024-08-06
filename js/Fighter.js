@@ -8,6 +8,7 @@ const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
 
 const ANIM_FPS = 24; // how fast the animations play
+const CROUCH_ANIM_FPS = 200;
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -303,7 +304,7 @@ class Fighter {
   crouch() {
     this.currentAnimation = ANIM_CROUCH;
     this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
+    this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
   }
 
   
