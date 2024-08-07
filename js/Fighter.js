@@ -29,6 +29,7 @@ class Fighter {
     this.getInput = whichInput;
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
 	this.hurtSound = new Audio('audio/playerHurt.mp3');
+	this.robotHurtSound = new Audio('audio/robotHurt.mp3');
     this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
 
     this.punchSound = new Audio('audio/punch.mp3');
@@ -356,7 +357,14 @@ class Fighter {
           // play hit sfx
           this.punchHitSound.play();
           myOpponent.health -= 1;
-		  this.hurtSound.play();
+		  
+		  if(this.AI){
+			  robotHurtSound.play();
+		  }
+		  
+		  else{
+			  this.hurtSound.play();
+		  }
         }
       } else {
         console.log("punch missed: out of range!");
