@@ -364,6 +364,25 @@ class Fighter {
         this.punchSound.play();
       }
     } // punch
-
+ if(this.currentAnimation == ANIM_KICK){
+		if (dist < 200) {
+        if (beingBlocked) {
+          console.log("kick was blocked!");
+          // play block sfx
+          this.kickHitSound.play();
+        } else if (closeEnough && !beingBlocked) {
+          console.log("kick hit!");
+          // play hit sfx
+          this.kickHitSound.play();
+		  this.kickSound.play();
+		  myOpponent.health -= 1;
+        }
+      }
+	  else {
+        console.log("punch missed: out of range!");
+        // play woosh sfx
+        this.kickSound.play();
+      }
+    } // kick
   }
 }
