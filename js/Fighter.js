@@ -359,7 +359,7 @@ class Fighter {
           myOpponent.health -= 1;
 		  
 		  if(this.AI){
-			  robotHurtSound.play();
+			  this.robotHurtSound.play();
 		  }
 		  
 		  else{
