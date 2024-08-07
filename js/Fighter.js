@@ -28,6 +28,7 @@ class Fighter {
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
+	this.hurtSound = new Audio('audio/playerHurt.mp3');
     this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
 
     this.images = {
@@ -346,6 +347,7 @@ class Fighter {
           console.log("punch hit!");
           // play hit sfx
           myOpponent.health -= 1;
+		  this.hurtSound.play();
         }
       } else {
         console.log("punch missed: out of range!");
