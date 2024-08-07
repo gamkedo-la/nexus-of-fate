@@ -30,6 +30,13 @@ class Fighter {
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
     this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
 
+    this.punchSound = new Audio('audio/punch.mp3');
+    this.punchSound.volume = 0.5;
+    this.punchHitSound = new Audio('audio/punchHit.mp3');
+    this.kickSound = new Audio('audio/kick.mp3');
+    this.kickSound.volume = 0.5;
+    this.kickHitSound = new Audio('audio/kickHit.mp3');
+
     this.images = {
       [ANIM_IDLE]: new Image(),
       [ANIM_WALK_FORWARD]: new Image(),
@@ -342,14 +349,17 @@ class Fighter {
         if (beingBlocked) {
           console.log("punch was blocked!");
           // play block sfx
+          this.punchHitSound.play();
         } else if (closeEnough && !beingBlocked) {
           console.log("punch hit!");
           // play hit sfx
+          this.punchHitSound.play();
           myOpponent.health -= 1;
         }
       } else {
         console.log("punch missed: out of range!");
         // play woosh sfx
+        this.punchSound.play();
       }
     } // punch
 
