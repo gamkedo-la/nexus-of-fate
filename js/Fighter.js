@@ -3,6 +3,8 @@ const AI_PREFERRED_DIST = 260; // when to stop moving forward - the ideal target
 
 const PUNCH_HIT_RANGE = 200; // if we punch and enemy is not blocking and we are this close, register as a hit
 const KICK_HIT_RANGE = 250;
+const PUNCH_DAMAGE = 1;
+const KICK_DAMAGE = 1;
 
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
@@ -350,13 +352,22 @@ class Fighter {
     let dist = Math.abs(this.x - myOpponent.x);
     let beingBlocked = myOpponent.currentAnimation == ANIM_BLOCK;
 
+    // prevent an attack from hitting multiple times or playing >1 sound
+    // by only checking collisions when the animation just changed!
+    if (this.lastFrameAnimation != this.currentAnimation) {
+        console.log("new animation! let's check collisions!");
+    } else {
+        return; // do nothing!
+    }
+    this.lastFrameAnimation = this.currentAnimation;
+
     if (this.currentAnimation == ANIM_PUNCH) {
       if (dist < PUNCH_HIT_RANGE) { // close enough?
         if (beingBlocked) {
           console.log("punch was blocked!");
           this.punchHitSound.play(); // block sound
         } else { // not blocked?
-          myOpponent.health -= 1;
+          myOpponent.health -= PUNCH_DAMAGE;
           console.log("punch hit! opponent health is now "+myOpponent.health);
           this.punchHitSound.play(); // impact sound
 		  if (this.AI) {
@@ -374,13 +385,13 @@ class Fighter {
     if(this.currentAnimation == ANIM_KICK){
 		if (dist < KICK_HIT_RANGE) { // close enough?
             if (beingBlocked) {
-            console.log("kick was blocked!");
-            this.kickHitSound.play(); // play block sfx
+                console.log("kick was blocked!");
+                this.kickHitSound.play(); // play block sfx
             } else { // not blocked
-            console.log("kick hit!");
-            this.kickHitSound.play(); // play hit sfx
-            this.kickSound.play(); // woosh
-            myOpponent.health -= 1;
+                myOpponent.health -= KICK_DAMAGE;
+                console.log("kick hit! opponent health is now "+myOpponent.health);
+                this.kickHitSound.play(); // play hit sfx
+                this.kickSound.play(); // woosh
             }
         } else {
             console.log("kick missed: out of range! distance="+dist.toFixed(1));
