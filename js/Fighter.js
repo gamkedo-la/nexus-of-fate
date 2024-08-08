@@ -356,9 +356,9 @@ class Fighter {
           console.log("punch was blocked!");
           this.punchHitSound.play(); // block sound
         } else { // not blocked?
-          console.log("punch hit!");
-          this.punchHitSound.play(); // impact sound
           myOpponent.health -= 1;
+          console.log("punch hit! opponent health is now "+myOpponent.health);
+          this.punchHitSound.play(); // impact sound
 		  if (this.AI) {
 			  this.robotHurtSound.play();
 		  } else {
@@ -366,7 +366,7 @@ class Fighter {
 		  }
         }
       } else {
-        console.log("punch missed: out of range!");
+        console.log("punch missed: out of range! distance="+dist.toFixed(1));
         this.punchSound.play(); // woosh
       }
     } // punch
@@ -383,7 +383,7 @@ class Fighter {
             myOpponent.health -= 1;
             }
         } else {
-            console.log("kick missed: out of range!");
+            console.log("kick missed: out of range! distance="+dist.toFixed(1));
             this.kickSound.play(); // woosh
         }
     } // kick
