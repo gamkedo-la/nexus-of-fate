@@ -3,8 +3,8 @@ const AI_PREFERRED_DIST = 260; // when to stop moving forward - the ideal target
 
 const PUNCH_HIT_RANGE = 200; // if we punch and enemy is not blocking and we are this close, register as a hit
 const KICK_HIT_RANGE = 250;
-const PUNCH_DAMAGE = 1;
-const KICK_DAMAGE = 1;
+const PUNCH_DAMAGE = 10;
+const KICK_DAMAGE = 15;
 
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
