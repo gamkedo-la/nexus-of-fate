@@ -1,6 +1,9 @@
 const AI_TOO_CLOSE_DIST = 250; // when to back up (if player walks into robot, it will back up)
 const AI_PREFERRED_DIST = 260; // when to stop moving forward - the ideal target distance
 
+const PUNCH_HIT_RANGE = 200; // if we punch and enemy is not blocking and we are this close, register as a hit
+const KICK_HIT_RANGE = 250;
+
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
@@ -346,53 +349,45 @@ class Fighter {
     if (!myOpponent) return;
     let dist = Math.abs(this.x - myOpponent.x);
     let beingBlocked = myOpponent.currentAnimation == ANIM_BLOCK;
-    let closeEnough = dist < 100;
 
     if (this.currentAnimation == ANIM_PUNCH) {
-      if (dist < 200) {
+      if (dist < PUNCH_HIT_RANGE) { // close enough?
         if (beingBlocked) {
           console.log("punch was blocked!");
-          // play block sfx
-          this.punchHitSound.play();
-        } else if (closeEnough && !beingBlocked) {
+          this.punchHitSound.play(); // block sound
+        } else { // not blocked?
           console.log("punch hit!");
-          // play hit sfx
-          this.punchHitSound.play();
+          this.punchHitSound.play(); // impact sound
           myOpponent.health -= 1;
-		  
-		  if(this.AI){
+		  if (this.AI) {
 			  this.robotHurtSound.play();
-		  }
-		  
-		  else{
+		  } else {
 			  this.hurtSound.play();
 		  }
         }
       } else {
         console.log("punch missed: out of range!");
-        // play woosh sfx
-        this.punchSound.play();
+        this.punchSound.play(); // woosh
       }
     } // punch
- if(this.currentAnimation == ANIM_KICK){
-		if (dist < 200) {
-        if (beingBlocked) {
-          console.log("kick was blocked!");
-          // play block sfx
-          this.kickHitSound.play();
-        } else if (closeEnough && !beingBlocked) {
-          console.log("kick hit!");
-          // play hit sfx
-          this.kickHitSound.play();
-		  this.kickSound.play();
-		  myOpponent.health -= 1;
+
+    if(this.currentAnimation == ANIM_KICK){
+		if (dist < KICK_HIT_RANGE) { // close enough?
+            if (beingBlocked) {
+            console.log("kick was blocked!");
+            this.kickHitSound.play(); // play block sfx
+            } else { // not blocked
+            console.log("kick hit!");
+            this.kickHitSound.play(); // play hit sfx
+            this.kickSound.play(); // woosh
+            myOpponent.health -= 1;
+            }
+        } else {
+            console.log("kick missed: out of range!");
+            this.kickSound.play(); // woosh
         }
-      }
-	  else {
-        console.log("punch missed: out of range!");
-        // play woosh sfx
-        this.kickSound.play();
-      }
     } // kick
-  }
-}
+
+  } // check_collisions()
+
+} // fighter class
