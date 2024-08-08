@@ -60,7 +60,7 @@ class Fighter {
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
     this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
-    this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_PUNCH];
+    this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 
     // Frame counts for each animation
@@ -69,6 +69,7 @@ class Fighter {
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
+	  [ANIM_CROUCH_PUNCH]: 10,
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
@@ -81,6 +82,7 @@ class Fighter {
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 2200 * 0.2,
+	  [ANIM_CROUCH_PUNCH]: 1746 * 0.2,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
