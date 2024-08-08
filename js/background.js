@@ -73,12 +73,6 @@ var healthBar = {
             healthbarBackground.onload = function() { this.loaded = true; }
         }
 
-       /* if (!powerbarBackground) {
-            powerbarBackground = new Image();
-            powerbarBackground.src = "images/powerbarBackground.png";
-            powerbarBackground.onload = function() { this.loaded = true; }
-        }*/
-
         // Draw GUI header overlay
         if (healthbarBackground.loaded) context.drawImage(healthbarBackground, 0, 0);
 
@@ -111,5 +105,31 @@ var healthBar = {
         context.fillStyle = "white";
         context.fillText(fightRoundNumber + " of " + fightRoundMax, 720, 40);
         context.fillText(fightTimeRemaining.toFixed(2) + "s", 720, 84);
+    }
+};
+
+var powerBar = {
+    width: 200,
+    height: 25,
+    padding: 50,
+
+    draw: function() {
+        // Draw player power bar background
+        context.fillStyle = "grey";
+        context.fillRect(this.padding + 350, this.padding + this.height - 27, this.width, this.height);
+
+        // Draw player power bar filled with green
+        context.fillStyle = "green";
+        context.fillRect(this.padding + 2, this.padding + this.height, (this.width - 4) * (player.power / 100), this.height - 4);
+    },
+
+    update: function(deltaTime) {
+        // Increase player power gradually over time
+        if (player.power < 100) {
+            player.power += deltaTime * 0.01; // Adjust the 0.01 to control the speed of power increase
+            if (player.power > 100) {
+                player.power = 100; // Ensure the power doesn't exceed 100
+            }
+        }
     }
 };
