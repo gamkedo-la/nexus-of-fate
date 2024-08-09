@@ -366,10 +366,13 @@ class Fighter {
         if (beingBlocked) {
           console.log("punch was blocked!");
           this.punchHitSound.play(); // block sound
+          fx.impactFX(myOpponent.x,myOpponent.y);
         } else { // not blocked?
           myOpponent.health -= PUNCH_DAMAGE;
           console.log("punch hit! opponent health is now "+myOpponent.health);
           this.punchHitSound.play(); // impact sound
+          fx.impactFX(myOpponent.x,myOpponent.y);
+          fx.hitFX(myOpponent.x,myOpponent.y);
 		  if (this.AI) {
 			  this.robotHurtSound.play();
 		  } else {
@@ -387,11 +390,14 @@ class Fighter {
             if (beingBlocked) {
                 console.log("kick was blocked!");
                 this.kickHitSound.play(); // play block sfx
+                fx.impactFX(myOpponent.x,myOpponent.y);
             } else { // not blocked
                 myOpponent.health -= KICK_DAMAGE;
                 console.log("kick hit! opponent health is now "+myOpponent.health);
                 this.kickHitSound.play(); // play hit sfx
                 this.kickSound.play(); // woosh
+                fx.impactFX(myOpponent.x,myOpponent.y);
+                fx.hitFX(myOpponent.x,myOpponent.y);
             }
         } else {
             console.log("kick missed: out of range! distance="+dist.toFixed(1));

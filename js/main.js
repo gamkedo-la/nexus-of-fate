@@ -60,6 +60,7 @@ window.onload = function () {
 		powerBar.update(deltaTime);
         player.check_collisions(robot);
         robot.check_collisions(player);
+        fx.update();
       }
       else {
         if (roundStartCountdownTick < 0) {
@@ -89,6 +90,8 @@ window.onload = function () {
       player.draw();
       robot.draw();
 	  powerBar.draw();
+      fx.draw();
+
     }
     requestAnimationFrame(draw);
   })();
