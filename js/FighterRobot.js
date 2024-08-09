@@ -22,8 +22,17 @@ class FighterRobot extends Fighter {
     
     this.canShootWhileRunning = true; // Boolean to control shooting
   }
+  
+
 
   update(deltaTime) {
+	  
+    if (this.opponent && this.opponent.health <= 0) {
+      this.currentAnimation = ANIM_IDLE;
+      this.speed = 0;
+      return;
+    }
+	
     let dx = player.x - this.x;
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
