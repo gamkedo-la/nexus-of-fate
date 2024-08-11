@@ -12,9 +12,7 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = false;
-    this.retreatDistance = 0;
     this.retreatTime = 0; // Time when retreat started
-    this.retreatDuration = 2; // Duration to retreat in seconds
 
     this.lasers = [];
     this.lastShotTime = 0;
@@ -38,17 +36,12 @@ class FighterRobot extends Fighter {
     let distanceToPlayer = Math.hypot(dx, dy);
 
     // Handle retreating
+	
+	 
     if (this.animReturnToIdle) {
-      if (Date.now() - this.retreatTime < this.retreatDuration * 1000) {
-        this.speed = -2;
-        let angle = Math.atan2(dy, dx);
-        this.x -= Math.cos(angle) * this.speed;
-        this.baseY -= Math.sin(angle) * this.speed;
-        this.retreatDistance -= this.speed;
-      } else {
-        this.animReturnToIdle = false;
-        this.speed = 2; // Resume moving forward
-      }
+      //  this.animReturnToIdle = false;
+       // this.speed = 2; // Resume moving forward
+		
     } else if (distanceToPlayer < AI_PREFERRED_DIST) {
       this.speed = -2;
       if (this.currentAnimation === ANIM_IDLE) {
@@ -79,7 +72,15 @@ class FighterRobot extends Fighter {
       this.shoot(dx, dy);
       this.lastShotTime = Date.now();
     }
-
+	
+	
+    if ( this.retreatTime > 0) {
+		this.retreatTime--;
+		this.speed = -2;
+	 }
+	 
+	 
+	 
     let angle = Math.atan2(dy, dx);
     this.x += Math.cos(angle) * this.speed;
     this.baseY += Math.sin(angle) * this.speed;
@@ -109,8 +110,7 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 500 + 50;
-    this.retreatTime = Date.now(); // Start retreating now
+    this.retreatTime = 200; // Start retreating now
     console.log("Punch anim started");
   }
 
@@ -119,8 +119,7 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatDistance = Math.random() * 500 + 50;
-    this.retreatTime = Date.now(); // Start retreating now
+    this.retreatTime = 200; // Start retreating now
     console.log("Kick anim started");
   }
 
