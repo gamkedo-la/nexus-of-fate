@@ -13,7 +13,7 @@ var roundStartCountdown = 3;
 
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
-const mainMenu = new MainMenu(context);
+const mainMenu = new MainMenu(canvas);
 
 const player = new Player(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
@@ -57,7 +57,7 @@ window.onload = function () {
         check_gamepad();
         player.update(canvas.width);
         robot.update();
-		powerBar.update(deltaTime);
+        powerBar.update(deltaTime);
         player.check_collisions(robot);
         robot.check_collisions(player);
         fx.update();
@@ -89,7 +89,7 @@ window.onload = function () {
       healthBar.draw();
       player.draw();
       robot.draw();
-	  powerBar.draw();
+      powerBar.draw();
       fx.draw();
 
     }

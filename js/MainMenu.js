@@ -1,37 +1,39 @@
 class MainMenu {
-  constructor(context) {
-      this.context = context;
+  constructor(canvas) {
+    this.context = canvas.getContext("2d");
 
-      this.mainMenuImage = document.createElement("img");
-      this.mainMenuImage.src = "images/MainMenuScreen.png";
-      this.onMainMenu = true;
+    this.mainMenuImage = document.createElement("img");
+    this.mainMenuImage.src = "images/MainMenuScreen.png";
+    this.onMainMenu = true;
 
-      function userIsOnStartText(mouseClick) {
-          // current Start text: clientX(610-900); clientY(500-600)
-          return (mouseClick.clientX >= 610 && mouseClick.clientX <= 900 &&
-              mouseClick.clientY >= 500 && mouseClick.clientY <= 600);
+    function userIsOnStartText(mouseClick) {
+      // current Start text: clientX(610-900); clientY(500-600)
+      var rect = canvas.getBoundingClientRect();
+
+      return (mouseClick.clientX >= rect.left + 610 && mouseClick.clientX <= rect.left + 900 &&
+        mouseClick.clientY >= rect.top + 500 && mouseClick.clientY <= rect.top + 600);
+    }
+
+    window.addEventListener("click", (event) => {
+      if (userIsOnStartText(event)) {
+        this.onMainMenu = false;
       }
+    });
 
-      window.addEventListener("click", (event) => {
-          if (userIsOnStartText(event)) {
-              this.onMainMenu = false;
-          }
-      });
-
-      // Cursor Styling when over Start Text
-      window.addEventListener("mousemove", (event) => {
-          if (userIsOnStartText(event) && this.onMainMenu) {
-              document.body.style.cursor = "pointer";
-          } else {
-              document.body.style.cursor = "default";
-          }
-      });
+    // Cursor Styling when over Start Text
+    window.addEventListener("mousemove", (event) => {
+      if (userIsOnStartText(event) && this.onMainMenu) {
+        document.body.style.cursor = "pointer";
+      } else {
+        document.body.style.cursor = "default";
+      }
+    });
 
   }
 
   show() {
     if (this.onMainMenu) {
-        this.context.drawImage(this.mainMenuImage, 0, 0); // load image for main menu
+      this.context.drawImage(this.mainMenuImage, 0, 0); // load image for main menu
     }
 
     return this.onMainMenu;
