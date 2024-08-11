@@ -38,7 +38,8 @@ class FighterRobot extends Fighter {
     // Handle retreating
 	
 	 
-    if (this.animReturnToIdle) {
+    if (this.animReturnToIdle && this.retreatTime > 0) {
+		
       //  this.animReturnToIdle = false;
        // this.speed = 2; // Resume moving forward
 		
