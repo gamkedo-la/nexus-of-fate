@@ -76,7 +76,11 @@ class FighterRobot extends Fighter {
 	
     if ( this.retreatTime > 0) {
 		this.retreatTime--;
-		this.speed = -2;
+		if(this.animReturnToIdle){
+		 this.speed = 0;
+		}else{
+		 this.speed = -2;
+		}
 	 }
 	 
 	 
@@ -110,7 +114,7 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatTime = 200; // Start retreating now
+    this.retreatTime = 40 + Math.random() * 50; 
     console.log("Punch anim started");
   }
 
@@ -119,7 +123,7 @@ class FighterRobot extends Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
-    this.retreatTime = 200; // Start retreating now
+    this.retreatTime = 40 + Math.random() * 50; 
     console.log("Kick anim started");
   }
 
