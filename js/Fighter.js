@@ -1,8 +1,8 @@
 const AI_TOO_CLOSE_DIST = 50; // when to back up (if player walks into robot, it will back up)
 const AI_PREFERRED_DIST = 150; // when to stop moving forward - the ideal target distance
 
-const PUNCH_HIT_RANGE = 55; // if we punch and enemy is not blocking and we are this close, register as a hit
-const KICK_HIT_RANGE = 56;
+const PUNCH_HIT_RANGE = 155; // if we punch and enemy is not blocking and we are this close, register as a hit
+const KICK_HIT_RANGE = 156;
 const PUNCH_DAMAGE = 5;
 const KICK_DAMAGE = 6;
 
@@ -358,7 +358,11 @@ class Fighter {
 
   check_collisions(myOpponent) {
     if (!myOpponent) return;
-    let dist = Math.abs(this.x - myOpponent.x);
+    //let dist = Math.abs(this.x - myOpponent.x);
+	let dx = myOpponent.x - this.x;
+    let dy = myOpponent.y - this.y;
+    let dist = Math.hypot(dx, dy);
+	
     let beingBlocked = myOpponent.currentAnimation == ANIM_BLOCK;
 
     // prevent an attack from hitting multiple times or playing >1 sound
