@@ -1,10 +1,10 @@
-const AI_TOO_CLOSE_DIST = 250; // when to back up (if player walks into robot, it will back up)
-const AI_PREFERRED_DIST = 260; // when to stop moving forward - the ideal target distance
+const AI_TOO_CLOSE_DIST = 50; // when to back up (if player walks into robot, it will back up)
+const AI_PREFERRED_DIST = 150; // when to stop moving forward - the ideal target distance
 
-const PUNCH_HIT_RANGE = 200; // if we punch and enemy is not blocking and we are this close, register as a hit
-const KICK_HIT_RANGE = 250;
-const PUNCH_DAMAGE = 10;
-const KICK_DAMAGE = 15;
+const PUNCH_HIT_RANGE = 55; // if we punch and enemy is not blocking and we are this close, register as a hit
+const KICK_HIT_RANGE = 56;
+const PUNCH_DAMAGE = 5;
+const KICK_DAMAGE = 6;
 
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
