@@ -2,10 +2,12 @@
 
 var fx = {
 
-    draw: function() {
+    ready:false,
+    particles:null,
 
+    draw: function() {
         // first time inits
-        if (!this.particles) {
+        if (!this.ready) {
             console.log("initializing particles...");
             this.particles = [];
             this.imgPuff = new Image();
@@ -17,6 +19,7 @@ var fx = {
             this.imgDust = new Image();
             this.imgDust.onload = function() { this.loaded=true; }
             this.imgDust.src = "images/jumpFX.png";
+            this.ready=true;
         }
 
         // only draw if the images are ready to use
@@ -79,6 +82,22 @@ var fx = {
             this.particles.push(p);
         }
     },
+
+    mainMenuFX: function() {
+        if (!this.ready) return;
+        for (let n=0; n<25; n++) {
+            var p = {
+                age:0,
+                life:Math.random()*1,
+                img:this.imgPuff,
+                x:Math.random()*1500-100,
+                y:Math.random()*100+600,
+                vx:Math.random()*4-2,
+                vy:Math.random()*-3
+            };
+            this.particles.push(p);
+        }
+    }
 
 }
 

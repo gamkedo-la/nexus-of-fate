@@ -34,6 +34,9 @@ class MainMenu {
   show() {
     if (this.onMainMenu) {
       this.context.drawImage(this.mainMenuImage, 0, 0); // load image for main menu
+      fx.draw();
+      fx.update();
+      fx.mainMenuFX();
     }
 
     return this.onMainMenu;
