@@ -96,6 +96,24 @@ var fx = {
             };
             this.particles.push(p);
         }
+    },
+
+    mainMenuHoverFX: function() {
+        if (!this.ready) return;
+        //console.log("mainMenuHoverFX");
+        for (let n=0; n<25; n++) {
+            let flip = Math.random()<0.5;
+            var p = {
+                age:0,
+                life:Math.random()*1,
+                img:this.imgPuff,
+                x:390+Math.random()*16+(flip?440:0),
+                y:408+Math.random()*16,
+                vx:Math.random()*(flip?16:-16),
+                vy:Math.random()*1-0.5
+            };
+            this.particles.push(p);
+        }
     }
 
 }

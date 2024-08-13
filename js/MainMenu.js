@@ -23,8 +23,10 @@ class MainMenu {
     // Cursor Styling when over Start Text
     window.addEventListener("mousemove", (event) => {
       if (userIsOnStartText(event) && this.onMainMenu) {
+        this.hoveringButton=true;
         document.body.style.cursor = "pointer";
       } else {
+        this.hoveringButton=false;
         document.body.style.cursor = "default";
       }
     });
@@ -37,6 +39,7 @@ class MainMenu {
       fx.draw();
       fx.update();
       fx.mainMenuFX();
+      if (this.hoveringButton) fx.mainMenuHoverFX();      
     }
 
     return this.onMainMenu;
