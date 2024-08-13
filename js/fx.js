@@ -3,13 +3,12 @@
 var fx = {
 
     ready:false,
-    particles:null,
+    particles:[],
 
     draw: function() {
         // first time inits
         if (!this.ready) {
             console.log("initializing particles...");
-            this.particles = [];
             this.imgPuff = new Image();
             this.imgPuff.onload = function() { this.loaded=true; }
             this.imgPuff.src = "images/impactFX.png";
