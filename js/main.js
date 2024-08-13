@@ -87,10 +87,10 @@ window.onload = function () {
 
       fog.draw();
       healthBar.draw();
+      fx.draw();
       player.draw();
       robot.draw();
       powerBar.draw();
-      fx.draw();
 
     }
     requestAnimationFrame(draw);

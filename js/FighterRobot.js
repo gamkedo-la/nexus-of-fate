@@ -103,11 +103,17 @@ class FighterRobot extends Fighter {
   }
 
   draw(context) {
-    // Call the draw method of the super class
+    
+    // add some jetpack fire
+    fx.jetpackFX(this.x-32,this.y+100,Math.random()*2-1,Math.random()*8);
+    fx.jetpackFX(this.x+8,this.y+100,Math.random()*2-1,Math.random()*8);
+
+    // draw the robot sprite
     super.draw(context);
 
-    // Draw the lasers
+    // draw the lasers
     this.lasers.forEach(laser => laser.draw());
+
   }
 
   punch() {
