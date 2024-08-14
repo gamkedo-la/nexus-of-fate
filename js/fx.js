@@ -127,3 +127,11 @@ var fx = {
 
 }
 
+// a handy function 
+function drawBitmapCenteredAtLocationWithRotation(graphic,atX,atY,withAngle) {
+  context.save(); // allows us to undo translate movement and rotate spin
+  context.translate(atX,atY); // sets the point where our graphic will go
+  context.rotate(withAngle); // sets the rotation
+  context.drawImage(graphic,-graphic.width/2,-graphic.height/2); // center, draw
+  context.restore(); // undo the translation movement and rotation since save()
+}

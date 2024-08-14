@@ -1,10 +1,17 @@
+const LASER_SPEED = 16; // was 35; slower speed so you can see it and duck in time
+const LASER_LENGTH = 20; // note: sprite is not stretched, only red line is
+
+var laserSprite = new Image();
+laserSprite.src = "images/laser_bolt.png";
+laserSprite.onload = function() { this.loaded=true; }
+
 class Laser {
   constructor(x, y, angle) {
     this.x = x;
     this.y = y;
     this.angle = angle;
-    this.speed = 35;
-    this.length = 20;
+    this.speed = LASER_SPEED;
+    this.length = LASER_LENGTH;
     this.active = true;
   }
 
@@ -25,5 +32,8 @@ class Laser {
     context.moveTo(this.x, this.y);
     context.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
     context.stroke();
+
+    if (laserSprite.loaded) drawBitmapCenteredAtLocationWithRotation(laserSprite,this.x,this.y,this.angle);
+
   }
 }

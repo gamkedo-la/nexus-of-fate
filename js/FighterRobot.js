@@ -1,3 +1,7 @@
+// offset robot laser origin so it starts from the eyes
+const LASER_SHOOT_OFFSETX = 0;
+const LASER_SHOOT_OFFSETY = 64;
+
 class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
     super(whichInput, imageSrcs, initialX, initialY);
@@ -136,7 +140,7 @@ class FighterRobot extends Fighter {
 
   shoot(dx, dy) {
     let angle = Math.atan2(dy, dx);
-    let laser = new Laser(this.x, this.y, angle);
+    let laser = new Laser(this.x+LASER_SHOOT_OFFSETX, this.y+LASER_SHOOT_OFFSETY, angle);
     this.lasers.push(laser);
     console.log("Laser shot");
   }
