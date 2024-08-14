@@ -13,7 +13,7 @@ const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
 
 const ANIM_FPS = 24; // how fast the animations play
-const CROUCH_ANIM_FPS = 200;
+const CROUCH_ANIM_FPS = 30;
 
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -141,7 +141,11 @@ class Fighter {
     this.timeTillNextFrame -= deltaTime;
     if (this.timeTillNextFrame <= 0) {
       this.frameNum++;
-      this.timeTillNextFrame += 1 / ANIM_FPS;
+	  if(this.currentAnimation == ANIM_CROUCH){
+		     this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
+	  }else{
+		     this.timeTillNextFrame += 1 / ANIM_FPS;
+	  }
 
       var frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
 
