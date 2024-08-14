@@ -92,14 +92,7 @@ var healthBar = {
         context.fillStyle = "red";
         context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
 
-        // Draw player power bar background
-        context.fillStyle = "grey";
-        context.fillRect(this.padding + 350, this.padding  + this.height - 27, this.width, this.height);
-
-        // Draw player power bar filled with green
-        context.fillStyle = "green";
-        context.fillRect(this.padding + 2, this.padding + this.height, (this.width - 4) * (player.power / 100), this.height - 4);
-
+       
         // Round number and timer
         context.font = "20px Tohoma bold";
         context.fillStyle = "white";
@@ -114,13 +107,15 @@ var powerBar = {
     padding: 50,
 
     draw: function() {
+		var cornerX = this.padding + 350;
+		var cornerY = this.padding + this.height - 27;
         // Draw player power bar background
         context.fillStyle = "grey";
-        context.fillRect(this.padding + 350, this.padding + this.height - 27, this.width, this.height);
+        context.fillRect(cornerX, cornerY, this.width, this.height);
 
         // Draw player power bar filled with green
         context.fillStyle = "green";
-        context.fillRect(this.padding + 2, this.padding + this.height, (this.width - 4) * (player.power / 100), this.height - 4);
+        context.fillRect(cornerX, cornerY, (this.width) * (player.power / 100), this.height);
     },
 
     update: function(deltaTime) {
