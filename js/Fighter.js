@@ -86,7 +86,7 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
-	  [ANIM_COMBO]: 19
+	  [ANIM_COMBO]: 11
 
     };
 
@@ -265,7 +265,9 @@ class Fighter {
 	
 	 if ((this.keys['n'] && this.keys['m'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
-      this.combo();
+        if(this.currentAnimation != ANIM_COMBO){
+		 this.startAnimIfNew(ANIM_COMBO); 
+	  }
     }
 	
     // keys below here can be held, remember to check for currentAnim when returnTOIdle is used
@@ -380,11 +382,6 @@ class Fighter {
     this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
   }
   
-  combo() {
-    this.currentAnimation = ANIM_COMBO;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-  }
 
   
 
