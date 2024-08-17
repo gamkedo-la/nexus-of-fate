@@ -25,6 +25,8 @@ const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
 const ANIM_BLOCK = 'block';
+const ANIM_COMBO = 'combo';
+
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
@@ -55,7 +57,8 @@ class Fighter {
       [ANIM_PUNCH]: new Image(),
       [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image(),
-      [ANIM_BLOCK]: new Image()
+      [ANIM_BLOCK]: new Image(),
+	  [ANIM_COMBO]: new Image()
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -68,6 +71,8 @@ class Fighter {
     this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
+	this.images[ANIM_COMBO].src = imageSrcs[ANIM_COMBO];
+
 
     // Frame counts for each animation
     this.frameCounts = {
@@ -80,7 +85,9 @@ class Fighter {
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
-      [ANIM_BLOCK]: 4
+      [ANIM_BLOCK]: 4,
+	  [ANIM_COMBO]: 19
+
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -93,7 +100,8 @@ class Fighter {
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 7,
-      [ANIM_BLOCK]: 2274 * 0.2
+      [ANIM_BLOCK]: 2274 * 0.2,
+	  [ANIM_COMBO]: 1913 * 0.2
     };
 
     this.frameHeightRobot = { // scale dim times frameheight from export
@@ -153,7 +161,11 @@ class Fighter {
       if (this.animReturnToIdle && this.frameNum === frameCount) {
         if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH) {
           this.frameNum = frameCount - 1;
-        } else {
+        } else if (this.currentAnimation === ANIM_CROUCH_PUNCH) {
+		  this.currentAnimation = ANIM_CROUCH;
+		  frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
+          this.frameNum = frameCount - 1;
+        } else{
           this.animReturnToIdle = false;
           this.currentAnimation = ANIM_IDLE;
           this.frameNum = 0;
@@ -245,9 +257,23 @@ class Fighter {
     if (this.keys['p'] || this.keys['gamepad_a_button']) {
       this.startAnimIfNew(ANIM_PUNCH);
     }
+	
+	 if ((this.keys['s'] && this.keys['p'])
+      || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
+      this.startAnimIfNew(ANIM_CROUCH_PUNCH);
+    }
+	
+	 if ((this.keys['n'] && this.keys['m'])
+      || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
+      this.combo();
+    }
+	
     // keys below here can be held, remember to check for currentAnim when returnTOIdle is used
-    if (this.keys['s'] || this.keys['gamepad_down']) {
-      this.startAnimIfNew(ANIM_CROUCH);
+    else if (this.keys['s'] || this.keys['gamepad_down']) {
+	  if(this.currentAnimation != ANIM_CROUCH_PUNCH){
+		 this.startAnimIfNew(ANIM_CROUCH); 
+	  }
+	  
     }
 	else if(this.currentAnimation == ANIM_CROUCH){
 		this.currentAnimation = ANIM_IDLE;
@@ -260,10 +286,7 @@ class Fighter {
 		this.currentAnimation = ANIM_IDLE;
 	}
 
-    if ((this.keys['s'] && this.keys['p'])
-      || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
-      this.startAnimIfNew(ANIM_CROUCH_PUNCH);
-    }
+   
 
     if (this.health <= 0) {
       this.died();
@@ -355,6 +378,12 @@ class Fighter {
     this.currentAnimation = ANIM_CROUCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
+  }
+  
+  combo() {
+    this.currentAnimation = ANIM_COMBO;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
   }
 
   
