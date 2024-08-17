@@ -205,24 +205,7 @@ class Fighter {
   // Draw the base sprite
   context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
 
-  // Apply red tint based on health
-  let healthPercentage = this.health / 100;
-  if (healthPercentage < 1) {
-    // Save the current state
   
-    context.save();
-    context.globalCompositeOperation = 'source-atop';
-    context.fillStyle = `rgba(255, 0, 0, ${(1 - healthPercentage) * 0.5})`;
-    context.fillRect(this.x - frameW / 2, this.y, frameW, frameH);
-    context.restore();
-
-    // Remove the tint on the next frame
-    requestAnimationFrame(() => {
-      context.clearRect(this.x - frameW / 2, this.y, frameW, frameH);
-      // Redraw the character without the tint
-      context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
-    });
-  }
 }
   update(canvasWidth) {
   this.prevAnim = this.currentAnimation;
