@@ -265,8 +265,9 @@ class Fighter {
 	
 	 if ((this.keys['n'] && this.keys['m'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
-        if(this.currentAnimation != ANIM_COMBO){
+        if(this.currentAnimation != ANIM_COMBO && player.power >= 100){
 		 this.startAnimIfNew(ANIM_COMBO); 
+		 player.power = 0;
 	  }
     }
 	
