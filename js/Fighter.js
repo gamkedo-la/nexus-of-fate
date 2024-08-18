@@ -5,16 +5,13 @@ const PUNCH_HIT_RANGE = 155; // if we punch and enemy is not blocking and we are
 const KICK_HIT_RANGE = 156;
 const PUNCH_DAMAGE = 5;
 const KICK_DAMAGE = 6;
-
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -10; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
-
 const ANIM_FPS = 24; // how fast the animations play
 const CROUCH_ANIM_FPS = 30;
-
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
@@ -26,6 +23,8 @@ const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
 const ANIM_BLOCK = 'block';
 const ANIM_COMBO = 'combo';
+const ANIM_DAMAGE = 'damage';
+
 
 
 class Fighter {
@@ -58,7 +57,9 @@ class Fighter {
       [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image(),
       [ANIM_BLOCK]: new Image(),
-	  [ANIM_COMBO]: new Image()
+	  [ANIM_COMBO]: new Image(),
+	  [ANIM_DAMAGE]: new Image()
+
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -72,6 +73,8 @@ class Fighter {
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 	this.images[ANIM_COMBO].src = imageSrcs[ANIM_COMBO];
+	this.images[ANIM_DAMAGE].src = imageSrcs[ANIM_COMBO];
+
 
 
     // Frame counts for each animation
@@ -86,8 +89,8 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
-	  [ANIM_COMBO]: 11
-
+	  [ANIM_COMBO]: 11.
+	  [ANIM_DAMAGE]: 0
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -101,7 +104,8 @@ class Fighter {
       [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 2274 * 0.2,
-	  [ANIM_COMBO]: 1913 * 0.2
+	  [ANIM_COMBO]: 1913 * 0.2,
+	  [ANIM_DAMAGE]: 0
     };
 
     this.frameHeightRobot = { // scale dim times frameheight from export
@@ -365,6 +369,12 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
   }
+  
+  damage() {
+	this.currentAnimation = ANIM_DAMAGE;
+    this.frameNum = 0;
+    this.timeTillNextFrame = 1 / ANIM_FPS;
+}
   
 
   
