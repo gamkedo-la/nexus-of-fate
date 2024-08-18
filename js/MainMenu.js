@@ -41,6 +41,9 @@ class MainMenu {
       fx.mainMenuFX();
       if (this.hoveringButton) fx.mainMenuHoverFX();      
     }
+    else {
+      fx.clear();
+    }
 
     return this.onMainMenu;
   }
