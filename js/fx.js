@@ -48,6 +48,10 @@ var fx = {
         }
     }, // update()
 
+    clear: function() {
+        this.particles = [];
+    },
+
     // used by blocks
     impactFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning an impactFX at "+x+","+y);
