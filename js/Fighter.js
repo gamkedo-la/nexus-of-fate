@@ -89,7 +89,7 @@ class Fighter {
       [ANIM_PUNCH]: 10,
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
-	  [ANIM_COMBO]: 11.
+	  [ANIM_COMBO]: 11,
 	  [ANIM_DAMAGE]: 0
     };
 
@@ -370,13 +370,14 @@ class Fighter {
     this.timeTillNextFrame = 1 / CROUCH_ANIM_FPS;
   }
   
+  
+  
+  
   damage() {
 	this.currentAnimation = ANIM_DAMAGE;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
 }
-  
-
   
 
   startAnimIfNew(newAnim) {
@@ -436,6 +437,10 @@ class Fighter {
 		  } else {
 			  this.hurtSound.play();
 		  }
+		  
+		  if(!this.AI){
+			  this.damage();
+		  }
         }
       } else {
         console.log("punch missed: out of range! distance="+dist.toFixed(1));
@@ -461,6 +466,10 @@ class Fighter {
             console.log("kick missed: out of range! distance="+dist.toFixed(1));
             this.kickSound.play(); // woosh
         }
+		
+		 if(!this.AI){
+			  this.damage();
+		  }
     } // kick
 
   } // check_collisions()
