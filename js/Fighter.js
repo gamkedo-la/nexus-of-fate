@@ -90,7 +90,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
 	  [ANIM_COMBO]: 11,
-	  [ANIM_DAMAGE]: 0
+	  [ANIM_DAMAGE]: 1
     };
 
     this.frameHeight = { // scale dim times frameheight from export
@@ -105,7 +105,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 2274 * 0.2,
 	  [ANIM_COMBO]: 1913 * 0.2,
-	  [ANIM_DAMAGE]: 0
+	  [ANIM_DAMAGE]: 1980 * 0.2
     };
 
     this.frameHeightRobot = { // scale dim times frameheight from export
@@ -371,14 +371,6 @@ class Fighter {
   }
   
   
-  
-  
-  damage() {
-	this.currentAnimation = ANIM_DAMAGE;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
-}
-  
 
   startAnimIfNew(newAnim) {
 	if(this.currentAnimation != newAnim){
@@ -414,7 +406,6 @@ class Fighter {
     // prevent an attack from hitting multiple times or playing >1 sound
     // by only checking collisions when the animation just changed!
     if (this.lastFrameAnimation != this.currentAnimation) {
-        console.log("new animation! let's check collisions!");
     } else {
         return; // do nothing!
     }
@@ -423,12 +414,10 @@ class Fighter {
     if (this.currentAnimation == ANIM_PUNCH) {
       if (dist < PUNCH_HIT_RANGE) { // close enough?
         if (beingBlocked) {
-          console.log("punch was blocked!");
           this.punchHitSound.play(); // block sound
           fx.impactFX(myOpponent.x,myOpponent.y);
         } else { // not blocked?
           myOpponent.health -= PUNCH_DAMAGE;
-          console.log("punch hit! opponent health is now "+myOpponent.health);
           this.punchHitSound.play(); // impact sound
           fx.impactFX(myOpponent.x,myOpponent.y);
           fx.hitFX(myOpponent.x,myOpponent.y);
@@ -438,12 +427,13 @@ class Fighter {
 			  this.hurtSound.play();
 		  }
 		  
-		  if(!this.AI){
-			  this.damage();
+		  if(myOpponent.AI == false){
+			  myOpponent.startAnimIfNew(ANIM_DAMAGE);
+			  this.timeTillNextFrame = 30 / ANIM_FPS;
+			  console.log("damagePunch");
 		  }
         }
       } else {
-        console.log("punch missed: out of range! distance="+dist.toFixed(1));
         this.punchSound.play(); // woosh
       }
     } // punch
@@ -451,24 +441,25 @@ class Fighter {
     if(this.currentAnimation == ANIM_KICK){
 		if (dist < KICK_HIT_RANGE) { // close enough?
             if (beingBlocked) {
-                console.log("kick was blocked!");
                 this.kickHitSound.play(); // play block sfx
                 fx.impactFX(myOpponent.x,myOpponent.y);
             } else { // not blocked
                 myOpponent.health -= KICK_DAMAGE;
-                console.log("kick hit! opponent health is now "+myOpponent.health);
                 this.kickHitSound.play(); // play hit sfx
                 this.kickSound.play(); // woosh
                 fx.impactFX(myOpponent.x,myOpponent.y);
                 fx.hitFX(myOpponent.x,myOpponent.y);
             }
         } else {
-            console.log("kick missed: out of range! distance="+dist.toFixed(1));
             this.kickSound.play(); // woosh
         }
 		
-		 if(!this.AI){
-			  this.damage();
+		 if(myOpponent.AI == false){
+			  myOpponent.startAnimIfNew(ANIM_DAMAGE);
+			  this.timeTillNextFrame = 30 / ANIM_FPS;
+
+			  console.log("damageKick");
+
 		  }
     } // kick
 

@@ -1,4 +1,4 @@
-var baseName = "Armature-animtion";
+var baseName = "Armature_animtion";
 frameLabel = ["0"];
 var animFrames = frameLabel.length;
 
@@ -20,14 +20,14 @@ window.onload = function() {
 
 function loadingDoneSoStartGame() {
   var scaleBy = 0.2;
-  var dimW = 1924;
-  var dimH = 2032;
+  var dimW = 1676;
+  var dimH = 1980;
   var scaleW = dimW * scaleBy;
   var scaleH = dimH * scaleBy;
   scaleH = Math.floor(scaleH) + 1;
   console.log("FrameHeight" + scaleH);
-  var cornerX = 1096;
-  var cornerY = 1240;
+  var cornerX = 1164;
+  var cornerY = 1170;
   canvas.width = scaleW*animFacings;
   canvas.height = scaleH*animFrames;
 

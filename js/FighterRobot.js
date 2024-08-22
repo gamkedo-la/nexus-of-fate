@@ -73,7 +73,6 @@ class FighterRobot extends Fighter {
 
     // Check if the player is in a running state and if enough time has passed since the last shot
     if (this.canShootWhileRunning && Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
-      console.log("Shooting condition met");
       this.shoot(dx, dy);
       this.lastShotTime = Date.now();
     }
@@ -126,7 +125,6 @@ class FighterRobot extends Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
     this.retreatTime = 40 + Math.random() * 50; 
-    console.log("Punch anim started");
   }
 
   kick() {
@@ -135,13 +133,11 @@ class FighterRobot extends Fighter {
     this.timeTillNextFrame = 1 / ANIM_FPS;
     this.animReturnToIdle = true;
     this.retreatTime = 40 + Math.random() * 50; 
-    console.log("Kick anim started");
   }
 
   shoot(dx, dy) {
     let angle = Math.atan2(dy, dx);
     let laser = new Laser(this.x+LASER_SHOOT_OFFSETX, this.y+LASER_SHOOT_OFFSETY, angle);
     this.lasers.push(laser);
-    console.log("Laser shot");
   }
 }
