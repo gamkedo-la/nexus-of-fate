@@ -429,7 +429,7 @@ class Fighter {
 		  
 		  if(myOpponent.AI == false){
 			  myOpponent.startAnimIfNew(ANIM_DAMAGE);
-			  this.timeTillNextFrame = 30 / ANIM_FPS;
+			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 			  console.log("damagePunch");
 		  }
         }
@@ -456,7 +456,7 @@ class Fighter {
 		
 		 if(myOpponent.AI == false){
 			  myOpponent.startAnimIfNew(ANIM_DAMAGE);
-			  this.timeTillNextFrame = 30 / ANIM_FPS;
+			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 
 			  console.log("damageKick");
 
