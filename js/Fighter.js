@@ -73,7 +73,7 @@ class Fighter {
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 	this.images[ANIM_COMBO].src = imageSrcs[ANIM_COMBO];
-	this.images[ANIM_DAMAGE].src = imageSrcs[ANIM_COMBO];
+	this.images[ANIM_DAMAGE].src = imageSrcs[ANIM_DAMAGE];
 
 
 
@@ -90,7 +90,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
 	  [ANIM_COMBO]: 11,
-	  [ANIM_DAMAGE]: 1
+	  [ANIM_DAMAGE]: 4
     };
 
     this.frameHeight = { // scale dim times frameheight from export
