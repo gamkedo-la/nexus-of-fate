@@ -11,7 +11,7 @@ const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
 const ANIM_FPS = 24; // how fast the animations play
-const CROUCH_ANIM_FPS = 30;
+const CROUCH_ANIM_FPS = 120;
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
@@ -113,7 +113,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 2274 * 0.2,
 	  [ANIM_COMBO]: 1913 * 0.2,
-	  [PLAYER_ANIM_DAMAGE]: 1980 * 0.2,
+	  [PLAYER_ANIM_DAMAGE]: 2130 * 0.2,
 
     };
 	
@@ -282,7 +282,7 @@ class Fighter {
 		this.currentAnimation = ANIM_IDLE;
 	}
 	
-    if (this.keys['z'] || this.keys['gamepad_x_button']) {
+    if (this.keys['b'] || this.keys['gamepad_x_button']) {
       this.startAnimIfNew(ANIM_BLOCK);
     }
 	else if(this.currentAnimation == ANIM_BLOCK){
@@ -446,7 +446,7 @@ class Fighter {
 			  console.log("damagePunch");
 		  }
 		  
-		    if(myOpponent.AI == true){
+		    if(myOpponent.AI){
 			  myOpponent.startAnimIfNew(ROBOT_ANIM_DAMAGE);
 			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 			  console.log("damagePunch");
@@ -478,7 +478,7 @@ class Fighter {
 			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 		  }
 		  
-		 if(myOpponent.AI == true){
+		 if(myOpponent.AI){
 			 myOpponent.startAnimIfNew(ROBOT_ANIM_DAMAGE);
 			 myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 		  }
