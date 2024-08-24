@@ -26,7 +26,7 @@ const ANIM_COMBO = 'combo';
 const PLAYER_ANIM_DAMAGE = 'playerDamage';
 const ROBOT_ANIM_DAMAGE = 'robotDamage';
 
-
+function setThisLoaded() { this.loaded=true; } // used for image onload
 
 
 class Fighter {
@@ -62,8 +62,6 @@ class Fighter {
 	  [ANIM_COMBO]: new Image(),
 	  [PLAYER_ANIM_DAMAGE]: new Image(),
 	  [ROBOT_ANIM_DAMAGE]: new Image()
-
-
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -80,6 +78,20 @@ class Fighter {
 	this.images[PLAYER_ANIM_DAMAGE].src = imageSrcs[PLAYER_ANIM_DAMAGE];
     this.images[ROBOT_ANIM_DAMAGE].src = imageSrcs[ROBOT_ANIM_DAMAGE];
 
+    // so we know when they are ready
+    this.images[ANIM_IDLE].onload = setThisLoaded;
+    this.images[ANIM_WALK_FORWARD].onload = setThisLoaded;
+    this.images[ANIM_WALK_BACKWARD].onload = setThisLoaded;
+    this.images[ANIM_CROUCH].onload = setThisLoaded;
+    this.images[ANIM_JUMP].onload = setThisLoaded;
+    this.images[ANIM_KICK].onload = setThisLoaded;
+    this.images[ANIM_PUNCH].onload = setThisLoaded;
+    this.images[ANIM_DEATH].onload = setThisLoaded;
+    this.images[ANIM_CROUCH_PUNCH].onload = setThisLoaded;
+    this.images[ANIM_BLOCK].onload = setThisLoaded;
+	this.images[ANIM_COMBO].onload = setThisLoaded;
+	this.images[PLAYER_ANIM_DAMAGE].onload = setThisLoaded;
+    this.images[ROBOT_ANIM_DAMAGE].onload = setThisLoaded;
 
 
 
@@ -220,7 +232,7 @@ class Fighter {
   let frameH = this.AI ? this.frameHeightRobot[this.currentAnimation] : this.frameHeight[this.currentAnimation];
 
   // Draw the base sprite
-  context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
+  if (image.loaded) context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
 
   
 }
