@@ -114,15 +114,8 @@ class FighterRobot extends Fighter {
     // draw the robot sprite
     super.draw(context);
 
-  if(this.opponent.health <=0)
-  {
-      return
-  }
-  else{
-	  
-	   this.lasers.forEach(laser => laser.draw());
-  }
     // draw the lasers
+    this.lasers.forEach(laser => laser.draw());
 
   }
 
