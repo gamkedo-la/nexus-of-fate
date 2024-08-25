@@ -118,7 +118,7 @@ class Fighter {
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
-      [ANIM_DEATH]: 7,
+      [ANIM_DEATH]: 2300 * 0.2,
       [ANIM_BLOCK]: 2274 * 0.2,
 	  [ANIM_COMBO]: 1913 * 0.2,
 	  [ANIM_DAMAGE]: 1980 * 0.2,
@@ -184,7 +184,7 @@ class Fighter {
       var frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
 
       if (this.animReturnToIdle && this.frameNum === frameCount) {
-        if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH) {
+        if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH || this.currentAnimation == ANIM_DEATH) {
           this.frameNum = frameCount - 1;
         } else if (this.currentAnimation === ANIM_CROUCH_PUNCH) {
 		  this.currentAnimation = ANIM_CROUCH;
