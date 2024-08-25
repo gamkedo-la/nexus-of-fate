@@ -27,8 +27,7 @@ const player = new Player(input_keyboard, {
   [ANIM_DEATH]: 'images/player_death.png',
   [ANIM_BLOCK]: 'images/player_block.png',
   [ANIM_COMBO]: 'images/player_combo.png',
-  [PLAYER_ANIM_DAMAGE]: 'images/player_damage.png',
-  [ROBOT_ANIM_DAMAGE]: 'images/player_damage.png'
+  [ANIM_DAMAGE]: 'images/player_damage.png',
 
 
 }, 100, FLOOR_Y);
@@ -37,6 +36,8 @@ const robot = new FighterRobot(input_ai, {
   [ANIM_IDLE]: 'images/robot_idle.png',
   [ANIM_KICK]: 'images/robot_kick.png',
   [ANIM_PUNCH]: 'images/robot_punch.png',
+  [ANIM_DAMAGE]: 'images/robot_damage.png'
+
 
 }, 2000, FLOOR_Y);
 

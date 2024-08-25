@@ -52,9 +52,9 @@ class FighterRobot extends Fighter {
       if (this.currentAnimation === ANIM_IDLE) {
         if (Math.random() < 0.5) {
           if (Math.random() < 0.5) {
-            this.punch();
+           // this.punch();
           } else {
-            this.kick();
+            //this.kick();
           }
         }
       }

@@ -23,8 +23,7 @@ const ANIM_CROUCH_PUNCH = 'crouchPunch';
 const ANIM_DEATH = 'die';
 const ANIM_BLOCK = 'block';
 const ANIM_COMBO = 'combo';
-const PLAYER_ANIM_DAMAGE = 'playerDamage';
-const ROBOT_ANIM_DAMAGE = 'robotDamage';
+const ANIM_DAMAGE = 'damage';
 
 function setThisLoaded() { this.loaded=true; } // used for image onload
 
@@ -60,8 +59,7 @@ class Fighter {
       [ANIM_CROUCH_PUNCH]: new Image(),
       [ANIM_BLOCK]: new Image(),
 	  [ANIM_COMBO]: new Image(),
-	  [PLAYER_ANIM_DAMAGE]: new Image(),
-	  [ROBOT_ANIM_DAMAGE]: new Image()
+	  [ANIM_DAMAGE]: new Image(),
     };
 
     this.images[ANIM_IDLE].src = imageSrcs[ANIM_IDLE];
@@ -75,8 +73,7 @@ class Fighter {
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 	this.images[ANIM_COMBO].src = imageSrcs[ANIM_COMBO];
-	this.images[PLAYER_ANIM_DAMAGE].src = imageSrcs[PLAYER_ANIM_DAMAGE];
-    this.images[ROBOT_ANIM_DAMAGE].src = imageSrcs[ROBOT_ANIM_DAMAGE];
+	this.images[ANIM_DAMAGE].src = imageSrcs[ANIM_DAMAGE];
 
     // so we know when they are ready
     this.images[ANIM_IDLE].onload = setThisLoaded;
@@ -90,8 +87,7 @@ class Fighter {
     this.images[ANIM_CROUCH_PUNCH].onload = setThisLoaded;
     this.images[ANIM_BLOCK].onload = setThisLoaded;
 	this.images[ANIM_COMBO].onload = setThisLoaded;
-	this.images[PLAYER_ANIM_DAMAGE].onload = setThisLoaded;
-    this.images[ROBOT_ANIM_DAMAGE].onload = setThisLoaded;
+	this.images[ANIM_DAMAGE].onload = setThisLoaded;
 
 
 
@@ -108,8 +104,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
 	  [ANIM_COMBO]: 11,
-	  [PLAYER_ANIM_DAMAGE]: 4,
-	  [ROBOT_ANIM_DAMAGE]: 7
+	  [ANIM_DAMAGE]: 4,
 
     };
 
@@ -125,7 +120,7 @@ class Fighter {
       [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 2274 * 0.2,
 	  [ANIM_COMBO]: 1913 * 0.2,
-	  [PLAYER_ANIM_DAMAGE]: 1980 * 0.2,
+	  [ANIM_DAMAGE]: 1980 * 0.2,
 
     };
 	
@@ -138,7 +133,7 @@ class Fighter {
       [ANIM_KICK]: 19,
       [ANIM_PUNCH]: 11,
       [ANIM_DEATH]: 7,
-	  [ROBOT_ANIM_DAMAGE]: 7
+	  [ANIM_DAMAGE]: 7
     }
 
     this.frameHeightRobot = { // scale dim times frameheight from export
@@ -150,7 +145,7 @@ class Fighter {
       [ANIM_KICK]: 0.2 * 1.5 * 1264,
       [ANIM_PUNCH]: 0.2 * 1.5 * 1280,
       [ANIM_DEATH]: 7,
-	  [ROBOT_ANIM_DAMAGE]: 1512 * 0.2
+	  [ANIM_DAMAGE]: 1284 * 0.2 * 1.5
     };
 
 ;
@@ -452,17 +447,10 @@ class Fighter {
 			  this.hurtSound.play();
 		  }
 		  
-		  if(myOpponent.AI == false){
-			  myOpponent.startAnimIfNew(PLAYER_ANIM_DAMAGE);
-			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
-			  console.log("damagePunch");
-		  }
-		  
-		    if(myOpponent.AI == true){
-			  myOpponent.startAnimIfNew(ROBOT_ANIM_DAMAGE);
-			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
-			  console.log("damagePunch");
-		  }
+		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
+		  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
+		  console.log("damagePunch");
+	
         }
       } else {
         this.punchSound.play(); // woosh
@@ -485,15 +473,10 @@ class Fighter {
             this.kickSound.play(); // woosh
         }
 		
-		 if(myOpponent.AI == false){
-			  myOpponent.startAnimIfNew(PLAYER_ANIM_DAMAGE);
-			  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
-		  }
+		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
+		  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
 		  
-		 if(myOpponent.AI == true){
-			 myOpponent.startAnimIfNew(ROBOT_ANIM_DAMAGE);
-			 myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
-		  }
+		
     } // kick
 
   } // check_collisions()
