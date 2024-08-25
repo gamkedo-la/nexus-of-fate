@@ -62,7 +62,7 @@ window.onload = function () {
 
         check_gamepad();
         player.update(canvas.width);
-        //robot.update();
+        robot.update();
         powerBar.update(deltaTime);
         player.check_collisions(robot);
         robot.check_collisions(player);

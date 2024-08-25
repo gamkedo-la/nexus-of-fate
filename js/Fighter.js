@@ -114,6 +114,7 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 2200 * 0.2,
 	  [ANIM_CROUCH_PUNCH]: 2288 * 0.2,
+	  [ANIM_CROUCH_PUNCH]: 2288 * 0.2,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
@@ -234,10 +235,11 @@ class Fighter {
   update(canvasWidth) {
   this.prevAnim = this.currentAnimation;
     this.getInput();
-
+    if(this.currentAnimation == ANIM_DEATH){
+		return;
+	}
     // Update the animation state based on movement
     if (this.keys['a'] || this.keys['gamepad_left']) {
-      this.moveLeft();
       this.moveLeft();
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
