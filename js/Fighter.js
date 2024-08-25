@@ -113,7 +113,7 @@ class Fighter {
       [ANIM_WALK_FORWARD]: 382.6,
       [ANIM_WALK_BACKWARD]: 382.6,
       [ANIM_CROUCH]: 2200 * 0.2,
-	  [ANIM_CROUCH_PUNCH]: 1746 * 0.2,
+	  [ANIM_CROUCH_PUNCH]: 2288 * 0.2,
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 1913 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
@@ -450,6 +450,7 @@ class Fighter {
 		  
 		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
 		  myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
+	
 	
         }
       } else {
