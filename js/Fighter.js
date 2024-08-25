@@ -238,6 +238,7 @@ class Fighter {
     // Update the animation state based on movement
     if (this.keys['a'] || this.keys['gamepad_left']) {
       this.moveLeft();
+      this.moveLeft();
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
       this.moveRight();
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
@@ -351,7 +352,7 @@ class Fighter {
   }
 
   moveLeft() {
-    if (this.currentAnimation !== ANIM_JUMP) {
+    if (this.currentAnimation !== ANIM_JUMP && this.currentAnimation !== ANIM_DAMAGE) {
       if (this.currentAnimation !== ANIM_WALK_BACKWARD) {
         this.currentAnimation = ANIM_WALK_BACKWARD;
         this.frameNum = 0;
@@ -363,7 +364,7 @@ class Fighter {
   }
 
   moveRight() {
-    if (this.currentAnimation !== ANIM_JUMP) {
+    if (this.currentAnimation !== ANIM_JUMP && this.currentAnimation !== ANIM_DAMAGE) {
       if (this.currentAnimation !== ANIM_WALK_FORWARD) {
         this.currentAnimation = ANIM_WALK_FORWARD;
         this.frameNum = 0;
@@ -448,8 +449,7 @@ class Fighter {
 		  }
 		  
 		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
-		  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
-		  console.log("damagePunch");
+		  myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
 	
         }
       } else {
@@ -474,7 +474,7 @@ class Fighter {
         }
 		
 		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
-		  myOpponent.timeTillNextFrame = 30 / ANIM_FPS;
+		  myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
 		  
 		
     } // kick

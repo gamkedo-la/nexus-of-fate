@@ -39,8 +39,9 @@ class FighterRobot extends Fighter {
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
 
-    // Handle retreating
-	
+	if(this.currentAnimation == ANIM_DAMAGE){
+		return;
+	}
 	 
     if (this.animReturnToIdle && this.retreatTime > 0) {
 		
@@ -120,6 +121,9 @@ class FighterRobot extends Fighter {
   }
 
   punch() {
+	if(this.currentAnimation == ANIM_DAMAGE){
+	   return;
+	}
     this.currentAnimation = ANIM_PUNCH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
@@ -128,6 +132,9 @@ class FighterRobot extends Fighter {
   }
 
   kick() {
+    if(this.currentAnimation == ANIM_DAMAGE){
+	   return;
+	}
     this.currentAnimation = ANIM_KICK;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
