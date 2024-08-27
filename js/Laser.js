@@ -1,9 +1,11 @@
-const LASER_SPEED = 16; // was 35; slower speed so you can see it and duck in time
-const LASER_LENGTH = 20; // note: sprite is not stretched, only red line is
+const LASER_SPEED = 16; // Slower speed so the player can react
+const LASER_LENGTH = 20; // Length of the red line representing the laser
 
 var laserSprite = new Image();
 laserSprite.src = "images/laser_bolt.png";
-laserSprite.onload = function() { this.loaded=true; }
+laserSprite.onload = function() { 
+  this.loaded = true; 
+}
 
 class Laser {
   constructor(x, y, angle) {
@@ -33,7 +35,14 @@ class Laser {
     context.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
     context.stroke();
 
-    if (laserSprite.loaded) drawBitmapCenteredAtLocationWithRotation(laserSprite,this.x,this.y,this.angle);
+    if (laserSprite.loaded) {
+      drawBitmapCenteredAtLocationWithRotation(laserSprite, this.x, this.y, this.angle);
+    }
+  }
 
+  collidesWith(target) {
+    // Simple point collision detection
+    return this.x > target.x && this.x < target.x + target.width &&
+           this.y > target.y && this.y < target.y + target.height;
   }
 }

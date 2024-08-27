@@ -28,68 +28,61 @@ class FighterRobot extends Fighter {
 
 
   update(deltaTime) {
-	  
     if (this.opponent && this.opponent.health <= 0) {
-      this.currentAnimation = ANIM_IDLE;
-      this.speed = 0;
-      return;
+        this.currentAnimation = ANIM_IDLE;
+        this.speed = 0;
+        return;
     }
-	
+
     let dx = player.x - this.x;
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
 
-	if(this.currentAnimation == ANIM_DAMAGE){
-		return;
-	}
-	 
+    if (this.currentAnimation == ANIM_DAMAGE) {
+        return;
+    }
+
     if (this.animReturnToIdle && this.retreatTime > 0) {
-		
-      //  this.animReturnToIdle = false;
-       // this.speed = 2; // Resume moving forward
-		
+        // Do nothing, just return to idle
     } else if (distanceToPlayer < AI_PREFERRED_DIST) {
-      this.speed = -2;
-      if (this.currentAnimation === ANIM_IDLE) {
-        if (Math.random() < 0.5) {
-          if (Math.random() < 0.5) {
-            this.punch();
-          } else {
-            this.kick();
-          }
+        this.speed = -2;
+        if (this.currentAnimation === ANIM_IDLE) {
+            if (Math.random() < 0.5) {
+                if (Math.random() < 0.5) {
+                    this.punch();
+                } else {
+                    this.kick();
+                }
+            }
         }
-      }
     } else if (distanceToPlayer > AI_PREFERRED_DIST) {
-      this.speed = 2;
-      if (debugSoundVolume) {
-        this.thrustSound.volume = 0.01;
-        this.canShootWhileRunning = true;
-      }
-      this.thrustSound.play();
-      this.currentAnimation = ANIM_IDLE;
+        this.speed = 2;
+        if (debugSoundVolume) {
+            this.thrustSound.volume = 0.01;
+            this.canShootWhileRunning = true;
+        }
+        this.thrustSound.play();
+        this.currentAnimation = ANIM_IDLE;
     } else {
-      this.speed = 0;
-      this.canShootWhileRunning = false;
+        this.speed = 0;
+        this.canShootWhileRunning = false;
     }
 
     // Check if the player is in a running state and if enough time has passed since the last shot
     if (this.canShootWhileRunning && Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
-      this.shoot(dx, dy);
-      this.lastShotTime = Date.now();
+        this.shoot(dx, dy);
+        this.lastShotTime = Date.now();
     }
-	
-	
-    if ( this.retreatTime > 0) {
-		this.retreatTime--;
-		if(this.animReturnToIdle){
-		 this.speed = 0;
-		}else{
-		 this.speed = -2;
-		}
-	 }
-	 
-	 
-	 
+
+    if (this.retreatTime > 0) {
+        this.retreatTime--;
+        if (this.animReturnToIdle) {
+            this.speed = 0;
+        } else {
+            this.speed = -2;
+        }
+    }
+
     let angle = Math.atan2(dy, dx);
     this.x += Math.cos(angle) * this.speed;
     this.baseY += Math.sin(angle) * this.speed;
@@ -102,9 +95,20 @@ class FighterRobot extends Fighter {
     if (this.y < 150) this.y = 150;
     if (this.y > canvas.height - 200) this.y = canvas.height - 200;
 
-    this.lasers.forEach(laser => laser.update());
-    this.lasers = this.lasers.filter(laser => laser.active);
-  }
+    this.lasers.forEach((laser) => {
+        laser.update();
+
+        // Check for collision with the opponent
+        if (laser.collidesWith(this.opponent)) {
+            this.opponent.health -= 1; // Decrease opponent's health by 1
+            laser.active = false; // Deactivate the laser
+			console.log("detected");
+        }
+    });
+
+    // Remove inactive lasers
+    this.lasers = this.lasers.filter((laser) => laser.active);
+}
 
   draw(context) {
     
