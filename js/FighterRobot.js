@@ -101,6 +101,7 @@ class FighterRobot extends Fighter {
         // Check for collision with the opponent
         if (laser.collidesWith(this.opponent)) {
             this.opponent.health -= 1; // Decrease opponent's health by 1
+            screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
             laser.active = false; // Deactivate the laser
 			console.log("detected");
         }
