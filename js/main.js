@@ -51,6 +51,9 @@ window.onload = function () {
     previousTimestamp = frameTimestamp;
 
     if (!mainMenu.show()) {
+
+      updateScreenshake();
+
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (roundStarted) {

@@ -442,6 +442,11 @@ class Fighter {
         } else { // not blocked?
           myOpponent.health -= PUNCH_DAMAGE;
           this.punchHitSound.play(); // impact sound
+          if (myOpponent == player) {
+            screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
+          } else {
+            screenshake(ROBOT_HIT_SCREENSHAKE_COUNT);
+          }
           fx.impactFX(myOpponent.x,myOpponent.y);
           fx.hitFX(myOpponent.x,myOpponent.y);
 		  if (this.AI) {
@@ -467,6 +472,11 @@ class Fighter {
                 fx.impactFX(myOpponent.x,myOpponent.y);
             } else { // not blocked
                 myOpponent.health -= KICK_DAMAGE;
+                if (myOpponent == player) {
+                    screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
+                } else {
+                    screenshake(ROBOT_HIT_SCREENSHAKE_COUNT);
+                }
                 this.kickHitSound.play(); // play hit sfx
                 this.kickSound.play(); // woosh
                 fx.impactFX(myOpponent.x,myOpponent.y);
