@@ -40,7 +40,7 @@ var background = {
         if (bgImage5.loaded) context.drawImage(bgImage5, -player.x / 3, 0);
         if (bgImage6.loaded) context.drawImage(bgImage6, -player.x / 2.5, 0);
 
-        if (leftBorderImage.loaded) context.drawImage(leftBorderImage, -player.x / 2.5 - 400, canvas.height - 640);
+        if (leftBorderImage.loaded) context.drawImage(leftBorderImage, -player.x / 2.5 + 35, canvas.height - 220);
         if (rightBorderImage.loaded) context.drawImage(rightBorderImage, -player.x / 2.5 + 1500, canvas.height - 270);
     }
 };
