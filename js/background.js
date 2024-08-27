@@ -37,7 +37,7 @@ var background = {
         context.globalAlpha = 0.1;
         if (cloudImage.loaded) context.drawImage(cloudImage, Math.sin(performance.now() / 32000) * 1000 - 1000 - player.x / 7, 0);
         context.globalAlpha = 1;
-        if (bgImage5.loaded) context.drawImage(bgImage5, -player.x / 3, 0);
+        if (bgImage5.loaded) context.drawImage(bgImage5, -player.x / 3, 190);
         if (bgImage6.loaded) context.drawImage(bgImage6, -player.x / 2.5, 0);
 
         if (leftBorderImage.loaded) context.drawImage(leftBorderImage, -player.x / 2.5 + 35, canvas.height - 220);
