@@ -54,17 +54,17 @@ var fog = {
         }
 
         if (fogImage.loaded) {
-            context.drawImage(fogImage, Math.sin(performance.now() / 64000) * 1000 - 1000 - player.x, canvas.height - 250 + Math.sin(performance.now() / 33000) * 100);
-            context.drawImage(fogImage, Math.sin(performance.now() / 88000) * -1234 - 1000 - player.x, canvas.height - 200 + Math.sin(performance.now() / 66000) * -100);
-            context.drawImage(fogImage, Math.sin(performance.now() / 99000) * 1000 - 1000 - player.x, canvas.height - 150 + Math.sin(performance.now() / 99000) * -100);
+            context.drawImage(fogImage, Math.sin(performance.now() / 34000) * 500 - 500 - player.x, canvas.height - 125 + Math.sin(performance.now() / 18000) * 50);
+            context.drawImage(fogImage, Math.sin(performance.now() / 48000) * -634 - 500 - player.x, canvas.height - 100 + Math.sin(performance.now() / 33000) * -50);
+            context.drawImage(fogImage, Math.sin(performance.now() / 49000) * 500 - 500 - player.x, canvas.height - 75 + Math.sin(performance.now() / 49000) * -50);
         }
     }
 };
 
 var healthBar = {
     width: 200,
-    height: 25,
-    padding: 50,
+    height: 10,
+    padding: 25,
 
     draw: function() {
         if (!healthbarBackground) {
@@ -96,15 +96,15 @@ var healthBar = {
         // Round number and timer
         context.font = "20px Tohoma bold";
         context.fillStyle = "white";
-        context.fillText(fightRoundNumber + " of " + fightRoundMax, 720, 40);
-        context.fillText(fightTimeRemaining.toFixed(2) + "s", 720, 84);
+        context.fillText(fightRoundNumber + " of " + fightRoundMax, 320, 20);
+        context.fillText(fightTimeRemaining.toFixed(2) + "s", 320, 44);
     }
 };
 
 var powerBar = {
     width: 200,
-    height: 25,
-    padding: 50,
+    height: 10,
+    padding: 45,
 
     draw: function() {
 		var cornerX = this.padding + 350;

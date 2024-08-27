@@ -84,7 +84,7 @@ window.onload = function () {
 
       // 3, 2, 1, FIGHT!
       if (roundStartCountdownTick > 0) {
-        const fontSize = 240;
+        const fontSize = 100;
         context.font = `${fontSize}px Tohoma bold`;
         context.fillStyle = "white";
         var drawn = roundStartCountdown > 0 ? roundStartCountdown : "FIGHT!";
