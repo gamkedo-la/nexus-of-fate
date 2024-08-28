@@ -96,19 +96,19 @@ var healthBar = {
         // Round number and timer
         context.font = "20px Tohoma bold";
         context.fillStyle = "white";
-        context.fillText(fightRoundNumber + " of " + fightRoundMax, 320, 20);
-        context.fillText(fightTimeRemaining.toFixed(2) + "s", 320, 44);
+        context.fillText(fightRoundNumber + " of " + fightRoundMax, 475, 70);
+        context.fillText(fightTimeRemaining.toFixed(2) + "s", 475, 95);
     }
 };
 
 var powerBar = {
-    width: 200,
+    width: 150,
     height: 10,
     padding: 45,
 
     draw: function() {
-		var cornerX = this.padding + 350;
-		var cornerY = this.padding + this.height - 27;
+		var cornerX = this.padding + 200;
+		var cornerY = this.padding + this.height - 15;
         // Draw player power bar background
         context.fillStyle = "grey";
         context.fillRect(cornerX, cornerY, this.width, this.height);
