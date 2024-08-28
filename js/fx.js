@@ -80,7 +80,7 @@ var fx = {
         this.particles.push(p);
     },
 
-    // blood or stars?
+    // blood or stars? ans : Blood
     dieFX: function(x,y,vx,vy) {
         //console.log("spawning a dieFX at "+x+","+y);
         for (let n=0; n<20; n++) {
@@ -114,8 +114,8 @@ var fx = {
                 age:0,
                 life:Math.random()*1,
                 img:this.imgFire,
-                x:100+445+Math.random()*16+(flip?360:0),
-                y:100+408+Math.random()*16,
+                x:100+225+Math.random()*16+(flip?360:0),
+                y:100+327+Math.random()*16,
                 vx:Math.random()*(flip?16:-16),
                 vy:Math.random()*1-0.5
             };
