@@ -10,8 +10,8 @@ class MainMenu {
       // current Start text: clientX(610-900); clientY(500-600)
       var rect = canvas.getBoundingClientRect();
 
-      return (mouseClick.clientX >= rect.left + 610 && mouseClick.clientX <= rect.left + 900 &&
-        mouseClick.clientY >= rect.top + 500 && mouseClick.clientY <= rect.top + 600);
+      return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
+        mouseClick.clientY >= rect.top + 400 && mouseClick.clientY <= rect.top + 500);
     }
 
     window.addEventListener("click", (event) => {
