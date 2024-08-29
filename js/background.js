@@ -62,9 +62,9 @@ var fog = {
 };
 
 var healthBar = {
-    width: 200,
-    height: 10,
-    padding: 25,
+    width: 160,
+    height: 15,
+    padding: 30,
 
     draw: function() {
         if (!healthbarBackground) {
