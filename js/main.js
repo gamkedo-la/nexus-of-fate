@@ -72,6 +72,9 @@ window.onload = function () {
         fx.update();
       }
       else {
+        
+        if (!music_is_playing) { music.play(); music_is_playing = true; }
+        
         if (roundStartCountdownTick < 0) {
           roundStarted = true;
         }
