@@ -57,10 +57,12 @@ window.onload = function () {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (roundStarted) {
-        fightTimeRemaining -= deltaTime / 1000;
-        if (fightTimeRemaining <= 0) {
-          fightTimeRemaining = 0;
-          // TODO: change rounds, reset health, end fight, etc
+        if (player.health > 0 && robot.health > 0) { 
+          fightTimeRemaining -= deltaTime / 1000;
+          if (fightTimeRemaining <= 0) {
+            fightTimeRemaining = 0;
+            // TODO: change rounds, reset health, end fight, etc
+          }
         }
 
         check_gamepad();
