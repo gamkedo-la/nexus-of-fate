@@ -303,6 +303,7 @@ class Fighter {
 
     if (this.health <= 0) {
       this.died();
+	   
     }
 
     this.boundsCheck(canvasWidth);
@@ -410,6 +411,7 @@ class Fighter {
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;
   }
+
 
  
 
