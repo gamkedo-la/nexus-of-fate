@@ -33,7 +33,7 @@ var background = {
             rightBorderImage.onload = function() { this.loaded = true; }
         }
 
-        if (bgImage1.loaded) context.drawImage(bgImage1, -player.x /50, 0);
+        if (bgImage1.loaded) context.drawImage(bgImage1, -player.x + 50  /7, 0);
         context.globalAlpha = 0.1;
         if (cloudImage.loaded) context.drawImage(cloudImage, Math.sin(performance.now() / 32000) * 1000 - 1000 - player.x / 7, 100);
         context.globalAlpha = 1;
