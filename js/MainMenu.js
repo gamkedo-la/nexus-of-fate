@@ -15,8 +15,12 @@ class MainMenu {
     }
 
     window.addEventListener("click", (event) => {
+
       if (userIsOnStartText(event)) {
         this.onMainMenu = false;
+      } else {
+        // clicked empty space - trigger intro music if it was unable to autostart
+        if (!INTRO_music_is_playing) { INTRO_music.play(); INTRO_music_is_playing = true; } 
       }
     });
 

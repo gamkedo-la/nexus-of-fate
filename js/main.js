@@ -75,6 +75,7 @@ window.onload = function () {
       }
       else {
         
+        if (INTRO_music_is_playing) { INTRO_music.pause(); INTRO_music_is_playing = false; } 
         if (!music_is_playing) { music.play(); music_is_playing = true; }
         
         if (roundStartCountdownTick < 0) {
