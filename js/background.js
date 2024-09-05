@@ -96,8 +96,8 @@ var healthBar = {
         // Round number and timer
         context.font = "20px Tohoma bold";
         context.fillStyle = "white";
-        context.fillText(fightRoundNumber + " of " + fightRoundMax, 475, 70);
-        context.fillText(fightTimeRemaining.toFixed(2) + "s", 475, 95);
+        context.fillText(fightRoundNumber + " of " + fightRoundMax, 475, 31);
+        context.fillText(fightTimeRemaining.toFixed(0), 490, 62);
     }
 };
 
