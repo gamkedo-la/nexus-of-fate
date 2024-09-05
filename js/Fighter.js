@@ -509,12 +509,15 @@ class Fighter {
                 this.kickHitSound.play(); // play hit sfx
                 this.kickSound.play(); // woosh
             }
+			
+		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
+		  myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
+		  
         } else {
             this.kickSound.play(); // woosh
         }
 		
-		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
-		  myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
+
 		  
 		
     } // kick
