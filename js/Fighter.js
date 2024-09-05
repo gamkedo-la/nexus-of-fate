@@ -33,6 +33,8 @@ class Fighter {
     this.health = 100;
 	this.power = 0;
     this.keys = {};
+	this.width = 180;
+	this.height = 400;
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
     this.walkSound = new Audio('audio/playerWalkSound.mp3');

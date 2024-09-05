@@ -102,9 +102,9 @@ var healthBar = {
 };
 
 var powerBar = {
-    width: 150,
+    width: 160,
     height: 10,
-    padding: 45,
+    padding: 35,
 
     draw: function() {
 		var cornerX = this.padding + 200;
