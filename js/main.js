@@ -45,6 +45,13 @@ player.opponent = robot;
 robot.opponent = player;
 
 window.onload = function () {
+	
+ // Helps it not blur from the scaling:
+	context.mozImageSmoothingEnabled = false;
+	context.imageSmoothingEnabled = false;
+	context.msImageSmoothingEnabled = false;
+	context.imageSmoothingEnabled = false;
+	
   (function draw() {
     frameTimestamp = performance.now();
     deltaTime = frameTimestamp - previousTimestamp;
@@ -75,8 +82,8 @@ window.onload = function () {
       }
       else {
         
-        if (INTRO_music_is_playing) { INTRO_music.pause(); INTRO_music_is_playing = false; } 
-        if (!music_is_playing) { music.play(); music_is_playing = true; }
+       // if (INTRO_music_is_playing) { INTRO_music.pause(); INTRO_music_is_playing = false; } 
+      //  if (!music_is_playing) { music.play(); music_is_playing = true; }
         
         if (roundStartCountdownTick < 0) {
           roundStarted = true;
