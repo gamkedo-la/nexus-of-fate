@@ -44,26 +44,68 @@ var fx = {
             p.x += p.vx;
             p.y += p.vy;
             p.age += 1 / 60; // fixme: use deltatime?
-            if (p.age > p.life) this.particles.splice(i,1);
+            if (p.age > p.life) {
+                //console.log("particle "+i+" died. removing.");
+                this.particles.splice(i,1);
+            }
         }
     }, // update()
 
     clear: function() {
+        console.log("clearing particles!");
         this.particles = [];
     },
 
     // used by blocks
-    impactFX: function(x=0,y=0,vx=0,vy=0) {
+    blockFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning an impactFX at "+x+","+y);
-        var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:1,img:this.imgPuff};
-        this.particles.push(p);
+        for (let n=0; n<10; n++) {
+            var rx = Math.random()*4-2;
+            var ry = Math.random()*4-2;
+            var rvx = Math.random()*4-2;
+            var rvy = Math.random()*4-2;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:0,life:0.5,img:this.imgPuff};
+            this.particles.push(p);
+        }
     },
 
     // successful kicks and punches
     hitFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning a hitFX at "+x+","+y);
-        var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:0.3,img:this.imgSpark};
-        this.particles.push(p);
+        for (let n=0; n<10; n++) {
+            var rx = Math.random()*4-2;
+            var ry = Math.random()*4-2;
+            var rvx = Math.random()*4-2;
+            var rvy = Math.random()*4-2;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:0,life:0.5,img:this.imgSpark};
+            this.particles.push(p);
+        }
+    },
+
+    // every punch (including misses) - a small woosh of air
+    punchFX: function(x=0,y=0,vx=0,vy=0) {
+        //console.log("spawning a punchFX at "+x+","+y);
+        for (let n=0; n<1; n++) {
+            var rx = Math.random()*4-2;
+            var ry = Math.random()*4-2;
+            var rvx = Math.random()*4-2;
+            var rvy = Math.random()*4-2;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:9,life:10,img:this.imgPuff};
+            this.particles.push(p);
+        }
+    },
+
+    // every kick (including misses) - a small woosh of air
+    kickFX: function(x=0,y=0,vx=0,vy=0) {
+        //console.log("spawning a kickFX at "+x+","+y);
+        for (let n=0; n<1; n++) {
+            var rx = Math.random()*4-2;
+            var ry = Math.random()*4-2;
+            var rvx = Math.random()*4-2;
+            var rvy = Math.random()*4-2;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:9,life:10,img:this.imgPuff};
+            this.particles.push(p);
+        }
     },
 
     // little puff of dust

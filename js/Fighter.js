@@ -1,6 +1,16 @@
 const AI_TOO_CLOSE_DIST = 50; // when to back up (if player walks into robot, it will back up)
 const AI_PREFERRED_DIST = 150; // when to stop moving forward - the ideal target distance
 
+// offsets used for the hit/block fx particle location relative to player x,y:
+const PLAYER_FIST_X = -60;
+const PLAYER_FIST_Y = -30;
+const PLAYER_FOOT_X = -20;
+const PLAYER_FOOT_Y = 50; 
+const ROBOT_FIST_X = -260;
+const ROBOT_FIST_Y = -20;
+const ROBOT_FOOT_X = -220;
+const ROBOT_FOOT_Y = 50; 
+
 const PUNCH_HIT_RANGE = 155; // if we punch and enemy is not blocking and we are this close, register as a hit
 const KICK_HIT_RANGE = 156;
 const PUNCH_DAMAGE = 5;
@@ -442,10 +452,14 @@ class Fighter {
     this.lastFrameAnimation = this.currentAnimation;
 
     if (this.currentAnimation == ANIM_PUNCH) {
+      
+      // particle fx for every punch including misses:
+      if (this.isAI) fx.punchFX(this.x+ROBOT_FIST_X,this.y+ROBOT_FIST_Y); else fx.punchFX(this.x+PLAYER_FIST_X,this.y+PLAYER_FIST_Y);
+
       if (dist < PUNCH_HIT_RANGE) { // close enough?
         if (beingBlocked) {
           this.punchHitSound.play(); // block sound
-          fx.impactFX(myOpponent.x,myOpponent.y);
+          if (this.isAI) fx.blockFX(this.x+ROBOT_FIST_X,this.y+ROBOT_FIST_Y); else fx.blockFX(this.x+PLAYER_FIST_X,this.y+PLAYER_FIST_Y);
         } else { // not blocked?
           myOpponent.health -= PUNCH_DAMAGE;
           this.punchHitSound.play(); // impact sound
@@ -454,12 +468,13 @@ class Fighter {
           } else {
             screenshake(ROBOT_HIT_SCREENSHAKE_COUNT);
           }
-          fx.impactFX(myOpponent.x,myOpponent.y);
-          fx.hitFX(myOpponent.x,myOpponent.y);
-		  if (this.AI) {
+          
+          if (this.AI) {
+              fx.hitFX(this.x+ROBOT_FIST_X,this.y+ROBOT_FIST_Y);
 			  this.robotHurtSound.play();
 		  } else {
 			  this.hurtSound.play();
+              fx.hitFX(this.x+PLAYER_FIST_X,this.y+PLAYER_FIST_Y);
 		  }
 		  
 		  myOpponent.startAnimIfNew(ANIM_DAMAGE);
@@ -473,21 +488,26 @@ class Fighter {
     } // punch
 
     if(this.currentAnimation == ANIM_KICK){
+
+        // particle fx for every kick including misses:
+        if (this.isAI) fx.kickFX(this.x+ROBOT_FOOT_X,this.y+ROBOT_FOOT_Y); else fx.kickFX(this.x+PLAYER_FOOT_X,this.y+PLAYER_FOOT_Y);
+
 		if (dist < KICK_HIT_RANGE) { // close enough?
             if (beingBlocked) {
                 this.kickHitSound.play(); // play block sfx
-                fx.impactFX(myOpponent.x,myOpponent.y);
+                if (this.isAI) fx.blockFX(this.x+ROBOT_FOOT_X,this.y+ROBOT_FOOT_Y); else fx.blockFX(this.x+PLAYER_FOOT_X,this.y+PLAYER_FOOT_Y);
+
             } else { // not blocked
                 myOpponent.health -= KICK_DAMAGE;
                 if (myOpponent == player) {
                     screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
+                    fx.hitFX(this.x+ROBOT_FOOT_X,this.y+ROBOT_FOOT_Y);
                 } else {
                     screenshake(ROBOT_HIT_SCREENSHAKE_COUNT);
+                    fx.hitFX(this.x+PLAYER_FOOT_X,this.y+PLAYER_FOOT_Y);
                 }
                 this.kickHitSound.play(); // play hit sfx
                 this.kickSound.play(); // woosh
-                fx.impactFX(myOpponent.x,myOpponent.y);
-                fx.hitFX(myOpponent.x,myOpponent.y);
             }
         } else {
             this.kickSound.play(); // woosh

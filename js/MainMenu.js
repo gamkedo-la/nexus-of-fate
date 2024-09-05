@@ -18,6 +18,7 @@ class MainMenu {
 
       if (userIsOnStartText(event)) {
         this.onMainMenu = false;
+        fx.clear(); // remove smoke particles
       } else {
         // clicked empty space - trigger intro music if it was unable to autostart
         console.log("clicked empty space on title screen: start intro music!");
@@ -47,7 +48,8 @@ class MainMenu {
       if (this.hoveringButton) fx.mainMenuHoverFX();      
     }
     else {
-      fx.clear();
+      // gets called every frame so if we clear here all future particles vanish
+      // fx.clear();
     }
 
     return this.onMainMenu;
