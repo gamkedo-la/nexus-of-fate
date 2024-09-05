@@ -25,6 +25,9 @@ const ANIM_BLOCK = 'block';
 const ANIM_COMBO = 'combo';
 const ANIM_DAMAGE = 'damage';
 
+const EDGE_BOUNDRY_PIXELS = 120;
+
+
 function setThisLoaded() { this.loaded=true; } // used for image onload
 
 
@@ -327,14 +330,14 @@ class Fighter {
     } else {
       this.speedY += GRAVITY;
     }
-
+    
     // Apply horizontal screen boundaries
-    if (this.x < 80) {
-      this.x = 80;
+    if (this.x < EDGE_BOUNDRY_PIXELS) {
+      this.x = EDGE_BOUNDRY_PIXELS	;
     }
 
-    if (this.x + BODY_WIDTH > canvasWidth) {
-      this.x = canvasWidth - BODY_WIDTH;
+    if (this.x + BODY_WIDTH > canvasWidth - EDGE_BOUNDRY_PIXELS) {
+      this.x = canvasWidth - EDGE_BOUNDRY_PIXELS - BODY_WIDTH;
     }
 
     // Prevent or reset if the fighters cross sides
