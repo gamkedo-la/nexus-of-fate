@@ -91,10 +91,10 @@ var fx = {
 
     mainMenuFX: function() {
         if (!this.ready) return;
-        for (let n=0; n<25; n++) {
+        for (let n=0; n<40; n++) {
             var p = {
                 age:0,
-                life:Math.random()*1,
+                life:Math.random()*2,
                 img:this.imgPuff,
                 x:Math.random()*1500-100,
                 y:Math.random()*100+600,

@@ -41,7 +41,7 @@ var background = {
         if (bgImage6.loaded) context.drawImage(bgImage6, -player.x / 2.5, 0);
 
         if (leftBorderImage.loaded) context.drawImage(leftBorderImage, -player.x / 2.5 + 35, canvas.height - 220);
-        if (rightBorderImage.loaded) context.drawImage(rightBorderImage, -player.x / 2.5 + 1000, canvas.height - 177);
+        if (rightBorderImage.loaded) context.drawImage(rightBorderImage, -player.x / 2.5 + 1000, canvas.height - 150);
     }
 };
 
