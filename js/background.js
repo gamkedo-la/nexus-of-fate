@@ -54,9 +54,9 @@ var fog = {
         }
 
         if (fogImage.loaded) {
-            context.drawImage(fogImage, Math.sin(performance.now() / 34000) * 500 - 500 - player.x, canvas.height - 125 + Math.sin(performance.now() / 18000) * 50);
-            context.drawImage(fogImage, Math.sin(performance.now() / 48000) * -634 - 500 - player.x, canvas.height - 100 + Math.sin(performance.now() / 33000) * -50);
-            context.drawImage(fogImage, Math.sin(performance.now() / 49000) * 500 - 500 - player.x, canvas.height - 75 + Math.sin(performance.now() / 49000) * -50);
+            context.drawImage(fogImage, Math.sin(performance.now() / 14000) * 500 - 500 - player.x, canvas.height - 225 + Math.sin(performance.now() / 8000) * 50);
+            context.drawImage(fogImage, Math.sin(performance.now() / 28000) * -634 - 500 - player.x, canvas.height - 200 + Math.sin(performance.now() / 13000) * -50);
+            context.drawImage(fogImage, Math.sin(performance.now() / 29000) * 500 - 500 - player.x, canvas.height - 175 + Math.sin(performance.now() / 29000) * -50);
         }
     }
 };
