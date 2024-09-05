@@ -118,7 +118,7 @@ class Fighter {
 	  [ANIM_CROUCH_PUNCH]: 2288 * 0.2,
 	  [ANIM_CROUCH_PUNCH]: 2288 * 0.2,
       [ANIM_JUMP]: 407,
-      [ANIM_KICK]: 1913 * 0.2,
+      [ANIM_KICK]: 2000 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
       [ANIM_DEATH]: 2300 * 0.2,
       [ANIM_BLOCK]: 2274 * 0.2,
