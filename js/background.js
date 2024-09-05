@@ -98,6 +98,25 @@ var healthBar = {
         context.fillStyle = "white";
         context.fillText(fightRoundNumber + " of " + fightRoundMax, 475, 31);
         context.fillText(fightTimeRemaining.toFixed(0), 490, 62);
+		
+		if(player.health <=0){
+			context.font = "60px Tohoma bold";
+			context.fillStyle = "red";
+			context.fillText(" ROBOT WINS ", 105, canvas.height / 2);
+			
+			context.font = "20px Tohoma bold";
+			context.fillStyle = "white";
+			context.fillText(" round doesn't yet reset, please refresh ", 105, canvas.height / 2 + 80);
+			
+		}
+		else if(robot.health <= 0){
+			context.font = "60px Tohoma bold";
+			context.fillStyle = "lime";
+			context.fillText(" PLAYER WINS ", 305, canvas.height / 2);
+			context.font = "20px Tohoma bold";
+			context.fillStyle = "white";
+			context.fillText(" round doesn't yet reset, please refresh ", 305, canvas.height / 2 + 80);
+		}
     }
 };
 
