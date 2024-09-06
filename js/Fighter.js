@@ -31,7 +31,6 @@ const ANIM_JUMP = 'jump';
 const ANIM_KICK = 'kick';
 const ANIM_PUNCH = 'punch';
 const ANIM_CROUCH_PUNCH = 'crouchPunch';
-const ANIM_DEATH = 'die';
 const ANIM_BLOCK = 'block';
 const ANIM_COMBO = 'combo';
 const ANIM_DAMAGE = 'damage';
@@ -73,7 +72,6 @@ class Fighter {
       [ANIM_JUMP]: new Image(),
       [ANIM_KICK]: new Image(),
       [ANIM_PUNCH]: new Image(),
-      [ANIM_DEATH]: new Image(),
       [ANIM_CROUCH_PUNCH]: new Image(),
       [ANIM_BLOCK]: new Image(),
 	  [ANIM_COMBO]: new Image(),
@@ -87,7 +85,6 @@ class Fighter {
     this.images[ANIM_JUMP].src = imageSrcs[ANIM_JUMP];
     this.images[ANIM_KICK].src = imageSrcs[ANIM_KICK];
     this.images[ANIM_PUNCH].src = imageSrcs[ANIM_PUNCH];
-    this.images[ANIM_DEATH].src = imageSrcs[ANIM_DEATH];
     this.images[ANIM_CROUCH_PUNCH].src = imageSrcs[ANIM_CROUCH_PUNCH];
     this.images[ANIM_BLOCK].src = imageSrcs[ANIM_BLOCK];
 	this.images[ANIM_COMBO].src = imageSrcs[ANIM_COMBO];
@@ -101,7 +98,6 @@ class Fighter {
     this.images[ANIM_JUMP].onload = setThisLoaded;
     this.images[ANIM_KICK].onload = setThisLoaded;
     this.images[ANIM_PUNCH].onload = setThisLoaded;
-    this.images[ANIM_DEATH].onload = setThisLoaded;
     this.images[ANIM_CROUCH_PUNCH].onload = setThisLoaded;
     this.images[ANIM_BLOCK].onload = setThisLoaded;
 	this.images[ANIM_COMBO].onload = setThisLoaded;
@@ -119,7 +115,6 @@ class Fighter {
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 13,
       [ANIM_PUNCH]: 10,
-      [ANIM_DEATH]: 7,
       [ANIM_BLOCK]: 4,
 	  [ANIM_COMBO]: 11,
 	  [ANIM_DAMAGE]: 4,
@@ -136,7 +131,6 @@ class Fighter {
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 2000 * 0.2,
       [ANIM_PUNCH]: 2126 * 0.2,
-      [ANIM_DEATH]: 2300 * 0.2,
       [ANIM_BLOCK]: 2274 * 0.2,
 	  [ANIM_COMBO]: 1913 * 0.2,
 	  [ANIM_DAMAGE]: 1980 * 0.2,
@@ -151,7 +145,6 @@ class Fighter {
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 19,
       [ANIM_PUNCH]: 11,
-      [ANIM_DEATH]: 7,
 	  [ANIM_DAMAGE]: 7
     }
 
@@ -163,7 +156,6 @@ class Fighter {
       [ANIM_JUMP]: 407,
       [ANIM_KICK]: 0.2 * 1.5 * 1264,
       [ANIM_PUNCH]: 0.2 * 1.5 * 1280,
-      [ANIM_DEATH]: 7,
 	  [ANIM_DAMAGE]: 1284 * 0.2 * 1.5
     };
 
@@ -202,7 +194,7 @@ class Fighter {
       var frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
 
       if (this.animReturnToIdle && this.frameNum === frameCount) {
-        if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH || this.currentAnimation == ANIM_DEATH) {
+        if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH) {
           this.frameNum = frameCount - 1;
         } else if (this.currentAnimation === ANIM_CROUCH_PUNCH) {
 		  this.currentAnimation = ANIM_CROUCH;
@@ -246,14 +238,18 @@ class Fighter {
   let frameH = this.AI ? this.frameHeightRobot[this.currentAnimation] : this.frameHeight[this.currentAnimation];
 
   // Draw the base sprite
-  if (image.loaded) context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH);
+  
+  if(this.health > 0){
+	    if (image.loaded){ context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH)};
+
+  }
 
   
 }
   update(canvasWidth) {
   this.prevAnim = this.currentAnimation;
     this.getInput();
-    if(this.currentAnimation == ANIM_DEATH){
+    if( !this.AI && this.health <= 0){
         fx.dieFX(this.x,this.y);
 		return;
 	}
@@ -432,13 +428,7 @@ class Fighter {
         fx.dieFX(this.x,this.y);
         this.playerDieSound.play();
     }
-    this.currentAnimation = ANIM_DEATH;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
   }
-
-
- 
 
   getCurrentAnimationFrameCount() {
     return
