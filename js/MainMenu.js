@@ -21,8 +21,10 @@ class MainMenu {
         fx.clear(); // remove smoke particles
       } else {
         // clicked empty space - trigger intro music if it was unable to autostart
-        console.log("clicked empty space on title screen: start intro music!");
-        INTRO_music.play(); INTRO_music_is_playing = true;
+        if (this.onMainMenu) {
+            console.log("clicked empty space on title screen: start intro music!");
+            INTRO_music.play(); INTRO_music_is_playing = true;
+        }
       }
     });
 

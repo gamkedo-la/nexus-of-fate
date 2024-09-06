@@ -11,10 +11,11 @@ const ROBOT_FIST_Y = -20;
 const ROBOT_FOOT_X = -220;
 const ROBOT_FOOT_Y = 50; 
 
-const PUNCH_HIT_RANGE = 155; // if we punch and enemy is not blocking and we are this close, register as a hit
-const KICK_HIT_RANGE = 156;
 const PUNCH_DAMAGE = 5;
 const KICK_DAMAGE = 6;
+const PUNCH_HIT_RANGE = 155; // if we punch and enemy is not blocking and we are this close, register as a hit
+const KICK_HIT_RANGE = 156;
+
 const MOVE_SPEED = 10; // how fast the fighters move left and right
 const JUMP_POWER = -5; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
@@ -50,17 +51,19 @@ class Fighter {
 	this.height = 400;
     this.AI = false; // overriding from main outside this function, to help gate debug output
     this.getInput = whichInput;
+    
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
 	this.hurtSound = new Audio('audio/playerHurt.mp3');
 	this.robotHurtSound = new Audio('audio/robotHurt.mp3');
     this.jumpSound = new Audio('audio/playerJumpLaunch.mp3');
-
     this.punchSound = new Audio('audio/punch.mp3');
     this.punchSound.volume = 0.5;
     this.punchHitSound = new Audio('audio/punchHit.mp3');
     this.kickSound = new Audio('audio/kick.mp3');
     this.kickSound.volume = 0.5;
     this.kickHitSound = new Audio('audio/kickHit.mp3');
+    this.playerDieSound = new Audio('audio/playerDie.mp3');
+    this.robotDieSound = new Audio('audio/robotDie.mp3');
 
     this.images = {
       [ANIM_IDLE]: new Image(),
@@ -251,6 +254,7 @@ class Fighter {
   this.prevAnim = this.currentAnimation;
     this.getInput();
     if(this.currentAnimation == ANIM_DEATH){
+        fx.dieFX(this.x,this.y);
 		return;
 	}
     // Update the animation state based on movement
@@ -318,7 +322,6 @@ class Fighter {
 
     if (this.health <= 0) {
       this.died();
-	   
     }
 
     this.boundsCheck(canvasWidth);
@@ -422,6 +425,13 @@ class Fighter {
 
 
   died() {
+    if (this.isAI) {
+        fx.dieFX(this.x,this.y);
+        this.robotDieSound.play();
+    } else {
+        fx.dieFX(this.x,this.y);
+        this.playerDieSound.play();
+    }
     this.currentAnimation = ANIM_DEATH;
     this.frameNum = 0;
     this.timeTillNextFrame = 1 / ANIM_FPS;

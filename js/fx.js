@@ -109,24 +109,29 @@ var fx = {
     },
 
     // little puff of dust
-    jumpFX: function(x,y,vx,vy) {
+    jumpFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning a jumpFX at "+x+","+y);
         var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:1,img:this.imgDust};
         this.particles.push(p);
     },
 
     // glowing eyes
-    laserFX: function(x,y,vx,vy) {
+    laserFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning a laserFX at "+x+","+y);
         var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:1,img:this.imgSpark};
         this.particles.push(p);
     },
 
-    // blood or stars? ans : Blood
-    dieFX: function(x,y,vx,vy) {
+    dieFX: function(x=0,y=0,vx=0,vy=0) {
+        x-=150; y+=180; // offset
         //console.log("spawning a dieFX at "+x+","+y);
-        for (let n=0; n<20; n++) {
-            var p = {x:x+Math.random()*100-50,y:y+Math.random()*100-50,vx:vx+Math.random()*10-5,vy:vy+Math.random()*10-5,age:0,life:1+Math.random()*5,img:this.imgPuff};
+        for (let n=0; n<3; n++) {
+            var rx = Math.random()*40-20;
+            var ry = Math.random()*40-20;
+            var rvx = Math.random()*4-2;
+            var rvy = Math.random()*4-2;
+            var len = 0.5+Math.random()*2.5;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:0,life:len,img:this.imgPuff};
             this.particles.push(p);
         }
     },
