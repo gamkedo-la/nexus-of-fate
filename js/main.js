@@ -10,6 +10,7 @@ var debugSoundVolume = true;
 var roundStarted = false;
 var roundStartCountdownTick = 120;
 var roundStartCountdown = 3;
+var roundStartCountdownSound = new Audio("audio/3-2-1-fight.mp3");
 
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
@@ -89,6 +90,10 @@ window.onload = function () {
           roundStarted = true;
         }
         else {
+          
+          // 3... 2... 1... FIGHT!
+          if (roundStartCountdown==3) roundStartCountdownSound.play();
+
           roundStartCountdownTick--;
           if (roundStartCountdownTick % 30 == 0) {
             roundStartCountdown--;
