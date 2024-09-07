@@ -102,7 +102,7 @@ var healthBar = {
 		if(player.health <=0){
 			context.font = "60px Tohoma bold";
 			context.fillStyle = "red";
-			context.fillText(" ROBOT WINS ", 105, canvas.height / 2);
+			context.fillText(" ROBOT WINS ", 130, canvas.height / 6);
 			
 			context.font = "20px Tohoma bold";
 			context.fillStyle = "white";
@@ -112,7 +112,7 @@ var healthBar = {
 		else if(robot.health <= 0){
 			context.font = "60px Tohoma bold";
 			context.fillStyle = "lime";
-			context.fillText(" PLAYER WINS ", 305, canvas.height / 2);
+			context.fillText(" PLAYER WINS ", 130, canvas.height / 2);
 			context.font = "20px Tohoma bold";
 			context.fillStyle = "white";
 			context.fillText(" round doesn't yet reset, please refresh ", 305, canvas.height / 2 + 80);
