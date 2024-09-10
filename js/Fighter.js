@@ -22,7 +22,9 @@ const JUMP_POWER = -5; // how much upward velocity jump gives you
 const GRAVITY = 0.2; // how fast you accelerate while falling
 const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
+const PUNCH_ANIM_FPS = 24; // how fast the animations play
 const ANIM_FPS = 24; // how fast the animations play
+const KICK_ANIM_FPS = 12;
 const CROUCH_ANIM_FPS = 30;
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
@@ -114,7 +116,7 @@ class Fighter {
       [ANIM_CROUCH]: 19,
       [ANIM_CROUCH_PUNCH]: 10,
       [ANIM_JUMP]: 9,
-      [ANIM_KICK]: 13,
+      [ANIM_KICK]: 4,
       [ANIM_PUNCH]: 10,
       [ANIM_BLOCK]: 4,
       [ANIM_COMBO]: 11,
@@ -515,7 +517,7 @@ class Fighter {
           }
 
           myOpponent.startAnimIfNew(ANIM_DAMAGE);
-          myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
+          myOpponent.timeTillNextFrame = 1 / PUNCH_ANIM_FPS;
 
 
         }
@@ -524,7 +526,7 @@ class Fighter {
       }
     } // punch
 
-    if (this.currentAnimation == ANIM_KICK) {
+    if (this.currentAnimation == KICK_ANIM_FPS) {
 
       // particle fx for every kick including misses:
       if (this.isAI) fx.kickFX(this.x + ROBOT_FOOT_X, this.y + ROBOT_FOOT_Y); else fx.kickFX(this.x + PLAYER_FOOT_X, this.y + PLAYER_FOOT_Y);
@@ -548,7 +550,7 @@ class Fighter {
         }
 
         myOpponent.startAnimIfNew(ANIM_DAMAGE);
-        myOpponent.timeTillNextFrame = 1 / ANIM_FPS;
+        myOpponent.timeTillNextFrame = 1 / KICK_ANIM_FPS;
 
       } else {
         this.kickSound.play(); // woosh
