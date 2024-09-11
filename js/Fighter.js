@@ -259,7 +259,7 @@ class Fighter {
     // Update the animation state based on movement
     if (this.keys['a'] || this.keys['gamepad_left']) {
     
-      if (this.keys['shift']) {
+      if (this.keys[' ']) {
         this.dashLeft();
       } else {
         this.moveLeft();
@@ -267,7 +267,7 @@ class Fighter {
     
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
     
-      if (this.keys['shift']) {
+      if (this.keys[' ']) {
         this.dashRight();
       } else {
         this.moveRight();
@@ -286,24 +286,24 @@ class Fighter {
       }
     }
 
-    if (this.keys[' '] || this.keys['gamepad_a_button']) {
+    if (this.keys['w'] || this.keys['gamepad_a_button']) {
       this.jump();
     }
 
-    if (this.keys['k'] || this.keys['gamepad_b_button']) {
+    if (this.keys['j'] || this.keys['gamepad_b_button']) {
       this.startAnimIfNew(ANIM_KICK);
     }
 
-    if (this.keys['p'] || this.keys['gamepad_a_button']) {
+    if (this.keys['h'] || this.keys['gamepad_a_button']) {
       this.startAnimIfNew(ANIM_PUNCH);
     }
 
-    if ((this.keys['s'] && this.keys['p'])
+    if ((this.keys['s'] && this.keys['h'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
 
-    if ((this.keys['n'] && this.keys['m'])
+    if ((this.keys['i'] && this.keys['o'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       if (this.currentAnimation != ANIM_COMBO && player.power >= 100) {
         this.startAnimIfNew(ANIM_COMBO);
@@ -322,7 +322,7 @@ class Fighter {
       this.currentAnimation = ANIM_IDLE;
     }
 
-    if (this.keys['z'] || this.keys['gamepad_x_button']) {
+    if (this.keys['u'] || this.keys['gamepad_x_button']) {
       this.startAnimIfNew(ANIM_BLOCK);
     }
     else if (this.currentAnimation == ANIM_BLOCK) {
