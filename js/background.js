@@ -106,7 +106,7 @@ var healthBar = {
 			
 			context.font = "20px Tohoma bold";
 			context.fillStyle = "white";
-			context.fillText(" round doesn't yet reset, please refresh ", 105, canvas.height / 2 + 80);
+			context.fillText(" round doesn't yet reset, please refresh ", 105, canvas.height / 6 + 100);
 			
 		}
 		else if(robot.health <= 0){

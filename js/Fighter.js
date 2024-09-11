@@ -526,7 +526,7 @@ class Fighter {
       }
     } // punch
 
-    if (this.currentAnimation == KICK_ANIM_FPS) {
+    if (this.currentAnimation == ANIM_KICK) {
 
       // particle fx for every kick including misses:
       if (this.isAI) fx.kickFX(this.x + ROBOT_FOOT_X, this.y + ROBOT_FOOT_Y); else fx.kickFX(this.x + PLAYER_FOOT_X, this.y + PLAYER_FOOT_Y);

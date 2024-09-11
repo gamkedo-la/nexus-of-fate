@@ -50,6 +50,7 @@ class FighterRobot extends Fighter {
             if (Math.random() < 0.5) {
                 if (Math.random() < 0.5) {
                     this.punch();
+					
                 } else {
                     this.kick();
                 }
