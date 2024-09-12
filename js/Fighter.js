@@ -298,12 +298,12 @@ class Fighter {
       this.startAnimIfNew(ANIM_PUNCH);
     }
 
-    if ((this.keys['s'] && this.keys['h'])
+    if ((this.keys['s']&& this.keys['k'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
 
-    if ((this.keys['i'] && this.keys['o'])
+    if ((this.keys['i'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       if (this.currentAnimation != ANIM_COMBO && player.power >= 100) {
         this.startAnimIfNew(ANIM_COMBO);
