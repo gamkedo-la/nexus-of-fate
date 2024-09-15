@@ -1,7 +1,9 @@
 const ROUND_START_TIME = 90;
+const FRAME_DELAY_BEFORE_RESET = 150;
+var resetRoundTimer = -1;
 var fightRoundNumber = 1;
 var fightRoundMax = 3;
-var fightDurationSeconds = 90;
+var fightDurationSeconds = ROUND_START_TIME;
 var fightTimeRemaining = fightDurationSeconds;
 var frameTimestamp = performance.now();
 var previousTimestamp = frameTimestamp;
@@ -42,6 +44,12 @@ const robot = new FighterRobot(input_ai, {
 player.opponent = robot;
 robot.opponent = player;
 
+function startRoundEndTimer() {
+  if (resetRoundTimer <= 0) {
+    resetRoundTimer = FRAME_DELAY_BEFORE_RESET;
+  }
+}
+
 function advanceRound () {
   fightTimeRemaining = ROUND_START_TIME;
   // TODO: change rounds, reset health, end fight, etc
@@ -49,6 +57,7 @@ function advanceRound () {
   player.health = MAX_HEALTH;
   player.x = PLAYER_START_X;
   robot.x = ROBOT_START_X;
+  resetRoundTimer = -1;
   fightRoundNumber +=1;
   console.log("Round" + fightRoundNumber);
   if (fightRoundNumber == fightRoundMax) {
@@ -76,16 +85,22 @@ window.onload = function () {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (roundStarted) {
+        if(resetRoundTimer >=0) {
+          resetRoundTimer--;
+          if(resetRoundTimer == 0){
+            advanceRound();
+          }
+        }
         if (player.health > 0 && robot.health > 0) { 
           fightTimeRemaining -= deltaTime / 1000;
           if (fightTimeRemaining <= 0) {
             fightTimeRemaining = 0;
-            advanceRound();
+            startRoundEndTimer();
           }
           
         }
         if ( player.health < 0 || robot.health < 0) {
-          advanceRound();
+          startRoundEndTimer();
         }
         check_gamepad();
         player.update(canvas.width);
