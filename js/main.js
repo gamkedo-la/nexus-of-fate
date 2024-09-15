@@ -1,3 +1,4 @@
+const ROUND_START_TIME = 90;
 var fightRoundNumber = 1;
 var fightRoundMax = 3;
 var fightDurationSeconds = 90;
@@ -15,7 +16,8 @@ var roundStartCountdownSound = new Audio("audio/3-2-1-fight.mp3");
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
 const mainMenu = new MainMenu(canvas);
-
+const PLAYER_START_X = 100;
+const ROBOT_START_X = 2000;
 const player = new Player(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
   [ANIM_WALK_FORWARD]: 'images/player_walk.png',
@@ -28,21 +30,31 @@ const player = new Player(input_keyboard, {
   [ANIM_BLOCK]: 'images/player_block.png',
   [ANIM_COMBO]: 'images/player_combo.png',
   [ANIM_DAMAGE]: 'images/player_damage.png',
-
-
-}, 100, FLOOR_Y);
+}, PLAYER_START_X, FLOOR_Y);
 
 const robot = new FighterRobot(input_ai, {
   [ANIM_IDLE]: 'images/robot_idle.png',
   [ANIM_KICK]: 'images/robot_kick.png',
   [ANIM_PUNCH]: 'images/robot_punch.png',
   [ANIM_DAMAGE]: 'images/robot_damage.png'
-
-
-}, 2000, FLOOR_Y);
+}, ROBOT_START_X, FLOOR_Y);
 
 player.opponent = robot;
 robot.opponent = player;
+
+function advanceRound () {
+  fightTimeRemaining = ROUND_START_TIME;
+  // TODO: change rounds, reset health, end fight, etc
+  robot.health = MAX_HEALTH;
+  player.health = MAX_HEALTH;
+  player.x = PLAYER_START_X;
+  robot.x = ROBOT_START_X;
+  fightRoundNumber +=1;
+  console.log("Round" + fightRoundNumber);
+  if (fightRoundNumber == fightRoundMax) {
+    console.log("Reset Game");
+  }
+}
 
 window.onload = function () {
 	
@@ -68,10 +80,13 @@ window.onload = function () {
           fightTimeRemaining -= deltaTime / 1000;
           if (fightTimeRemaining <= 0) {
             fightTimeRemaining = 0;
-            // TODO: change rounds, reset health, end fight, etc
+            advanceRound();
           }
+          
         }
-
+        if ( player.health < 0 || robot.health < 0) {
+          advanceRound();
+        }
         check_gamepad();
         player.update(canvas.width);
         robot.update();

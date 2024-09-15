@@ -38,14 +38,14 @@ const ANIM_COMBO = 'combo';
 const ANIM_DAMAGE = 'damage';
 
 const EDGE_BOUNDRY_PIXELS = 120;
-
+const MAX_HEALTH = 100;
 
 function setThisLoaded() { this.loaded = true; } // used for image onload
 
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
-    this.health = 100;
+    this.health = MAX_HEALTH;
     this.power = 0;
     this.keys = {};
     this.width = 180;
