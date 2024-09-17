@@ -1,4 +1,34 @@
 var bgImage1, bgImage5, bgImage6, cloudImage, fogImage, leftBorderImage, rightBorderImage, healthbarBackground, powerbarBackground;
+isOptionsVisible: false,
+function drawControls() {
+    context.font = "20px Tahoma";
+    context.fillStyle = "white";
+    context.textAlign = "left";
+    context.textBaseline = "top";
+
+    var controlsText = [
+        "W jump",
+        "A left",
+        "D right",
+        "S down",
+        "I combo",
+        "H punch",
+        "J kick",
+        "SPACE dash",
+        "U block",
+        "K Crouch Punch"
+    ];
+	
+	var startX = 50; // Starting X position
+    var startY = 100; // Starting Y position
+
+    // Draw each line of the controls text
+    for (var i = 0; i < controlsText.length; i++) {
+        context.fillText(controlsText[i], startX, startY + i * 30); // Adjust spacing with i * 30
+    }
+	
+}
+
 
 var background = {
     draw: function() {
@@ -147,3 +177,29 @@ var powerBar = {
         }
     }
 };
+
+var optionsButton = {
+    width: 100,
+    height: 30,
+    padding: 20,
+
+    draw: function() {
+        var cornerX = canvas.width - this.width - this.padding;
+        var cornerY = canvas.height - this.height - this.padding;
+
+        // Draw the button background
+        context.fillStyle = "grey";
+        context.fillRect(cornerX, cornerY, this.width, this.height);
+
+        // Draw the button text
+        context.font = "16px Tahoma bold";
+        context.fillStyle = "white";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText("Options", cornerX + this.width / 2, cornerY + this.height / 2);
+    }
+	
+	
+    
+};
+

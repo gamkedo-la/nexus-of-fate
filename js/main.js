@@ -147,8 +147,27 @@ window.onload = function () {
       player.draw();
       robot.draw();
       powerBar.draw();
+	  optionsButton.draw();
+	  
+	  if (optionsButton.isOptionsVisible) {
+        drawControls();
+    }
 
     }
     requestAnimationFrame(draw);
   })();
 };
+
+	canvas.addEventListener('click', function(event) {
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.clientX - rect.left;
+    var mouseY = event.clientY - rect.top;
+
+    // Check if the Options button was clicked
+    if (optionsButton.isClicked(mouseX, mouseY)) {
+        optionsButton.isOptionsVisible = !optionsButton.isOptionsVisible; // Toggle visibility
+    }
+});
+
+});
+
