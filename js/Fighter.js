@@ -180,6 +180,9 @@ class Fighter {
   draw() {
     let now = performance.now() / 1000;
     let deltaTime = now - this.previousFrameTimestamp;
+	if (optionsButton.isOptionsVisible){
+		deltaTime = 0;
+	}
     this.previousFrameTimestamp = now;
 
     // Only update frame if enough time has passed

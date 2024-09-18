@@ -1,5 +1,4 @@
 var bgImage1, bgImage5, bgImage6, cloudImage, fogImage, leftBorderImage, rightBorderImage, healthbarBackground, powerbarBackground;
-var isOptionsVisible = false;
 function drawControls() {
 	var wasFont = context.font;
 	var wasFillStyle  = context.fillStyle;
@@ -193,6 +192,7 @@ var optionsButton = {
     padding: 20,
 	cornerX: -1,
 	cornerY: -1,
+	isOptionsVisible: false,
 	
     draw: function() {
         this.cornerX = canvas.width - this.width - this.padding;
