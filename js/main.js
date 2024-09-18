@@ -7,7 +7,7 @@ var fightDurationSeconds = ROUND_START_TIME;
 var fightTimeRemaining = fightDurationSeconds;
 var frameTimestamp = performance.now();
 var previousTimestamp = frameTimestamp;
-var deltaTime = 0; // seconds since previous frame
+var deltaTime = 0; // seconds since the previous frame
 var debugSoundVolume = true;
 
 var roundStarted = false;
@@ -20,6 +20,7 @@ const context = canvas.getContext('2d');
 const mainMenu = new MainMenu(canvas);
 const PLAYER_START_X = 100;
 const ROBOT_START_X = 2000;
+
 const player = new Player(input_keyboard, {
   [ANIM_IDLE]: 'images/player_idle.png',
   [ANIM_WALK_FORWARD]: 'images/player_walk.png',
@@ -50,44 +51,42 @@ function startRoundEndTimer() {
   }
 }
 
-function advanceRound () {
+function advanceRound() {
   fightTimeRemaining = ROUND_START_TIME;
-  // TODO: change rounds, reset health, end fight, etc
+  // Reset health and positions
   robot.health = MAX_HEALTH;
   player.health = MAX_HEALTH;
   player.x = PLAYER_START_X;
   robot.x = ROBOT_START_X;
   resetRoundTimer = -1;
-  fightRoundNumber +=1;
-  console.log("Round" + fightRoundNumber);
+  fightRoundNumber += 1;
+  console.log("Round " + fightRoundNumber);
   if (fightRoundNumber == fightRoundMax) {
     console.log("Reset Game");
   }
 }
 
 window.onload = function () {
-	
- // Helps it not blur from the scaling:
-	context.mozImageSmoothingEnabled = false;
-	context.imageSmoothingEnabled = false;
-	context.msImageSmoothingEnabled = false;
-	context.imageSmoothingEnabled = false;
-	
+  // Helps it not blur from the scaling:
+  context.mozImageSmoothingEnabled = false;
+  context.imageSmoothingEnabled = false;
+  context.msImageSmoothingEnabled = false;
+  context.imageSmoothingEnabled = false;
+
   (function draw() {
     frameTimestamp = performance.now();
     deltaTime = frameTimestamp - previousTimestamp;
     previousTimestamp = frameTimestamp;
 
     if (!mainMenu.show()) {
-
       updateScreenshake();
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (roundStarted) {
-        if(resetRoundTimer >=0) {
+        if (resetRoundTimer >= 0) {
           resetRoundTimer--;
-          if(resetRoundTimer == 0){
+          if (resetRoundTimer == 0) {
             advanceRound();
           }
         }
@@ -97,11 +96,11 @@ window.onload = function () {
             fightTimeRemaining = 0;
             startRoundEndTimer();
           }
-          
         }
-        if ( player.health < 0 || robot.health < 0) {
+        if (player.health <= 0 || robot.health <= 0) {
           startRoundEndTimer();
         }
+
         check_gamepad();
         player.update(canvas.width);
         robot.update();
@@ -109,19 +108,12 @@ window.onload = function () {
         player.check_collisions(robot);
         robot.check_collisions(player);
         fx.update();
-      }
-      else {
-        
-       // if (INTRO_music_is_playing) { INTRO_music.pause(); INTRO_music_is_playing = false; } 
-      //  if (!music_is_playing) { music.play(); music_is_playing = true; }
-        
+      } else {
         if (roundStartCountdownTick < 0) {
           roundStarted = true;
-        }
-        else {
-          
+        } else {
           // 3... 2... 1... FIGHT!
-          if (roundStartCountdown==3) roundStartCountdownSound.play();
+          if (roundStartCountdown == 3) roundStartCountdownSound.play();
 
           roundStartCountdownTick--;
           if (roundStartCountdownTick % 30 == 0) {
@@ -132,10 +124,10 @@ window.onload = function () {
 
       background.draw();
 
-      // 3, 2, 1, FIGHT!
+      // Draw the countdown or "FIGHT!"
       if (roundStartCountdownTick > 0) {
         const fontSize = 100;
-        context.font = `${fontSize}px Tohoma bold`;
+        context.font = `${fontSize}px Tahoma bold`;
         context.fillStyle = "white";
         var drawn = roundStartCountdown > 0 ? roundStartCountdown : "FIGHT!";
         context.fillText(drawn, canvas.width / 2 - context.measureText(drawn).width / 2, canvas.height / 2);
@@ -147,27 +139,23 @@ window.onload = function () {
       player.draw();
       robot.draw();
       powerBar.draw();
-	  optionsButton.draw();
-	  
-	  if (optionsButton.isOptionsVisible) {
+      optionsButton.draw();
+
+      if (optionsButton.isOptionsVisible) {
         drawControls();
+      }
     }
 
-    }
     requestAnimationFrame(draw);
   })();
-};
 
-	canvas.addEventListener('click', function(event) {
+  // Move the canvas event listener inside the onload function
+  canvas.addEventListener('click', function(event) {
     var rect = canvas.getBoundingClientRect();
     var mouseX = event.clientX - rect.left;
     var mouseY = event.clientY - rect.top;
 
     // Check if the Options button was clicked
-    if (optionsButton.isClicked(mouseX, mouseY)) {
-        optionsButton.isOptionsVisible = !optionsButton.isOptionsVisible; // Toggle visibility
-    }
-});
-
-});
-
+    optionsButton.checkClicked(mouseX, mouseY); 
+  });
+};

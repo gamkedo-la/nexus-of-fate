@@ -1,5 +1,5 @@
 var bgImage1, bgImage5, bgImage6, cloudImage, fogImage, leftBorderImage, rightBorderImage, healthbarBackground, powerbarBackground;
-isOptionsVisible: false,
+var isOptionsVisible = false;
 function drawControls() {
     context.font = "20px Tahoma";
     context.fillStyle = "white";
@@ -182,24 +182,42 @@ var optionsButton = {
     width: 100,
     height: 30,
     padding: 20,
-
+	cornerX: -1,
+	cornerY: -1,
+	
     draw: function() {
-        var cornerX = canvas.width - this.width - this.padding;
-        var cornerY = canvas.height - this.height - this.padding;
+        this.cornerX = canvas.width - this.width - this.padding;
+        this.cornerY = canvas.height - this.height - this.padding;
 
         // Draw the button background
         context.fillStyle = "grey";
-        context.fillRect(cornerX, cornerY, this.width, this.height);
+        context.fillRect(this.cornerX, this.cornerY, this.width, this.height);
 
         // Draw the button text
         context.font = "16px Tahoma bold";
         context.fillStyle = "white";
         context.textAlign = "center";
         context.textBaseline = "middle";
-        context.fillText("Options", cornerX + this.width / 2, cornerY + this.height / 2);
-    }
+        context.fillText("Options", this.cornerX + this.width / 2, this.cornerY + this.height / 2);
+    },
+	
+	checkClicked: function(x,y){
+		var leftX = this.cornerX;
+		var topY  = this.cornerY;
+		var rightX =  leftX + this.width;
+		var bottomY = topY + this.height;
+		console.log("Clicked",x,y);
+		if(x > leftX && y > topY && x < rightX && y < bottomY){
+		   optionsButton.isOptionsVisible = !optionsButton.isOptionsVisible; // Toggle visibility
+		}
+
+	}
 	
 	
-    
+	
+	
+	
+	
+	
 };
 
