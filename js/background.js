@@ -1,6 +1,11 @@
 var bgImage1, bgImage5, bgImage6, cloudImage, fogImage, leftBorderImage, rightBorderImage, healthbarBackground, powerbarBackground;
 var isOptionsVisible = false;
 function drawControls() {
+	var wasFont = context.font;
+	var wasFillStyle  = context.fillStyle;
+	var wasTextAllign = context.textAlign;
+	var wasTextBaseline = context.textBaseline;
+	
     context.font = "20px Tahoma";
     context.fillStyle = "white";
     context.textAlign = "left";
@@ -27,8 +32,12 @@ function drawControls() {
         context.fillText(controlsText[i], startX, startY + i * 30); // Adjust spacing with i * 30
     }
 	
+    context.font = wasFont;
+    context.fillStyle = wasFillStyle;
+    context.textAlign = wasTextAllign;
+    context.textBaseline = wasTextBaseline;
+	
 }
-
 
 var background = {
     draw: function() {
@@ -194,11 +203,19 @@ var optionsButton = {
         context.fillRect(this.cornerX, this.cornerY, this.width, this.height);
 
         // Draw the button text
+		var wasFont = context.font;
+		var wasFillStyle  = context.fillStyle;
+		var wasTextAllign = context.textAlign;
+		var wasTextBaseline = context.textBaseline;
         context.font = "16px Tahoma bold";
         context.fillStyle = "white";
         context.textAlign = "center";
         context.textBaseline = "middle";
         context.fillText("Options", this.cornerX + this.width / 2, this.cornerY + this.height / 2);
+	    context.font = wasFont;
+		context.fillStyle = wasFillStyle;
+		context.textAlign = wasTextAllign;
+		context.textBaseline = wasTextBaseline;
     },
 	
 	checkClicked: function(x,y){
