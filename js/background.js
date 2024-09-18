@@ -24,7 +24,7 @@ function drawControls() {
         "K Crouch Punch"
     ];
 	
-	var startX = 50; // Starting X position
+	var startX = canvas.width/2 - 100; // Starting X position
     var startY = 100; // Starting Y position
 
     // Draw each line of the controls text

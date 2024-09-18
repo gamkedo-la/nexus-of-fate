@@ -84,30 +84,33 @@ window.onload = function () {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (roundStarted) {
-        if (resetRoundTimer >= 0) {
-          resetRoundTimer--;
-          if (resetRoundTimer == 0) {
-            advanceRound();
-          }
-        }
-        if (player.health > 0 && robot.health > 0) { 
-          fightTimeRemaining -= deltaTime / 1000;
-          if (fightTimeRemaining <= 0) {
-            fightTimeRemaining = 0;
-            startRoundEndTimer();
-          }
-        }
-        if (player.health <= 0 || robot.health <= 0) {
-          startRoundEndTimer();
-        }
+		if (optionsButton.isOptionsVisible == false){
+		    if (resetRoundTimer >= 0) {
+			  resetRoundTimer--;
+			  if (resetRoundTimer == 0) {
+				advanceRound();
+			  }
+			}
+			if (player.health > 0 && robot.health > 0) { 
+			  fightTimeRemaining -= deltaTime / 1000;
+			  if (fightTimeRemaining <= 0) {
+				fightTimeRemaining = 0;
+				startRoundEndTimer();
+			  }
+			}
+			if (player.health <= 0 || robot.health <= 0) {
+			  startRoundEndTimer();
+			}
 
-        check_gamepad();
-        player.update(canvas.width);
-        robot.update();
-        powerBar.update(deltaTime);
-        player.check_collisions(robot);
-        robot.check_collisions(player);
-        fx.update();
+			check_gamepad();
+			player.update(canvas.width);
+			robot.update();
+			powerBar.update(deltaTime);
+			player.check_collisions(robot);
+			robot.check_collisions(player);
+			fx.update();
+		}
+       
       } else {
         if (roundStartCountdownTick < 0) {
           roundStarted = true;
