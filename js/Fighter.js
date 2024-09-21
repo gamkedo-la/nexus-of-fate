@@ -145,7 +145,7 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
       [ANIM_JUMP]: 9,
-      [ANIM_KICK]: 19,
+      [ANIM_KICK]: 4,
       [ANIM_PUNCH]: 11,
       [ANIM_DAMAGE]: 7
     }
