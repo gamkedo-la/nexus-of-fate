@@ -152,7 +152,7 @@ class FighterRobot extends Fighter {
 	}
     this.currentAnimation = ANIM_KICK;
     this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
+    this.timeTillNextFrame = 1 / KICK_ANIM_FPS;
     this.animReturnToIdle = true;
     this.retreatTime = 40 + Math.random() * 50; 
   }

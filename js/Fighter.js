@@ -24,7 +24,7 @@ const FLOOR_Y = 240; // lowest possible Y coordinate
 const BODY_WIDTH = 170;
 const PUNCH_ANIM_FPS = 24; // how fast the animations play
 const ANIM_FPS = 24; // how fast the animations play
-const KICK_ANIM_FPS = 12;
+const KICK_ANIM_FPS = 10;
 const ANIM_IDLE = 'idle';
 const ANIM_WALK_FORWARD = 'walk_forward';
 const ANIM_WALK_BACKWARD = 'walk_backward';
@@ -146,7 +146,7 @@ class Fighter {
       [ANIM_WALK_BACKWARD]: 39,
       [ANIM_CROUCH]: 19,
       [ANIM_JUMP]: 9,
-      [ANIM_KICK]: 4,
+      [ANIM_KICK]: 5,
       [ANIM_PUNCH]: 11,
       [ANIM_DAMAGE]: 7
     }
@@ -191,7 +191,10 @@ class Fighter {
       this.timeTillNextFrame -= deltaTime;
       if (this.timeTillNextFrame <= 0) {
         this.frameNum++;
-        if (this.currentAnimation == ANIM_CROUCH) {
+	   if(this.currentAnimation == ANIM_KICK){
+		  this.timeTillNextFrame += 1 / KICK_ANIM_FPS;
+	   }
+       else if (this.currentAnimation == ANIM_CROUCH) {
           this.timeTillNextFrame = 1 / ANIM_FPS;
         } else {
           this.timeTillNextFrame += 1 / ANIM_FPS;
