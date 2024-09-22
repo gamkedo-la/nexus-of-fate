@@ -5,11 +5,12 @@ const LASER_SHOOT_OFFSETY = 64;
 class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
     super(whichInput, imageSrcs, initialX, initialY);
-    this.speed = 2;
+    this.speed = 0;
     this.baseY = FLOOR_Y - 100;
     this.angle = 0;
     this.y = FLOOR_Y;
-    this.AI = true;
+    this.AI = false;
+	this.robot = true;
     this.thrustSound = new Audio('audio/RobotThrust.mp3');
 
     this.currentAnimation = ANIM_IDLE;
@@ -28,15 +29,45 @@ class FighterRobot extends Fighter {
 
 
   update(deltaTime) {
+	let dx = player.x - this.x;
+    let dy = player.y - this.y;
+    let distanceToPlayer = Math.hypot(dx, dy);
+	
+	let angle = Math.atan2(dy, dx);
+    this.x += Math.cos(angle) * this.speed;
+    this.baseY += Math.sin(angle) * this.speed;
+
+    this.angle += 0.05;
+    this.y = this.baseY + Math.sin(this.angle) * 20;
+
+    if (this.x < 0) this.x = 0;
+    if (this.x > canvas.width) this.x = canvas.width;
+    if (this.y < 150) this.y = 150;
+    if (this.y > canvas.height - 200) this.y = canvas.height - 200;
+
+    this.lasers.forEach((laser) => {
+        laser.update();
+
+        // Check for collision with the opponent
+        if (laser.collidesWith(this.opponent)) {
+            this.opponent.health -= 1; // Decrease opponent's health by 1
+            //screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
+            laser.active = false; // Deactivate the laser
+        }
+    });
+    
+	 // Remove inactive lasers
+    this.lasers = this.lasers.filter((laser) => laser.active);
+	
+	if(this.AI == true){
+	   return; // avoid AI code below
+	}
+   
     if (this.opponent && this.opponent.health <= 0) {
         this.currentAnimation = ANIM_IDLE;
         this.speed = 0;
         return;
     }
-
-    let dx = player.x - this.x;
-    let dy = player.y - this.y;
-    let distanceToPlayer = Math.hypot(dx, dy);
 
     if (this.currentAnimation == ANIM_DAMAGE) {
         return;
@@ -84,31 +115,7 @@ class FighterRobot extends Fighter {
         }
     }
 
-    let angle = Math.atan2(dy, dx);
-    this.x += Math.cos(angle) * this.speed;
-    this.baseY += Math.sin(angle) * this.speed;
-
-    this.angle += 0.05;
-    this.y = this.baseY + Math.sin(this.angle) * 20;
-
-    if (this.x < 0) this.x = 0;
-    if (this.x > canvas.width) this.x = canvas.width;
-    if (this.y < 150) this.y = 150;
-    if (this.y > canvas.height - 200) this.y = canvas.height - 200;
-
-    this.lasers.forEach((laser) => {
-        laser.update();
-
-        // Check for collision with the opponent
-        if (laser.collidesWith(this.opponent)) {
-            this.opponent.health -= 1; // Decrease opponent's health by 1
-            //screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
-            laser.active = false; // Deactivate the laser
-        }
-    });
-
-    // Remove inactive lasers
-    this.lasers = this.lasers.filter((laser) => laser.active);
+   
 }
 
   draw(context) {

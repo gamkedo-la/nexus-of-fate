@@ -51,6 +51,7 @@ class Fighter {
     this.width = 180;
     this.height = 400;
     this.AI = false; // overriding from main outside this function, to help gate debug output
+	this.robot = false; // important for animation if robot is human controlled
     this.getInput = whichInput;
 
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
@@ -196,14 +197,14 @@ class Fighter {
           this.timeTillNextFrame += 1 / ANIM_FPS;
         }
 
-        var frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
+        var frameCount = this.robot ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
 
         if (this.animReturnToIdle && this.frameNum === frameCount) {
           if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH) {
             this.frameNum = frameCount - 1;
           } else if (this.currentAnimation === ANIM_CROUCH_PUNCH) {
             this.currentAnimation = ANIM_CROUCH;
-            frameCount = this.AI ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
+            frameCount = this.robot ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
             this.frameNum = frameCount - 1;
           } else {
             this.animReturnToIdle = false;
@@ -240,7 +241,7 @@ class Fighter {
 
     let image = this.images[this.currentAnimation];
     let frameW = image.width;
-    let frameH = this.AI ? this.frameHeightRobot[this.currentAnimation] : this.frameHeight[this.currentAnimation];
+    let frameH = this.robot ? this.frameHeightRobot[this.currentAnimation] : this.frameHeight[this.currentAnimation];
 
     // Draw the base sprite
 
@@ -254,7 +255,7 @@ class Fighter {
   update(canvasWidth) {
     this.prevAnim = this.currentAnimation;
     this.getInput();
-    if (!this.AI && this.health <= 0) {
+    if (!this.robot && this.health <= 0) {
       fx.dieFX(this.x, this.y);
       return;
     }
@@ -510,7 +511,7 @@ class Fighter {
             screenshake(ROBOT_HIT_SCREENSHAKE_COUNT);
           }
 
-          if (this.AI) {
+          if (this.robot) {
             fx.hitFX(this.x + ROBOT_FIST_X, this.y + ROBOT_FIST_Y);
             this.robotHurtSound.play();
           } else {
