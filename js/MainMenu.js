@@ -18,6 +18,10 @@ class MainMenu {
 
       if (userIsOnStartText(event)) {
         this.onMainMenu = false;
+		console.log("Gameplay music");
+		INTRO_music.pause();
+		INTRO_music.currentTime = 0;
+		music.play();
         fx.clear(); // remove smoke particles
       } else {
         // clicked empty space - trigger intro music if it was unable to autostart
