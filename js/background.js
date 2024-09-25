@@ -117,19 +117,25 @@ var healthBar = {
         // Draw player health bar background
         context.fillStyle = "black";
         context.fillRect(this.padding, this.padding, this.width, this.height);
-
-        // Draw player health bar filled with blue
-        context.fillStyle = "blue";
-        context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (player.health / 100), this.height - 4);
+        
+		if(player.health > 0){
+		   // Draw player health bar filled with blue
+			context.fillStyle = "blue";
+			context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (player.health / 100), this.height - 4);
+		}
+      
 
         // Draw robot health bar background
         context.fillStyle = "black";
         context.fillRect(canvas.width - this.width - this.padding, this.padding, this.width, this.height);
+        
+		if(robot.health > 0){
+			// Draw robot health bar filled with red
+			context.fillStyle = "red";
+			context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
 
-        // Draw robot health bar filled with red
-        context.fillStyle = "red";
-        context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
-
+		}
+      
        
         // Round number and timer
         context.font = "20px Tohoma bold";
