@@ -7,6 +7,8 @@ var fightDurationSeconds = ROUND_START_TIME;
 var fightTimeRemaining = fightDurationSeconds;
 var frameTimestamp = performance.now();
 var previousTimestamp = frameTimestamp;
+var playerWinCounter = 0;
+var robotWinCounter = 0;
 var deltaTime = 0; // seconds since the previous frame
 var debugSoundVolume = true;
 
@@ -52,6 +54,17 @@ function startRoundEndTimer() {
 }
 
 function advanceRound() {
+  if(player.health <= 0){
+	  robotWinCounter++;
+  }
+  
+  if(robot.health <= 0){
+	  playerWinCounter++;
+  }
+  console.log(playerWinCounter);
+  console.log(robotWinCounter);
+
+	  
   fightTimeRemaining = ROUND_START_TIME;
   // Reset health and positions
   robot.health = MAX_HEALTH;
@@ -61,8 +74,11 @@ function advanceRound() {
   resetRoundTimer = -1;
   fightRoundNumber += 1;
   console.log("Round " + fightRoundNumber);
-  if (fightRoundNumber == fightRoundMax) {
-    console.log("Reset Game");
+  if (playerWinCounter >= 2 || robotWinCounter >= 2) {
+    //location.reload();
+	playerWinCounter = 0;
+	robotWinCounter  = 0;
+	fightRoundNumber = 1;
   }
 }
 

@@ -123,7 +123,14 @@ var healthBar = {
 			context.fillStyle = "blue";
 			context.fillRect(this.padding + 2, this.padding + 2, (this.width - 4) * (player.health / 100), this.height - 4);
 		}
-      
+        var roundWinBoxSize = 20;
+		var roundWinBoxSpacer = 5;
+		context.fillStyle = (playerWinCounter >= 1 ? "green" : "grey");
+		context.fillRect(this.padding, this.padding + roundWinBoxSpacer +  this.height, roundWinBoxSize,roundWinBoxSize);
+	    context.fillStyle = (playerWinCounter >= 2 ? "green" : "grey");
+	    context.fillRect(this.padding + roundWinBoxSpacer + roundWinBoxSize, this.padding + roundWinBoxSpacer + this.height, roundWinBoxSize,roundWinBoxSize);
+
+
 
         // Draw robot health bar background
         context.fillStyle = "black";
@@ -135,7 +142,11 @@ var healthBar = {
 			context.fillRect(canvas.width - this.width - this.padding + 2, this.padding + 2, (this.width - 4) * (robot.health / 100), this.height - 4);
 
 		}
-      
+		var enemyHealthRightEdge = canvas.width - this.padding;
+		context.fillStyle = (robotWinCounter >= 1 ? "green" : "grey");
+		context.fillRect(enemyHealthRightEdge - roundWinBoxSize, this.padding + roundWinBoxSpacer +  this.height, roundWinBoxSize,roundWinBoxSize);
+		context.fillStyle = (robotWinCounter >= 2 ? "green" : "grey");
+		context.fillRect(enemyHealthRightEdge - roundWinBoxSpacer - roundWinBoxSize * 2, this.padding + roundWinBoxSpacer + this.height, roundWinBoxSize,roundWinBoxSize);
        
         // Round number and timer
         context.font = "20px Tohoma bold";
