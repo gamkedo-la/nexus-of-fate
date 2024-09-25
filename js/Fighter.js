@@ -113,7 +113,7 @@ class Fighter {
       [ANIM_IDLE]: 58,
       [ANIM_WALK_FORWARD]: 12,
       [ANIM_WALK_BACKWARD]: 39,
-      [ANIM_CROUCH]: 19,
+      [ANIM_CROUCH]: 7,
       [ANIM_CROUCH_PUNCH]: 5,
       [ANIM_JUMP]: 9,
       [ANIM_KICK]: 4,
