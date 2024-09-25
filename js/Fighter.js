@@ -39,6 +39,7 @@ const ANIM_DAMAGE = 'damage';
 
 const EDGE_BOUNDRY_PIXELS = 120;
 const MAX_HEALTH = 100;
+var dashFlag = false;
 
 function setThisLoaded() { this.loaded = true; } // used for image onload
 
@@ -267,16 +268,21 @@ class Fighter {
     
       if (this.keys[' ']) {
         this.dashLeft();
+		dashFlag = true;
       } else {
         this.moveLeft();
+		dashFlag = false;
+
       }
     
     } else if (this.keys['d'] || this.keys['gamepad_right']) {
     
       if (this.keys[' ']) {
         this.dashRight();
+		dashFlag = true;
       } else {
         this.moveRight();
+		dashFlag = false;
       }
 
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
@@ -506,7 +512,11 @@ class Fighter {
           this.punchHitSound.play(); // block sound
           if (this.isAI) fx.blockFX(this.x + ROBOT_FIST_X, this.y + ROBOT_FIST_Y); else fx.blockFX(this.x + PLAYER_FIST_X, this.y + PLAYER_FIST_Y);
         } else { // not blocked?
+		
+		  if(dashFlag == false){  
           myOpponent.health -= PUNCH_DAMAGE;
+		  }
+		  
           this.punchHitSound.play(); // impact sound
           if (myOpponent == player) {
             screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
@@ -543,7 +553,11 @@ class Fighter {
           if (this.isAI) fx.blockFX(this.x + ROBOT_FOOT_X, this.y + ROBOT_FOOT_Y); else fx.blockFX(this.x + PLAYER_FOOT_X, this.y + PLAYER_FOOT_Y);
 
         } else { // not blocked
-          myOpponent.health -= KICK_DAMAGE;
+		  
+		  if(dashFlag == false){
+			  myOpponent.health -= KICK_DAMAGE;
+		  }
+		  
           if (myOpponent == player) {
             screenshake(PLAYER_HIT_SCREENSHAKE_COUNT);
             fx.hitFX(this.x + ROBOT_FOOT_X, this.y + ROBOT_FOOT_Y);
