@@ -119,10 +119,12 @@ class FighterRobot extends Fighter {
 }
 
   draw(context) {
-    
-    // add some jetpack fire
+    if(this.health > 0){
+		   // add some jetpack fire
     fx.jetpackFX(this.x-32,this.y+100,Math.random()*2-1,Math.random()*8);
     fx.jetpackFX(this.x+8,this.y+100,Math.random()*2-1,Math.random()*8);
+	}
+ 
 
     // draw the robot sprite
     super.draw(context);
