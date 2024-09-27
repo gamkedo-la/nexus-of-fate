@@ -61,6 +61,12 @@ class FighterRobot extends Fighter {
 	
 	if(this.AI == false){
 	   this.input_handle();
+	   if(this.currentAnimation != ANIM_KICK && 
+			this.currentAnimation != ANIM_PUNCH && 
+			this.currentAnimation != ANIM_PUNCH )
+			{
+				this.currentAnimation = ANIM_IDLE;
+			}
 	   return; // avoid AI code below
 	}
    
