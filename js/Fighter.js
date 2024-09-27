@@ -256,13 +256,18 @@ class Fighter {
 
 
   }
-  update(canvasWidth) {
+  update() {
     this.prevAnim = this.currentAnimation;
-    this.getInput();
     if (!this.robot && this.health <= 0) {
       fx.dieFX(this.x, this.y);
       return;
     }
+	this.input_handle()
+  }
+  
+  input_handle(){
+	 this.getInput();
+
     // Update the animation state based on movement
     if (this.keys['a'] || this.keys['gamepad_left']) {
     
@@ -347,11 +352,10 @@ class Fighter {
       this.died();
     }
 
-    this.boundsCheck(canvasWidth);
+    this.boundsCheck();
   }
 
-  boundsCheck(canvasWidth) {
-    if (canvasWidth == undefined || canvasWidth <= 0) return;
+  boundsCheck() {
 
     // Apply gravity and floor constraint
     this.y += this.speedY;
@@ -372,8 +376,8 @@ class Fighter {
       this.x = EDGE_BOUNDRY_PIXELS;
     }
 
-    if (this.x + BODY_WIDTH > canvasWidth - EDGE_BOUNDRY_PIXELS) {
-      this.x = canvasWidth - EDGE_BOUNDRY_PIXELS - BODY_WIDTH;
+    if (this.x + BODY_WIDTH > canvas.width - EDGE_BOUNDRY_PIXELS) {
+      this.x = canvas.width - EDGE_BOUNDRY_PIXELS - BODY_WIDTH;
     }
 
     // Prevent or reset if the fighters cross sides
@@ -389,7 +393,7 @@ class Fighter {
         // This is the player, keep to the left of opponent
         let maxX = this.opponent.x - thatsCloseEnoughX;
         if (this.x > maxX) {
-          this.x = Math.min(maxX, canvasWidth - BODY_WIDTH); // Ensure the player stays within the right screen boundary
+          this.x = Math.min(maxX, canvas.width - BODY_WIDTH); // Ensure the player stays within the right screen boundary
         }
       }
     }
