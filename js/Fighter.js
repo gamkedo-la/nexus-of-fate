@@ -48,6 +48,7 @@ class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
 	this.useGamepad = true;
 	this.walkKeyLeft = 'a';
+    this.walkKeyRight = 'd';
     this.health = MAX_HEALTH;
     this.power = 0;
     this.keys = {};
@@ -282,7 +283,7 @@ class Fighter {
 
       }
     
-    } else if (this.keys['d'] || this.keys['gamepad_right']) {
+    } else if (this.keys[this.walkKeyRight] || (this.useGamepad && this.keys['gamepad_right'])) {
     
       if (this.keys[' ']) {
         this.dashRight();

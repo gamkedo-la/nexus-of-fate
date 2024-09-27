@@ -7,6 +7,8 @@ class FighterRobot extends Fighter {
     super(whichInput, imageSrcs, initialX, initialY);
 	this.useGamepad = false;
 	this.walkKeyLeft = 'arrowleft';
+    this.walkKeyRight = 'arrowright';
+
 
     this.speed = 0;
     this.baseY = FLOOR_Y - 100;
