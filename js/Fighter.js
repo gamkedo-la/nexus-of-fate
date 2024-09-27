@@ -257,7 +257,6 @@ class Fighter {
 
   }
   update() {
-    this.prevAnim = this.currentAnimation;
     if (!this.robot && this.health <= 0) {
       fx.dieFX(this.x, this.y);
       return;
@@ -266,6 +265,7 @@ class Fighter {
   }
   
   input_handle(){
+	 this.prevAnim = this.currentAnimation;
 	 this.getInput();
 
     // Update the animation state based on movement

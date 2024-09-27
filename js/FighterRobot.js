@@ -60,6 +60,7 @@ class FighterRobot extends Fighter {
     this.lasers = this.lasers.filter((laser) => laser.active);
 	
 	if(this.AI == false){
+	   this.input_handle();
 	   return; // avoid AI code below
 	}
    
