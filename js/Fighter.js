@@ -173,7 +173,6 @@ class Fighter {
     this.speedY = 0;
     this.currentAnimation = ANIM_IDLE;
     this.prevAnim = ANIM_IDLE;
-    this.prevAnim = ANIM_IDLE;
     this.frameNum = 0;
     this.animReturnToIdle = false;
     this.timeTillNextFrame = 1 / ANIM_FPS;

@@ -8,6 +8,7 @@ class FighterRobot extends Fighter {
 	this.useGamepad = false;
 	this.walkKeyLeft = 'arrowleft';
     this.walkKeyRight = 'arrowright';
+	this.laserKey = "shift";
 
 
     this.speed = 0;
@@ -66,6 +67,11 @@ class FighterRobot extends Fighter {
 	
 	if(this.AI == false){
 	   this.input_handle();
+	   //robot special controls
+	   if(this.keys[this.laserKey]){
+		   this.shoot(dx, dy);
+	   }
+	   //robot uses fewer animations
 	   if(this.currentAnimation != ANIM_KICK && 
 			this.currentAnimation != ANIM_PUNCH && 
 			this.currentAnimation != ANIM_PUNCH )
@@ -115,7 +121,6 @@ class FighterRobot extends Fighter {
     // Check if the player is in a running state and if enough time has passed since the last shot
     if (this.canShootWhileRunning && Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
         this.shoot(dx, dy);
-        this.lastShotTime = Date.now();
     }
 
     if (this.retreatTime > 0) {
@@ -175,5 +180,6 @@ class FighterRobot extends Fighter {
     let angle = Math.atan2(dy, dx);
     let laser = new Laser(this.x+LASER_SHOOT_OFFSETX, this.y+LASER_SHOOT_OFFSETY, angle);
     this.lasers.push(laser);
+	this.lastShotTime = Date.now();
   }
 }
