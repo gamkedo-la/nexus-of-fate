@@ -8,8 +8,9 @@ class FighterRobot extends Fighter {
 	this.useGamepad = false;
 	this.walkKeyLeft = 'arrowleft';
     this.walkKeyRight = 'arrowright';
+	this.moveKeyUp = 'arrowup';
+	this.moveKeyDown = "arrowdown";
 	this.laserKey = "shift";
-
 
     this.speed = 0;
     this.baseY = FLOOR_Y - 100;
@@ -32,7 +33,9 @@ class FighterRobot extends Fighter {
     this.canShootWhileRunning = true; // Boolean to control shooting
   }
   
-
+ jump(){
+	 // ignore jump call robot flying differently
+ }
 
   update(deltaTime) {
 	let dx = player.x - this.x;
@@ -71,6 +74,14 @@ class FighterRobot extends Fighter {
 	   if(this.keys[this.laserKey]){
 		   this.shoot(dx, dy);
 	   }
+	   if(this.keys[this.moveUpKey]){
+		  this.baseY -= 50;
+	   }
+	   
+	   if(this.keys[this.moveDownKey]){
+		  this.baseY += 50;
+	   }
+	 
 	   //robot uses fewer animations
 	   if(this.currentAnimation != ANIM_KICK && 
 			this.currentAnimation != ANIM_PUNCH && 

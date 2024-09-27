@@ -49,6 +49,8 @@ class Fighter {
 	this.useGamepad = true;
 	this.walkKeyLeft = 'a';
     this.walkKeyRight = 'd';
+	this.moveKeyUp = 'w';
+	this.moveKeyDown = "s";
     this.health = MAX_HEALTH;
     this.power = 0;
     this.keys = {};
@@ -305,7 +307,7 @@ class Fighter {
       }
     }
 
-    if (this.keys['w'] || this.keys['gamepad_a_button']) {
+    if (this.keys[this.moveKeyUp] || (this.useGamepad && this.keys['gamepad_a_button'])) {
       this.jump();
     }
 
@@ -331,7 +333,7 @@ class Fighter {
     }
 
     // keys below here can be held, remember to check for currentAnim when returnTOIdle is used
-    else if (this.keys['s'] || this.keys['gamepad_down']) {
+    else if (this.keys[this.moveKeyDown] || (this.useGamepad && this.keys['gamepad_down'])) {
       if (this.currentAnimation != ANIM_CROUCH_PUNCH) {
         this.startAnimIfNew(ANIM_CROUCH);
       }
