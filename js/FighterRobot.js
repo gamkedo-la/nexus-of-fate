@@ -59,7 +59,7 @@ class FighterRobot extends Fighter {
 	 // Remove inactive lasers
     this.lasers = this.lasers.filter((laser) => laser.active);
 	
-	if(this.AI == true){
+	if(this.AI == false){
 	   return; // avoid AI code below
 	}
    
