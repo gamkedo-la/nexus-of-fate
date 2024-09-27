@@ -5,6 +5,9 @@ const LASER_SHOOT_OFFSETY = 64;
 class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
     super(whichInput, imageSrcs, initialX, initialY);
+	this.useGamepad = false;
+	this.walkKeyLeft = 'arrowleft';
+
     this.speed = 0;
     this.baseY = FLOOR_Y - 100;
     this.angle = 0;

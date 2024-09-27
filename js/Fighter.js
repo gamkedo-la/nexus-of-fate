@@ -46,6 +46,8 @@ function setThisLoaded() { this.loaded = true; } // used for image onload
 
 class Fighter {
   constructor(whichInput, imageSrcs, initialX, initialY) {
+	this.useGamepad = true;
+	this.walkKeyLeft = 'a';
     this.health = MAX_HEALTH;
     this.power = 0;
     this.keys = {};
@@ -269,7 +271,7 @@ class Fighter {
 	 this.getInput();
 
     // Update the animation state based on movement
-    if (this.keys['a'] || this.keys['gamepad_left']) {
+    if (this.keys[this.walkKeyLeft] || (this.useGamepad && this.keys['gamepad_left'])) {
     
       if (this.keys[' ']) {
         this.dashLeft();
