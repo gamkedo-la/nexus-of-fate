@@ -158,6 +158,7 @@ window.onload = function () {
       player.draw();
       robot.draw();
       powerBar.draw();
+	  laserBar.draw();
       optionsButton.draw();
 
       if (optionsButton.isOptionsVisible) {

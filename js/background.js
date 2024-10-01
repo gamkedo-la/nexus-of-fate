@@ -203,6 +203,26 @@ var powerBar = {
     }
 };
 
+var laserBar = {
+    width: 160,
+    height: 10,
+    padding: 35,
+
+    draw: function() {
+		var cornerX = this.padding + 550;
+		var cornerY = this.padding + this.height - 15;
+        // Draw player power bar background
+        context.fillStyle = "grey";
+        context.fillRect(cornerX, cornerY, this.width, this.height);
+
+        // Draw player power bar filled with green
+        context.fillStyle = "yellow";
+        context.fillRect(cornerX, cornerY, (this.width) * (robot.laserBar / 100), this.height);
+    },
+
+  
+};
+
 var optionsButton = {
     width: 100,
     height: 30,
