@@ -1,6 +1,7 @@
 // offset robot laser origin so it starts from the eyes
 const LASER_SHOOT_OFFSETX = 0;
 const LASER_SHOOT_OFFSETY = 64;
+const LASER_RELOAD_TIME = 1000;
 
 class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
@@ -42,6 +43,12 @@ class FighterRobot extends Fighter {
  }
 
   update(deltaTime) {
+	this.laserBar = (Date.now() - this.lastShotTime) / LASER_RELOAD_TIME;
+	
+     if(this.laserBar >= 1){
+		this.laserBar = 1;
+	 }
+
 	let dx = player.x - this.x;
     let dy = player.y - this.y;
     let distanceToPlayer = Math.hypot(dx, dy);
@@ -191,6 +198,9 @@ class FighterRobot extends Fighter {
   }
 
   shoot(dx, dy) {
+	if(Date.now() - this.lastShotTime < LASER_RELOAD_TIME){
+		return;
+	}
     let angle = Math.atan2(dy, dx);
     let laser = new Laser(this.x+LASER_SHOOT_OFFSETX, this.y+LASER_SHOOT_OFFSETY, angle);
     this.lasers.push(laser);

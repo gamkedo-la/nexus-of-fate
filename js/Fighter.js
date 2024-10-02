@@ -271,7 +271,6 @@ class Fighter {
     if (!this.robot && this.health <= 0) {
       fx.dieFX(this.x, this.y);
       return;
-      return;
     }
 	this.input_handle()
   }

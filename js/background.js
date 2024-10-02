@@ -211,13 +211,11 @@ var laserBar = {
     draw: function() {
 		var cornerX = this.padding + 550;
 		var cornerY = this.padding + this.height - 15;
-        // Draw player power bar background
         context.fillStyle = "grey";
         context.fillRect(cornerX, cornerY, this.width, this.height);
 
-        // Draw player power bar filled with green
         context.fillStyle = "yellow";
-        context.fillRect(cornerX, cornerY, (this.width) * (robot.laserBar / 100), this.height);
+        context.fillRect(cornerX, cornerY, (this.width) * (robot.laserBar), this.height);
     },
 
   
