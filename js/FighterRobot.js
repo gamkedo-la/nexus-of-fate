@@ -34,7 +34,11 @@ class FighterRobot extends Fighter {
   }
   
  jump(){
-	 // ignore jump call robot flying differently
+	this.speedY = -2; 
+ }
+ 
+ crouch(){
+	this.speedY = 2;
  }
 
   update(deltaTime) {
@@ -45,9 +49,10 @@ class FighterRobot extends Fighter {
 	let angle = Math.atan2(dy, dx);
     this.x += Math.cos(angle) * this.speed;
     this.baseY += Math.sin(angle) * this.speed;
+	this.speedY = 0;
 
     this.angle += 0.05;
-    this.y = this.baseY + Math.sin(this.angle) * 20;
+ //   this.y = this.baseY + Math.sin(this.angle) * 20;
 
     if (this.x < 0) this.x = 0;
     if (this.x > canvas.width) this.x = canvas.width;

@@ -264,6 +264,7 @@ class Fighter {
     if (!this.robot && this.health <= 0) {
       fx.dieFX(this.x, this.y);
       return;
+      return;
     }
 	this.input_handle()
   }
@@ -334,10 +335,7 @@ class Fighter {
 
     // keys below here can be held, remember to check for currentAnim when returnTOIdle is used
     else if (this.keys[this.moveKeyDown] || (this.useGamepad && this.keys['gamepad_down'])) {
-      if (this.currentAnimation != ANIM_CROUCH_PUNCH) {
-        this.startAnimIfNew(ANIM_CROUCH);
-      }
-
+		this.crouch();
     }
     else if (this.currentAnimation == ANIM_CROUCH) {
       this.currentAnimation = ANIM_IDLE;
@@ -371,7 +369,7 @@ class Fighter {
       }
       this.y = FLOOR_Y;
       this.speedY = 0;
-    } else {
+    } else if(this.robot == false) {
       this.speedY += GRAVITY;
     }
 
@@ -436,11 +434,11 @@ class Fighter {
       this.jumpSound.play();
     }
   }
-
-  crouch() {
-    this.currentAnimation = ANIM_CROUCH;
-    this.frameNum = 0;
-    this.timeTillNextFrame = 1 / ANIM_FPS;
+  
+  crouch(){
+	if (this.currentAnimation != ANIM_CROUCH_PUNCH) {
+        this.startAnimIfNew(ANIM_CROUCH);
+      }
   }
 
   dashLeft() {
