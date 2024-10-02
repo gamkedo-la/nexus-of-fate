@@ -172,6 +172,7 @@ class Fighter {
 
     this.x = initialX;
     this.y = initialY;
+	this.drawY = this.y;
     this.speedY = 0;
     this.currentAnimation = ANIM_IDLE;
     this.prevAnim = ANIM_IDLE;
@@ -254,7 +255,13 @@ class Fighter {
     // Draw the base sprite
 
     if (this.health > 0) {
-      if (image.loaded) { context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.y, frameW, frameH) };
+      if (image.loaded) { 
+	     this.drawY = this.y;
+		if(this.robot){
+			this.drawY += Math.sin(this.angle) * 10;
+		}
+	    context.drawImage(image, 0, frameH * this.frameNum, frameW, frameH, this.x - frameW / 2, this.drawY, frameW, frameH) 
+	  };
 
     }
 

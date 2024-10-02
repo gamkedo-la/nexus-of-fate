@@ -49,11 +49,9 @@ class FighterRobot extends Fighter {
 	let angle = Math.atan2(dy, dx);
     this.x += Math.cos(angle) * this.speed;
     this.baseY += Math.sin(angle) * this.speed;
-	this.speedY = 0;
+	this.speedY *= 0.8;
 
     this.angle += 0.05;
- //   this.y = this.baseY + Math.sin(this.angle) * 20;
-
     if (this.x < 0) this.x = 0;
     if (this.x > canvas.width) this.x = canvas.width;
     if (this.y < 150) this.y = 150;
@@ -154,8 +152,8 @@ class FighterRobot extends Fighter {
   draw(context) {
     if(this.health > 0){
 		   // add some jetpack fire
-    fx.jetpackFX(this.x-32,this.y+100,Math.random()*2-1,Math.random()*8);
-    fx.jetpackFX(this.x+8,this.y+100,Math.random()*2-1,Math.random()*8);
+    fx.jetpackFX(this.x-32,this.drawY+100,Math.random()*2-1,Math.random()*8);
+    fx.jetpackFX(this.x+8,this.drawY+100,Math.random()*2-1,Math.random()*8);
 	}
  
 
