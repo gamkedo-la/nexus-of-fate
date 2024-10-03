@@ -5,9 +5,9 @@ hadoukenSprite.src = "images/player_hadouken.png";
 hadoukenSprite.onload = function() { this.loaded = true; }
 
 var hadouken = {
-    x:100,//-9999,
-    y:300,//-9999,
-    speed:1.5,//0,
+    x:-9999,
+    y:-9999,
+    speed:0,
     fire:function(x,y) {
         console.log("HADOUKEN FIRED at "+x+","+y);
         if (player.hadoukenSound) player.hadoukenSound.play();
