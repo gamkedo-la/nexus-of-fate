@@ -120,6 +120,7 @@ window.onload = function () {
 
 			check_gamepad();
 			player.update();
+            hadouken.update(deltaTime);
 			robot.update();
 			powerBar.update(deltaTime);
 			player.check_collisions(robot);
@@ -155,6 +156,7 @@ window.onload = function () {
       fog.draw();
       healthBar.draw();
       fx.draw();
+      hadouken.draw();
       player.draw();
       robot.draw();
       powerBar.draw();

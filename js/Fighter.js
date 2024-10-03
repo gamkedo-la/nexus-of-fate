@@ -60,6 +60,7 @@ class Fighter {
 	this.robot = false; // important for animation if robot is human controlled
     this.getInput = whichInput;
 
+    this.hadoukenSound = new Audio('audio/Hadouken.mp3');
     this.walkSound = new Audio('audio/playerWalkSound.mp3');
     this.hurtSound = new Audio('audio/playerHurt.mp3');
     this.robotHurtSound = new Audio('audio/robotHurt.mp3');
@@ -336,6 +337,10 @@ class Fighter {
       if (this.currentAnimation != ANIM_COMBO && player.power >= 100) {
         this.startAnimIfNew(ANIM_COMBO);
         player.power = 0;
+
+        // fire a "hadouken:" fireball!!! 
+        hadouken.fire(this.x+50,this.y+100);
+
       }
     }
 

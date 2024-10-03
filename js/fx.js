@@ -82,6 +82,19 @@ var fx = {
         }
     },
 
+    // successful kicks and punches
+    hadouken_hitFX: function(x=0,y=0,vx=0,vy=0) {
+        //console.log("spawning a hitFX at "+x+","+y);
+        for (let n=0; n<30; n++) {
+            var rx = Math.random()*10-5;
+            var ry = Math.random()*10-5;
+            var rvx = Math.random()*10-5;
+            var rvy = Math.random()*10-5;
+            var p = {x:x+rx,y:y+ry,vx:vx+rvx,vy:vy+rvy,age:0,life:0.5,img:this.imgSpark};
+            this.particles.push(p);
+        }
+    },
+
     // every punch (including misses) - a small woosh of air
     punchFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning a punchFX at "+x+","+y);
