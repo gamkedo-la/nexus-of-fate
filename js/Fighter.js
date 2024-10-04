@@ -51,6 +51,8 @@ class Fighter {
     this.walkKeyRight = 'd';
 	this.moveKeyUp = 'w';
 	this.moveKeyDown = "s";
+	this.punchKey = "j";
+	this.kickKey = "h";
     this.health = MAX_HEALTH;
     this.power = 0;
     this.keys = {};
@@ -315,19 +317,19 @@ class Fighter {
       }
     }
 
-    if (this.keys[this.moveKeyUp] || (this.useGamepad && this.keys['gamepad_a_button'])) {
+    if (this.keys[this.moveKeyUp] || (this.useGamepad && this.keys['gamepad_up'])) {
       this.jump();
     }
 
-    if (this.keys['j'] || this.keys['gamepad_b_button']) {
+    if (this.keys[this.kickKey] || (this.useGamepad && this.keys['gamepad_b_button'])) {
       this.startAnimIfNew(ANIM_KICK);
     }
 
-    if (this.keys['h'] || this.keys['gamepad_a_button']) {
+    if (this.keys[this.punchKey] || (this.useGamepad && this.keys['gamepad_a_button'])) {
       this.startAnimIfNew(ANIM_PUNCH);
     }
 
-    if ((this.keys['s']&& this.keys['k'])
+    if ((this.keys['s']&& this.keys[punchKey])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
