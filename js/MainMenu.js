@@ -1,7 +1,7 @@
 class MainMenu {
   constructor(canvas) {
     this.context = canvas.getContext("2d");
-
+    this.hoveringButton = 0;
     this.mainMenuImage = document.createElement("img");
     this.mainMenuImage.src = "images/MainMenuScreen.png";
     this.onMainMenu = true;
@@ -54,10 +54,13 @@ class MainMenu {
     // Cursor Styling when over Start Text
     window.addEventListener("mousemove", (event) => {
       if (userIsOnStartText(event) && this.onMainMenu) {
-        this.hoveringButton=true;
+        this.hoveringButton=1;
         document.body.style.cursor = "pointer";
-      } else {
-        this.hoveringButton=false;
+      } else if (userIsOnStartText2Player(event) && this.onMainMenu) {
+        this.hoveringButton=2;
+        document.body.style.cursor = "pointer";
+      } else{
+        this.hoveringButton=0;
         document.body.style.cursor = "default";
       }
     });
@@ -70,7 +73,7 @@ class MainMenu {
       fx.draw();
       fx.update();
       fx.mainMenuFX();
-      if (this.hoveringButton) fx.mainMenuHoverFX();      
+      fx.mainMenuHoverFX(this.hoveringButton);      
     }
     else {
       // gets called every frame so if we clear here all future particles vanish

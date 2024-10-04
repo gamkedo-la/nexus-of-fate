@@ -165,9 +165,15 @@ var fx = {
         }
     },
 
-    mainMenuHoverFX: function() {
-        if (!this.ready) return;
-        //console.log("mainMenuHoverFX");
+    mainMenuHoverFX: function(whichButton) {
+	    if (!this.ready || whichButton == 0) return;
+		var effectHeight;
+		if(whichButton == 1){
+			effectHeight = 450;
+		}else if(whichButton == 2){
+			effectHeight = 545;
+		}
+        console.log(whichButton);
         for (let n=0; n<25; n++) {
             let flip = Math.random()<0.5;
             var p = {
@@ -175,7 +181,7 @@ var fx = {
                 life:Math.random()*1,
                 img:this.imgFire,
                 x:100+225+Math.random()*16+(flip?360:0),
-                y:100+327+Math.random()*16,
+                y:-25+effectHeight+Math.random()*16,
                 vx:Math.random()*(flip?16:-16),
                 vy:Math.random()*1-0.5
             };
