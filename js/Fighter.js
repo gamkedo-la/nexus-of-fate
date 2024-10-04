@@ -329,7 +329,7 @@ class Fighter {
       this.startAnimIfNew(ANIM_PUNCH);
     }
 
-    if ((this.keys['s']&& this.keys[punchKey])
+    if ((this.keys['s']&& this.keys[this.punchKey])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
