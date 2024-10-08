@@ -155,7 +155,10 @@ var healthBar = {
         context.fillText(fightTimeRemaining.toFixed(0), 490, 62);
 		
 		if(player.health <=0){
-			context.font = "60px Tohoma bold";
+			
+            robot.knockoutSound.play();
+            
+            context.font = "60px Tohoma bold";
 			context.fillStyle = "red";
 			context.fillText(" ROBOT WINS ", 130, canvas.height / 6);
 			
@@ -165,6 +168,9 @@ var healthBar = {
 			
 		}
 		else if(robot.health <= 0){
+
+            player.knockoutSound.play();
+
 			context.font = "60px Tohoma bold";
 			context.fillStyle = "lime";
 			context.fillText(" PLAYER WINS ", 130, canvas.height / 2);

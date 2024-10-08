@@ -75,6 +75,7 @@ class Fighter {
     this.kickHitSound = new Audio('audio/kickHit.mp3');
     this.playerDieSound = new Audio('audio/playerDie.mp3');
     this.robotDieSound = new Audio('audio/robotDie.mp3');
+    this.knockoutSound = new Audio('audio/knockout.mp3');
 
     this.images = {
       [ANIM_IDLE]: new Image(),
@@ -492,6 +493,9 @@ class Fighter {
 
 
   died() {
+
+    this.knockoutSound.play();
+
     if (this.isAI) {
       fx.dieFX(this.x, this.y);
       this.robotDieSound.play();
