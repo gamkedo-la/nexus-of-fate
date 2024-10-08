@@ -445,6 +445,7 @@ class Fighter {
       this.timeTillNextFrame = 1 / ANIM_FPS;
       this.speedY = JUMP_POWER;
       this.jumpSound.play();
+      fx.jumpFX(this.x-120,this.y+235);
     }
   }
   

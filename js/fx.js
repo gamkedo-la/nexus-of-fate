@@ -124,7 +124,7 @@ var fx = {
     // little puff of dust
     jumpFX: function(x=0,y=0,vx=0,vy=0) {
         //console.log("spawning a jumpFX at "+x+","+y);
-        var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:1,img:this.imgDust};
+        var p = {x:x,y:y,vx:vx,vy:vy,age:0,life:0.5,img:this.imgDust};
         this.particles.push(p);
     },
 
