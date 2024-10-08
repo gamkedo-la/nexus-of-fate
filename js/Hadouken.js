@@ -4,6 +4,8 @@ var hadoukenSprite = new Image();
 hadoukenSprite.src = "images/player_hadouken.png";
 hadoukenSprite.onload = function() { this.loaded = true; }
 
+const HADOUKEN_DAMAGE = 50;
+
 var hadouken = {
     x:-9999,
     y:-9999,
@@ -25,7 +27,7 @@ var hadouken = {
             fx.hadouken_hitFX(this.x-150,this.y-100);
             if (robot.robotHurtSound) robot.robotHurtSound.play();
             if (robot.punchHitSound) robot.punchHitSound.play();
-            robot.health -= 25;
+            robot.health -= HADOUKEN_DAMAGE;
             this.x = -9999;
             this.y = -9999;
             this.speed = 0;
