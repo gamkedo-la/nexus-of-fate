@@ -169,9 +169,11 @@ var fx = {
 	    if (!this.ready || whichButton == 0) return;
 		var effectHeight;
 		if(whichButton == 1){
-			effectHeight = 450;
+			effectHeight = 270;
 		}else if(whichButton == 2){
-			effectHeight = 545;
+			effectHeight = 360;
+		}else if(whichButton == 3){
+			effectHeight = 458;
 		}
         console.log(whichButton);
         for (let n=0; n<25; n++) {
@@ -180,7 +182,7 @@ var fx = {
                 age:0,
                 life:Math.random()*1,
                 img:this.imgFire,
-                x:100+225+Math.random()*16+(flip?360:0),
+                x:canvas.width/2+Math.random()*16+(flip?345:-345)-20,
                 y:-25+effectHeight+Math.random()*16,
                 vx:Math.random()*(flip?16:-16),
                 vy:Math.random()*1-0.5

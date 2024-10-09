@@ -11,7 +11,7 @@ class MainMenu {
       var rect = canvas.getBoundingClientRect();
 
       return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
-        mouseClick.clientY >= rect.top + 428 && mouseClick.clientY <= rect.top + 467);
+        mouseClick.clientY >= rect.top + 260 && mouseClick.clientY <= rect.top + 290);
     }
 	
 	function userIsOnStartText2Player(mouseClick) {
@@ -19,7 +19,7 @@ class MainMenu {
       var rect = canvas.getBoundingClientRect();
 
       return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
-        mouseClick.clientY >= rect.top + 535 && mouseClick.clientY <= rect.top + 561);
+        mouseClick.clientY >= rect.top + 360 && mouseClick.clientY <= rect.top + 391);
     }
 
     window.addEventListener("click", (event) => {
