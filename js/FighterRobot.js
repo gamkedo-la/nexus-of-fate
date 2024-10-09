@@ -199,7 +199,6 @@ class FighterRobot extends Fighter {
 
   shoot(dx, dy) {
 	if(Date.now() - this.lastShotTime < LASER_RELOAD_TIME){
-		consoleLog("LASER NOT READY YET");
 		return;
 	}
     let angle = Math.atan2(dy, dx);
