@@ -32,9 +32,7 @@ class FighterRobot extends Fighter {
     this.lasers = [];
     this.lastShotTime = 0;
     this.shotCooldown = 3; // Cooldown time in seconds
-    
-    this.canShootWhileRunning = true; // Boolean to control shooting
-  }
+   }
   
  jump(){
 	this.speedY = -2; 
@@ -132,19 +130,19 @@ class FighterRobot extends Fighter {
         this.speed = 2;
         if (debugSoundVolume) {
             this.thrustSound.volume = 0.01;
-            this.canShootWhileRunning = true;
         }
         this.thrustSound.play();
         this.currentAnimation = ANIM_IDLE;
-    } else {
+		  // Check if the player is in a running state and if enough time has passed since the last shot
+		if ( Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
+			this.shoot(dx, dy);
+		}
+
+    } else  {
         this.speed = 0;
-        this.canShootWhileRunning = false;
     }
 
-    // Check if the player is in a running state and if enough time has passed since the last shot
-    if (this.canShootWhileRunning && Date.now() - this.lastShotTime > this.shotCooldown * 1000) {
-        this.shoot(dx, dy);
-    }
+  
 
     if (this.retreatTime > 0) {
         this.retreatTime--;
@@ -201,6 +199,7 @@ class FighterRobot extends Fighter {
 
   shoot(dx, dy) {
 	if(Date.now() - this.lastShotTime < LASER_RELOAD_TIME){
+		consoleLog("LASER NOT READY YET");
 		return;
 	}
     let angle = Math.atan2(dy, dx);

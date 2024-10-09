@@ -40,7 +40,7 @@ const ANIM_DAMAGE = 'damage';
 const EDGE_BOUNDRY_PIXELS = 120;
 const MAX_HEALTH = 100;
 var dashFlag = false;
-
+var moveRightFlag = false;
 function setThisLoaded() { this.loaded = true; } // used for image onload
 
 
@@ -213,6 +213,7 @@ class Fighter {
         var frameCount = this.robot ? this.frameCountsRobot[this.currentAnimation] : this.frameCounts[this.currentAnimation];
 
         if (this.animReturnToIdle && this.frameNum === frameCount) {
+		moveRightFlag = false;
           if (this.currentAnimation === ANIM_BLOCK || this.currentAnimation === ANIM_CROUCH) {
             this.frameNum = frameCount - 1;
           } else if (this.currentAnimation === ANIM_CROUCH_PUNCH) {
@@ -303,6 +304,7 @@ class Fighter {
       } else {
         this.moveRight();
 		dashFlag = false;
+		moveRightFlag = true;
       }
 
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {
@@ -323,11 +325,17 @@ class Fighter {
     }
 
     if (this.keys[this.kickKey] || (this.useGamepad && this.keys['gamepad_b_button'])) {
-      this.startAnimIfNew(ANIM_KICK);
+	if(moveRightFlag == false){
+	 this.startAnimIfNew(ANIM_KICK);
+	}
+	
     }
 
     if (this.keys[this.punchKey] || (this.useGamepad && this.keys['gamepad_a_button'])) {
-      this.startAnimIfNew(ANIM_PUNCH);
+		
+	  if(moveRightFlag == false){
+		 this.startAnimIfNew(ANIM_PUNCH);
+	  }
     }
 
     if ((this.keys['s']&& this.keys[this.punchKey])

@@ -41,8 +41,9 @@ class Laser {
   }
 
   collidesWith(target) {
+	var laserCollisionPlayerWidth = target.width * 0.2;
     // Simple point collision detection
-    return this.x > target.x && this.x < target.x + target.width &&
+    return this.x > target.x && this.x < target.x + laserCollisionPlayerWidth &&
            this.y > target.y && this.y < target.y + target.height;
   }
 }
