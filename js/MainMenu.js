@@ -5,6 +5,7 @@ class MainMenu {
     this.mainMenuImage = document.createElement("img");
     this.mainMenuImage.src = "images/MainMenuScreen.png";
     this.onMainMenu = true;
+    this.showCredits = false;
 
     function userIsOnStartText(mouseClick) {
       var rect = canvas.getBoundingClientRect();
@@ -28,6 +29,10 @@ class MainMenu {
     }
 
     window.addEventListener("click", (event) => {
+      if(this.showCredits) {
+        this.showCredits=false;
+        return;
+      }
 
       if (userIsOnStartText(event)) {
 		    robot.AI = true;
@@ -46,7 +51,7 @@ class MainMenu {
     		music.play();
         fx.clear(); // remove smoke particles
       } else if (userIsOnStartTextCredits(event)) {
-        console.log("show credits");
+        this.showCredits = true;
       } else {
 		 
         // clicked empty space - trigger intro music if it was unable to autostart
@@ -79,11 +84,15 @@ class MainMenu {
 
   show() {
     if (this.onMainMenu) {
-      this.context.drawImage(this.mainMenuImage, 0, 0); // load image for main menu
-      fx.draw();
-      fx.update();
-      fx.mainMenuFX();
-      fx.mainMenuHoverFX(this.hoveringButton);      
+      if(this.showCredits) {
+        drawCredits()
+      } else {
+        this.context.drawImage(this.mainMenuImage, 0, 0); // draw image for main menu
+        fx.draw();
+        fx.update();
+        fx.mainMenuFX();
+        fx.mainMenuHoverFX(this.hoveringButton);
+      }
     }
     else {
       // gets called every frame so if we clear here all future particles vanish
@@ -93,3 +102,77 @@ class MainMenu {
     return this.onMainMenu;
   }
 }
+
+function drawCredits() {
+  context.fillStyle="black";
+  context.fillRect(0,0,canvas.width,canvas.height);
+  var lineX = 40;
+  var lineY = 43;
+  var creditsSize = 22;
+  var lineSkip = creditsSize+12;
+  context.globalAlpha = 1;
+  context.fillStyle = "rgba(220,220,220,1)";
+  var wasFont = context.font;
+  context.font = creditsSize+"px Arial";
+  for(var i=0;i<this.creditsList.length;i++) {
+      context.fillText(this.creditsList[i],lineX,lineY+=lineSkip);
+  }
+  context.font = wasFont;
+}
+
+var creditsList=[
+"Syed Daniyal Ali: Project lead, core gameplay, combat code, animation system, character animations, hit functionality, movement abilities, sky, robot laser and jetpack features, two-player control support, charge bars, game resizing, assorted asset integration and bug fixes",
+"Christer \"McFunkypants\" Kaitila: Robot sprite, robot AI, environment city/street/parallax, fog, debris, UI styling, health, gamepad support, sound hookups, damage tuning, menu particles, laser sprite, screenshake, dark music, fireball voice/sprite  ",
+"Vaan Hope Khani: Sounds (walk, jump, land, jump kick, jetpack, hurt, launch, finish, robot variant), round reset with delay",
+"Cindy Andrade: Intro music, title art",
+"Randy Tan Shaoxian: Dash, round start timer, window resize mouse coordinate fix, menu and character code refactoring, tweaks for Linux support",
+"Jason Timms: Character collision, preventing crossing of sides",
+"Chris DeLeon: Sprite animation fix, variable frame height support, jump glitch solved"," ",
+"                                             == CLICK ANYWHERE TO GO BACK =="];
+
+function lineWrapCredits() {
+    const newCut = [];
+    var maxLineChar = 96;
+    var findEnd;
+
+    for(let i = 0; i < this.creditsList.length; i++) {
+      const currentLine = this.creditsList[i];
+      for(let j = 0; j < currentLine.length; j++) {
+        /*const aChar = currentLine[j];
+        if(aChar === ":") {
+          if(i !== 0) {
+            newCut.push("\n");
+          }
+          newCut.push(currentLine.substring(0, j + 1));
+          newCut.push(currentLine.substring(j + 2, currentLine.length));
+          break;
+        } else*/ if(j === currentLine.length - 1) {
+          if((i === 0) || (i >= this.creditsList.length - 2)) {
+            newCut.push(currentLine);
+          } else {
+            newCut.push(currentLine.substring(0, currentLine.length));
+          }
+        }
+      }
+    }
+
+    const newerCut = [];
+    for(var i=0;i<newCut.length;i++) {
+      while(newCut[i].length > 0) {
+        findEnd = maxLineChar;
+        if(newCut[i].length > maxLineChar) {
+          for(var ii=findEnd;ii>0;ii--) {
+            if(newCut[i].charAt(ii) == " ") {
+              findEnd=ii;
+              break;
+            }
+          }
+        }
+        newerCut.push(newCut[i].substring(0, findEnd));
+        newCut[i] = newCut[i].substring(findEnd, newCut[i].length);
+      }
+    }
+
+    this.creditsList = newerCut;
+  }
+lineWrapCredits();
