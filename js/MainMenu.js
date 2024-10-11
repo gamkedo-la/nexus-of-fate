@@ -7,39 +7,46 @@ class MainMenu {
     this.onMainMenu = true;
 
     function userIsOnStartText(mouseClick) {
-      // current Start text: clientX(610-900); clientY(500-600)
       var rect = canvas.getBoundingClientRect();
 
       return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
         mouseClick.clientY >= rect.top + 260 && mouseClick.clientY <= rect.top + 290);
     }
 	
-	function userIsOnStartText2Player(mouseClick) {
-      // current Start text: clientX(610-900); clientY(500-600)
+	 function userIsOnStartText2Player(mouseClick) {
       var rect = canvas.getBoundingClientRect();
 
       return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
-        mouseClick.clientY >= rect.top + 360 && mouseClick.clientY <= rect.top + 391);
+        mouseClick.clientY >= rect.top + 360 && mouseClick.clientY <= rect.top + 390);
+    }
+
+    function userIsOnStartTextCredits(mouseClick) {
+      var rect = canvas.getBoundingClientRect();
+
+      return (mouseClick.clientX >= rect.left + 250 && mouseClick.clientX <= rect.left + 900 &&
+        mouseClick.clientY >= rect.top + 460 && mouseClick.clientY <= rect.top + 490);
     }
 
     window.addEventListener("click", (event) => {
 
       if (userIsOnStartText(event)) {
-		robot.AI = true;
+		    robot.AI = true;
         this.onMainMenu = false;
-		console.log("Gameplay music");
-		INTRO_music.pause();
-		INTRO_music.currentTime = 0;
-		music.play();
+    		console.log("Gameplay music");
+    		INTRO_music.pause();
+    		INTRO_music.currentTime = 0;
+    		music.play(); 
         fx.clear(); // remove smoke particles
       } else if (userIsOnStartText2Player(event)) {
-		robot.AI = false;
+		    robot.AI = false;
         this.onMainMenu = false;
-		console.log("Gameplay music");
-		INTRO_music.pause();
-		INTRO_music.currentTime = 0;
-		music.play();
+    		console.log("Gameplay music");
+    		INTRO_music.pause();
+    		INTRO_music.currentTime = 0;
+    		music.play();
         fx.clear(); // remove smoke particles
+      } else if (userIsOnStartTextCredits(event)) {
+        console.log("show credits");
       } else {
 		 
         // clicked empty space - trigger intro music if it was unable to autostart
@@ -58,6 +65,9 @@ class MainMenu {
         document.body.style.cursor = "pointer";
       } else if (userIsOnStartText2Player(event) && this.onMainMenu) {
         this.hoveringButton=2;
+        document.body.style.cursor = "pointer";
+      } else if (userIsOnStartTextCredits(event) && this.onMainMenu) {
+        this.hoveringButton=3;
         document.body.style.cursor = "pointer";
       } else{
         this.hoveringButton=0;
