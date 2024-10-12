@@ -121,8 +121,8 @@ function drawCredits() {
 }
 
 var creditsList=[
-"Syed Daniyal Ali: Project lead, core gameplay, combat code, animation system, character animations, hit functionality, movement abilities, sky, robot laser and jetpack features, two-player control support, charge bars, game resizing, assorted asset integration and bug fixes",
-"Christer \"McFunkypants\" Kaitila: Robot sprite, robot AI, environment city/street/parallax, fog, debris, UI styling, health, gamepad support, sound hookups, damage tuning, menu particles, laser sprite, screenshake, dark music, fireball voice/sprite  ",
+"Syed Daniyal Ali: Project lead, core gameplay, combat code, animation system, player and robot sprites / animations, hit functionality, movement abilities, sky, robot laser and jetpack features, two-player control support, charge bars, game resizing, assorted asset integration and bug fixes",
+"Christer \"McFunkypants\" Kaitila: Robot AI, environment city/street/parallax, fog, debris, UI styling, health, gamepad support, sound hookups, damage tuning, menu particles, laser sprite, screenshake, dark music, fireball voice/sprite  ",
 "Vaan Hope Khani: Sounds (walk, jump, land, jump kick, jetpack, hurt, launch, finish, robot variant), round reset with delay",
 "Cindy Andrade: Intro music, title art",
 "Randy Tan Shaoxian: Dash, round start timer, window resize mouse coordinate fix, menu and character code refactoring, tweaks for Linux support",
