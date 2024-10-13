@@ -11,8 +11,8 @@ class FighterRobot extends Fighter {
     this.walkKeyRight = 'arrowright';
 	this.moveKeyUp = 'arrowup';
 	this.moveKeyDown = "arrowdown";
-	this.punchKey = "c";
-	this.kickKey = "v";
+	this.punchKey = "ctrl";
+	this.kickKey = "alt";
 	this.laserKey = "shift";
 
     this.speed = 0;

@@ -172,8 +172,7 @@ class Fighter {
       [ANIM_DAMAGE]: 1284 * 0.2 * 1.5
     };
 
-    ;
-
+    
     this.x = initialX;
     this.y = initialY;
 	this.drawY = this.y;
@@ -343,7 +342,7 @@ class Fighter {
       this.startAnimIfNew(ANIM_CROUCH_PUNCH);
     }
 
-    if ((this.keys['i'])
+    if ((this.keys['i'] && this.keys['o'])
       || (this.keys['gamepad_a_button'] && this.keys['gamepad_down'])) {
       if (this.currentAnimation != ANIM_COMBO && player.power >= 100) {
         this.startAnimIfNew(ANIM_COMBO);
