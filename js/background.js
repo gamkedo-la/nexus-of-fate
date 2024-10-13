@@ -11,31 +11,35 @@ function drawControls() {
     context.textBaseline = "top";
 
     var controlsText = [
-        "W jump",
-        "A left",
-        "D right",
-        "S down",
-        "I combo",
-        "H punch",
-        "J kick",
-        "SPACE dash",
-        "U block",
-        "K Crouch Punch"
+      ["W", "jump"],
+      ["A", "left"],
+      ["D", "right"],
+      ["S", "down"],
+      ["I", "combo"],
+      ["H", "punch"],
+      ["J", "kick"],
+      ["SPACE", "dash"],
+      ["U", "block"],
+      ["K", "Crouch Punch"]
     ];
 	
-	var startX = canvas.width/2 - 100; // Starting X position
+	 var startX = canvas.width/2 - 100; // Starting X position
     var startY = 100; // Starting Y position
+    var keyWidth = 20;
 
     // Draw each line of the controls text
     for (var i = 0; i < controlsText.length; i++) {
-        context.fillText(controlsText[i], startX, startY + i * 30); // Adjust spacing with i * 30
-    }
+      // prevent key SPACE overlapping action by right-aligning
+      var [key, action] = controlsText[i];
+      var keyX = startX - context.measureText(key).width;
+      context.fillText(key, keyX, startY + i * 30);
+      context.fillText(action, startX + keyWidth, startY + i * 30);
+    } 
 	
     context.font = wasFont;
     context.fillStyle = wasFillStyle;
     context.textAlign = wasTextAllign;
     context.textBaseline = wasTextBaseline;
-	
 }
 
 var background = {
