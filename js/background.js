@@ -15,7 +15,7 @@ function drawControls() {
       ["A", "left"],
       ["D", "right"],
       ["S", "down"],
-      ["I", "combo"],
+      ["I" + " " + "O", "combo"],
       ["H", "punch"],
       ["J", "kick"],
       ["SPACE", "dash"],
