@@ -41,6 +41,7 @@ const EDGE_BOUNDRY_PIXELS = 120;
 const MAX_HEALTH = 100;
 var dashFlag = false;
 var moveRightFlag = false;
+
 function setThisLoaded() { this.loaded = true; } // used for image onload
 
 
@@ -285,7 +286,9 @@ class Fighter {
 
     // Update the animation state based on movement
     if (this.keys[this.walkKeyLeft] || (this.useGamepad && this.keys['gamepad_left'])) {
-    
+       
+	   moveLeftFlag = false;
+
       if (this.keys[' ']) {
         this.dashLeft();
 		dashFlag = true;
@@ -304,6 +307,8 @@ class Fighter {
         this.moveRight();
 		dashFlag = false;
 		moveRightFlag = true;
+	    moveLeftFlag = true;
+
       }
 
     } else if (this.y >= FLOOR_Y && this.speedY == 0) {

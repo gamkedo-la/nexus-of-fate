@@ -2,6 +2,8 @@
 const LASER_SHOOT_OFFSETX = 0;
 const LASER_SHOOT_OFFSETY = 64;
 const LASER_RELOAD_TIME = 1000;
+var moveLeftFlag = false;
+
 
 class FighterRobot extends Fighter {
   constructor(whichInput, imageSrcs, initialX = 2000, initialY = FLOOR_Y) {
@@ -11,8 +13,8 @@ class FighterRobot extends Fighter {
     this.walkKeyRight = 'arrowright';
 	this.moveKeyUp = 'arrowup';
 	this.moveKeyDown = "arrowdown";
-	this.punchKey = "ctrl";
-	this.kickKey = "alt";
+	this.punchKey = "c";
+	this.kickKey = "v";
 	this.laserKey = "shift";
 
     this.speed = 0;
@@ -119,10 +121,14 @@ class FighterRobot extends Fighter {
         if (this.currentAnimation === ANIM_IDLE) {
             if (Math.random() < 0.5) {
                 if (Math.random() < 0.5) {
-                    this.punch();
 					
+					if(moveLeftFlag == false){
+					this.punch();
+					}				
                 } else {
-                    this.kick();
+			      if(moveLeftFlag == false){
+				   this.kick();
+				  }
                 }
             }
         }
