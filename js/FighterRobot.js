@@ -2,7 +2,6 @@
 const LASER_SHOOT_OFFSETX = 0;
 const LASER_SHOOT_OFFSETY = 64;
 const LASER_RELOAD_TIME = 1000;
-var moveLeftFlag = false;
 
 
 class FighterRobot extends Fighter {
@@ -121,14 +120,10 @@ class FighterRobot extends Fighter {
         if (this.currentAnimation === ANIM_IDLE) {
             if (Math.random() < 0.5) {
                 if (Math.random() < 0.5) {
-					
-					if(moveLeftFlag == false){
 					this.punch();
-					}				
+								
                 } else {
-			      if(moveLeftFlag == false){
 				   this.kick();
-				  }
                 }
             }
         }

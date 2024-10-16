@@ -287,8 +287,6 @@ class Fighter {
     // Update the animation state based on movement
     if (this.keys[this.walkKeyLeft] || (this.useGamepad && this.keys['gamepad_left'])) {
        
-	   moveLeftFlag = false;
-
       if (this.keys[' ']) {
         this.dashLeft();
 		dashFlag = true;
@@ -306,8 +304,6 @@ class Fighter {
       } else {
         this.moveRight();
 		dashFlag = false;
-		moveRightFlag = true;
-	    moveLeftFlag = true;
 
       }
 

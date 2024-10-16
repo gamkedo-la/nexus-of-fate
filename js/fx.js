@@ -175,7 +175,6 @@ var fx = {
 		}else if(whichButton == 3){
 			effectHeight = 458;
 		}
-        console.log(whichButton);
         for (let n=0; n<25; n++) {
             let flip = Math.random()<0.5;
             var p = {
