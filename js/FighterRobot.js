@@ -109,7 +109,7 @@ class FighterRobot extends Fighter {
         return;
     }
 
-    if (this.currentAnimation == ANIM_DAMAGE) {
+    if (this.currentAnimation == ANIM_DAMAGE || this.health <= 0) {
         return;
     }
 
